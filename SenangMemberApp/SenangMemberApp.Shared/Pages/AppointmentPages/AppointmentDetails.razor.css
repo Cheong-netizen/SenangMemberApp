@@ -1,4 +1,4 @@
-﻿/* -----------------------------------------------------------------
+/* -----------------------------------------------------------------
    BOOKING SUMMARY (CARD MODIFICATIONS)
    This section is modified to separate details into cards.
 ----------------------------------------------------------------- */
@@ -30,7 +30,14 @@
 ----------------------------------------------------------------- */
 .store-image {
     width: 80px;
+    height: 80px;
+    object-fit: contain;
+    object-position: center;
+    padding: 4px;
+    box-sizing: border-box;
     border-radius: var(--radius-md);
+    background-color: var(--color-gray-50, #f9fafb);
+    flex-shrink: 0;
 }
 
 .store-info-wrapper {

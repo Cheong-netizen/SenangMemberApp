@@ -1,4 +1,4 @@
-﻿.page-wrapper{
+.page-wrapper{
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -130,21 +130,34 @@
 
 .shop-image {
     width: 100%;
-    border-radius: var(--radius-md);
+    height: 120px;
+    object-fit: contain;
+    object-position: center;
+    padding: 8px;
+    box-sizing: border-box;
+    border-top-right-radius: var(--radius-md);
+    border-top-left-radius: var(--radius-md);
+    background-color: var(--color-gray-50, #f9fafb);
 }
 
 .shop-grid-layout {
-    display: grid;
-    grid-template-rows: 0.7fr 0.3fr;
+    display: flex;
+    flex-direction: column;
     box-shadow: var(--shadow-lg);
     border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--bg-input, #ffffff);
     transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
-    align-items: center;
 }
 
 .shop-name {
     text-align: center;
-    padding: 10px 10px 20px 10px;
+    padding: 10px 8px;
+    font-weight: var(--bold-sm, 500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
 }
 
 .selected {

@@ -1,4 +1,4 @@
-﻿.page-wrapper {
+.page-wrapper {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -130,12 +130,22 @@
     display: flex;
     box-shadow: var(--shadow-lg);
     border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--bg-input, #ffffff);
     transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
 }
 
 .outlet-image {
-    width: 150px;
-    border-radius: var(--radius-md);
+    width: 120px;
+    height: 100px;
+    object-fit: contain;
+    object-position: center;
+    padding: 6px;
+    box-sizing: border-box;
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+    background-color: var(--color-gray-50, #f9fafb);
+    flex-shrink: 0;
 }
 
 .outlet-info-wrapper{

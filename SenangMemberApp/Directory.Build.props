@@ -10,5 +10,7 @@
     <ShortProjectName Condition="'$(ShortProjectName)' == ''">$(MSBuildProjectName)</ShortProjectName>
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)o\$(ShortProjectName)\</BaseIntermediateOutputPath>
     <BaseOutputPath>$(MSBuildThisFileDirectory)b\$(ShortProjectName)\</BaseOutputPath>
+    <!-- Prevent background MSBuild node processes from locking intermediate Android build files -->
+    <MSBuildDisableNodeReuse>true</MSBuildDisableNodeReuse>
   </PropertyGroup>
 </Project>

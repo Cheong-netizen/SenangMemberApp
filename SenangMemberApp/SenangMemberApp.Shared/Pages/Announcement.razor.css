@@ -1,4 +1,4 @@
-﻿.page-wrapper {
+.page-wrapper {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -248,27 +248,36 @@
 }
 
 .shop-grid-layout {
-    display: grid;
-    grid-template-rows: auto auto;
+    display: flex;
+    flex-direction: column;
     box-shadow: var(--shadow-lg);
-    border-top-right-radius: var(--radius-md);
-    border-top-left-radius: var(--radius-md);
+    border-radius: var(--radius-md);
+    overflow: hidden;
     cursor: pointer;
-    background-color: white; /* Ensures tiles have a solid background */
+    background-color: var(--bg-input, #ffffff);
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
 }
 
 .shop-image {
     width: 100%;
-    aspect-ratio: 1/1; /* Keeps images consistently square if needed */
-    object-fit: cover; /* Prevents image distortion */
+    height: 120px;
+    object-fit: contain;
+    object-position: center;
+    padding: 8px;
+    box-sizing: border-box;
     border-top-right-radius: var(--radius-md);
     border-top-left-radius: var(--radius-md);
+    background-color: var(--color-gray-50, #f9fafb);
 }
 
 .shop-name {
     text-align: center;
-    padding: 10px; /* Replaced padding-bottom: 20px for better vertical centering */
-    font-weight: var(--bold-sm);
+    padding: 10px 8px;
+    font-weight: var(--bold-sm, 500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
 }
 
 
