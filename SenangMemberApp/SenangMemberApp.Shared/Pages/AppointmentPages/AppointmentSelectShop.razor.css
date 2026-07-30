@@ -1,0 +1,158 @@
+﻿.page-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    padding-bottom: 90px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 41px 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+.search-wrapper {
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+    margin: 0 7% 0 7%;
+}
+
+.search-textbox{
+    border: none;
+}
+
+.search-box{
+    padding: 7px 7px 7px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-box span{
+    padding: 0 15px;
+}
+
+.search-textbox{
+    flex: 1;
+    padding: 5px 0;
+}
+
+/* 1. The Grid Container */
+.product-grid {
+    display: grid;
+    /* Magic Explanation:
+       - auto-fit: Create as many columns as possible.
+       - minmax(250px, 1fr): Columns must be at least 250px wide. 
+         If there is extra space, they will share it equally (1fr).
+    */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px; /* Space between rows and columns */
+    margin: 0 7% 0 7%;
+}
+
+/* 2. The Product Card Style */
+.product-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    /* Flexbox used INSIDE the card to align button to bottom */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. Responsive Image Handling */
+.image-wrapper img {
+    width: 100%; /* Make image fill the card width */
+    height: 150px; /* Set a fixed height for consistency */
+    object-fit: cover; /* Prevents image distortion */
+    display: block; /* Removes bottom whitespace glitch */
+}
+
+.card-content {
+    padding: 15px;
+    /* Pushes content to fill height so button aligns at bottom */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+    .card-content button {
+        margin-top: auto; /* Pushes button to the very bottom */
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+/*next button at the bottom*/
+.next-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 7%;
+    z-index: 1000;
+}
+
+.next-button-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-md);
+}
+
+.next-button-content span{
+    padding: 15px;
+    font-size: var(--fontsize-text);
+    font-weight: var(--bold-sm);
+    color: white;
+}
+
+.shop-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 2% 7%;
+    gap: 10px;
+    height: 85%;
+    align-content: start;
+    overflow-y: scroll;
+}
+
+.shop-image {
+    width: 100%;
+    border-radius: var(--radius-md);
+}
+
+.shop-grid-layout {
+    display: grid;
+    grid-template-rows: 0.7fr 0.3fr;
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-md);
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
+    align-items: center;
+}
+
+.shop-name {
+    text-align: center;
+    padding: 10px 10px 20px 10px;
+}
+
+.selected {
+    border: 1.5px solid var(--color-primary);
+    background-color: var(--color-primary-light);
+    transform: scale(1.05);
+}
+
+.disabled{
+    opacity: 50%;
+}

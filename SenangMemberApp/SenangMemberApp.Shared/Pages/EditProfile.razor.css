@@ -1,0 +1,246 @@
+﻿/* =========================================
+   Edit Profile Page Styles
+   ========================================= */
+
+/* --- 1. Header & Layout --- */
+.profile-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    padding: 41px 7% 2% 7%;
+    background-color: var(--bg-body);
+    color: var(--color-primary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    font-size: var(--fontsize-header);
+    /* Optional: Add shadow when scrolling if desired */
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.05); */
+}
+
+.profile-header-title {
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+    text-align: center;
+}
+
+.btn-save {
+    color: var(--color-primary);
+    background: none;
+    border: none;
+    font-weight: var(--bold-lg);
+    cursor: pointer;
+    padding: 5px;
+    text-align: right;
+}
+
+/* --- 2. Image Upload Section --- */
+.edit-profile-img-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    position: relative;
+}
+
+.img-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.edit-profile-pic {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: var(--shadow-sm);
+    background-color: var(--color-gray-100);
+}
+
+.camera-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: var(--color-primary);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s;
+}
+
+    .camera-btn:active {
+        transform: scale(0.9);
+    }
+
+/* --- 3. General Form Styles --- */
+.form-section {
+    padding: 0 7% 100px 7%; /* Extra bottom padding for scrolling */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 5px;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: var(--bold-sm);
+    color: var(--text-muted);
+    margin-left: 2px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: var(--fontsize-text);
+    background-color: var(--bg-input);
+    transition: border-color 0.2s;
+}
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--color-primary);
+    }
+
+/* --- 4. Address Section Styles --- */
+.section-header {
+    font-size: 16px;
+    font-weight: var(--bold-lg);
+    color: var(--color-primary);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.address-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.address-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-100);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Top Row: "Address 1" label and Delete Icon */
+.address-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--color-gray-200);
+    padding-bottom: 10px;
+}
+
+.address-number-label {
+    font-weight: var(--bold-lg);
+    color: var(--color-primary);
+    font-size: 14px;
+}
+
+.btn-remove-address {
+    color: var(--color-danger);
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: transform 0.2s;
+}
+
+    .btn-remove-address:active {
+        transform: scale(0.9);
+    }
+
+/* Wrapper for the input fields inside the card */
+.address-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Row for side-by-side inputs (e.g. Postcode + City) */
+.form-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+    .form-row .form-group {
+        flex: 1; /* Ensures both inputs take equal width */
+        min-width: 0; /* Prevents overflow on small screens */
+    }
+
+/* --- 5. "Add New Address" Button --- */
+.btn-add-address {
+    width: 100%;
+    padding: 15px;
+    background-color: transparent;
+    border: 2px dashed var(--color-primary);
+    color: var(--color-primary);
+    border-radius: var(--radius-md);
+    font-weight: var(--bold-sm);
+    font-size: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+    .btn-add-address:active {
+        background-color: var(--color-primary-light);
+    }
+
+/*next button at the bottom*/
+.save-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 7%;
+    z-index: 1000;
+}
+
+.save-button-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-md);
+    color: white;
+}
+
+    .save-button-content span {
+        padding: 15px;
+        font-size: var(--fontsize-text);
+        font-weight: var(--bold-sm);
+    }

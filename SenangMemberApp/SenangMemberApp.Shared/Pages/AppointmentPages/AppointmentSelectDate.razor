@@ -1,0 +1,130 @@
+﻿@page "/AppointmentSelectDate"
+@layout EmptyLayout
+
+@using Microsoft.Extensions.Localization
+
+
+@inject IStringLocalizer<AppointmentSelectDate> Loc
+
+<div class="page-wrapper">
+    <div class="header">
+        <div><span @onclick="navBack"><i class="fa-solid fa-angle-left"></i></span></div>
+        <div><span>@Loc["PageTitle"]</span></div>
+        <div></div>
+    </div>
+
+    <div class="steps-wrapper">
+        @* <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill"><span>1</span></div>
+                </div>
+            </div>
+            <span>@Loc["StepServices"]</span>
+        </div>
+        <div class="steps-line active"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill"><span>2</span></div>
+                </div>
+            </div>
+            <span>@Loc["StepStaff"]</span>
+        </div> *@
+        <div class="steps-line @(loaded ? "active" : "")"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer @(loaded ? "active" : "")">
+                    <div class="steps-ball-fill"><span>1</span></div>
+                </div>
+            </div>
+            <span>@Loc["StepDate"]</span>
+        </div>
+        <div class="steps-line"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer">
+                    <div class="steps-ball-fill"><span>2</span></div>
+                </div>
+            </div>
+            <span>@Loc["StepSummary"]</span>
+        </div>
+    </div>
+
+    <div class="date-selection-wrapper">
+        <div class="date-navigator">
+            <div @onclick="previousWeek" class="nav-left">
+                @if (selectedWeekIndex > 0)
+                {
+                    <i class="fa-solid fa-angle-left"></i>
+                }
+            </div>
+            <div class="month-year">@week.First().Date.ToString("MMMM yyyy")</div>
+            <div @onclick="nextWeek" class="nav-right">
+                @if (selectedWeekIndex < yearOfWeeks.Count - 1)
+                {
+                    <i class="fa-solid fa-angle-right"></i>
+                }
+            </div>
+        </div>
+        <div class="week-day">
+            @foreach (var day in week)
+            {
+                bool isDaySelected = currentViewDate.Date == day.Date;
+                <div @onclick="() => { if (day.IsOpen) SelectDayToView(day.Date); }"
+                     class="day-wrapper @(isDaySelected ? "active-day" : "") @(!day.IsOpen ? "disabled" : "")">
+                    <span class="day-header">@day.Date.ToString("ddd")</span>
+                    <span class="day-date">@day.Date.ToString("dd")</span>
+                </div>
+            }
+        </div>
+
+        <div class="slots-title">
+            <span>@Loc["AvailableTimes"]</span>
+        </div>
+
+        <div class="slots-area">
+            @if (activeDaySchedule != null)
+            {
+                @if (activeDaySchedule.IsOpen)
+                {
+                    <div class="schedule-container">
+                        @foreach (var hourGroup in activeDaySchedule.TimeSlots
+                                        .Where(s => s.IsAvailable)
+                                        .GroupBy(s => s.FullDateTime.Hour)
+                                        .OrderBy(g => g.Key))
+                        {
+                            <div class="hour-section">
+                                <span class="hour-header">
+                                    @DateTime.Today.AddHours(hourGroup.Key).ToString("hh:00 tt")
+                                </span>
+                                <div class="time-slots-grid">
+                                    @foreach (var slot in hourGroup)
+                                    {
+                                        <div @onclick="() => { if (slot.IsAvailable) SelectTimeSlot(slot); }"
+                                             class="time-btn @(slot == selectedSlot ? "selected" : "") @(!slot.IsAvailable ? "disabled" : "")">
+                                            @slot.FullDateTime.ToString("hh:mm tt")
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="closed-message">
+                        <i class="fa-solid fa-store-slash"></i>
+                        <span>@Loc["ClosedMessage"]</span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div class="next-button">
+    <div @onclick="navSummary" class="next-button-content @(selectedSlot == null ? "disabled" : "")">
+        <span>@Loc["NextButton"]</span>
+    </div>
+</div>

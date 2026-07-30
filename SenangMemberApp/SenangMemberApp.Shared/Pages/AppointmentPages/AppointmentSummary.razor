@@ -1,0 +1,138 @@
+﻿@page "/AppointmentSummary"
+@layout EmptyLayout
+
+@using Microsoft.Extensions.Localization
+
+
+@inject IStringLocalizer<AppointmentSummary> Loc
+
+<div class="page-wrapper">
+    <div class="header">
+        <div><span @onclick="navBack"><i class="fa-solid fa-angle-left"></i></span></div>
+        <div><span>@Loc["PageTitle"]</span></div>
+        <div></div>
+    </div>
+    <div class="steps-wrapper">
+        @* <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill">
+                        <span>1</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepServices"]</span>
+        </div>
+        <div class="steps-line active"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill">
+                        <span>2</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepStaff"]</span>
+        </div> *@
+        <div class="steps-line active"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill">
+                        <span>1</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepDate"]</span>
+        </div>
+        <div class="steps-line active">
+        </div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill">
+                        <span>2</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepSummary"]</span>
+        </div>
+    </div>
+    <div class="summary-info">
+        <div class="store-info-wrapper">
+            <img class="store-image" src="@appointmentState.selectedOutlet.imagePath" alt="Product Image">
+            <div class="store-info">
+                <span class="normal-text">@(appointmentState.selectedOutlet.companyName ?? "")</span>
+                <span class="subtitle-text">@(appointmentState.selectedOutlet.branch ?? "")</span>
+            </div>
+        </div>
+        <div class="date">
+            <span class="header-text"><i class="fa-regular fa-calendar icon"></i>  @Loc["DateAndTime"]</span>
+            <span class="normal-text">@appointmentState.selectedTime.ToString("dd MMMM yyyy, hh:mm tt")</span>
+            @* <span class="subtitle-text">@timeRequired.ToString(@"hh\:mm")</span> *@
+        </div>
+
+        @* <div class="staff">
+            <span class="header-text"><i class="fa-regular fa-user icon"></i>  @Loc["Staff"]</span>
+            <div class="staff-info-wrapper">
+                <img class="staff-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" alt="Product Image">
+                <div class="staff-info">
+                    <span>@(staffDetails?.LastName ?? "")</span>
+                </div>
+            </div>
+        </div> *@
+    </div>
+</div>
+<div class="next-button">
+    <div @onclick="cancelBooking" class="cancel-button-content">
+        <span>@Loc["CancelButton"]</span>
+    </div>
+    <div @onclick="confirmBooking" class="next-button-content">
+        <span>@Loc["ConfirmButton"]</span>
+    </div>
+</div>
+
+@if (cancelModalIsOpen)
+{
+    <div @onclick="closeCancelModal" class="backdrop">
+        <div @onclick:stopPropagation="true" class="modal-wrapper">
+            <div class="modal-top">
+                <div class="left-header-div"></div>
+                <div class="center-header-div"><span>@Loc["CancelModalTitle"]</span></div>
+                <div @onclick="closeCancelModal" class="close-button right-header-div"></div>
+            </div>
+            <div class="modal-content-wrapper">
+                <span>@Loc["CancelModalContent"]</span>
+            </div>
+            <div class="button-wrapper">
+                <div @onclick="closeCancelModal" class="button cancel-button">
+                    <span>@Loc["CancelButton"]</span>
+                </div>
+                <div class="button confirm-button">
+                    <span>@Loc["ConfirmButton"]</span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (confirmModalIsOpen)
+{
+    <div class="backdrop">
+        <div @onclick:stopPropagation="true" class="modal-wrapper">
+            <div class="modal-top">
+                <div class="left-header-div"></div>
+                <div class="center-header-div"><span>@Loc["ConfirmModalTitle"]</span></div>
+                <div class="close-button right-header-div"></div>
+            </div>
+            <div class="modal-content-wrapper">
+                <span>@Loc["ConfirmModalContent"]</span>
+            </div>
+            <div class="button-wrapper">
+                <div @onclick="navAppointment" class="button confirm-button">
+                    <span>@Loc["ConfirmButton"]</span>
+                </div>
+            </div>
+        </div>
+    </div>
+}

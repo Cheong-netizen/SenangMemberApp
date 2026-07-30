@@ -1,0 +1,203 @@
+@page "/appointment"
+
+@using Microsoft.Extensions.Localization
+
+
+@inject IStringLocalizer<Appointment> Loc
+
+@using SenangMemberApp.Shared.Models
+@using SenangMemberApp.Shared.Models.DTO.AppoinmentDTO
+
+<div class="page-wrapper">
+    <div class="appointment-header">
+        <span>@Loc["PageTitle"]</span>
+    </div>
+    <div class="shop-wrapper">
+        <div @onclick="() => { if (!loadingAppointment) toggleShopListModal(); }" class="shop-dropdown" style="@(loadingAppointment ? "opacity: 0.5; cursor: not-allowed;" : "cursor: pointer;")">
+            <div class="shop-dropdown-placeholder">
+                @if(loadingAppointment){
+                    <div class="spinner-container">
+                        <div class="loader"></div>
+                    </div>
+                }
+                else
+                {
+                    @if (selectedShopToView != "0")
+                    {
+                        <span>@currentShopName</span>
+                        <span><i class="fa-solid fa-caret-down"></i></span>
+                    }
+                    else
+                    {
+                        <span>@Loc["AllShops"]</span>
+                        <span><i class="fa-solid fa-caret-down"></i></span>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="booking-category">
+        <div @onclick="toggleOneMonth" class="booking-button @(isOneMonthView ? "active" : "")">
+            <span>@Loc["OneMonth"]</span>
+        </div>
+        <div @onclick="toggleOneYear" class="booking-button @(!isOneMonthView ? "active" : "")">
+            <span>@Loc["OneYear"]</span>
+        </div>
+    </div>
+    @if (loadingAppointment)
+    {
+        <div class="spinner"></div>
+    }
+    else
+    {
+        @* Check if the filtered list has any items *@
+        @if (currentDisplayAppointments != null && currentDisplayAppointments.Any())
+        {
+            @foreach (AppointmentResponseDTO appointment in currentDisplayAppointments)
+            {
+                <div @onclick="() => navAppointmentDetails(appointment)" class="appointment-list">
+                    <div class="appointment-card">
+                        <div class="appointment-card-header">
+                            <div class="appointment-image-name">
+                                <div class="appointment-name-info">
+                                    <span class="card-name">@ShopState.CurrentShopName</span>
+                                    <span class="card-branch">@GetBranchName(appointment.appointmentLocation)</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-ellipsis" @onclick="() => OpenAppointmentMoreModal(appointment)" @onclick:stopPropagation="true"></i>
+                        </div>
+
+                        <div class="appointment-info">
+                            <div class="chip-info">
+                                <i class="fa-regular fa-calendar"></i>
+                                <div class="appointment-info-text">
+                                    <span>@appointment.startTime.ToString("dd/MM/yyyy")</span>
+                                    <span class="appointment-info-subtitle">@appointment.startTime.ToString("dddd")</span>
+                                </div>
+                            </div>
+
+                            <div class="chip-info">
+                                <i class="fa-regular fa-clock"></i>
+                                <div class="appointment-info-text">
+                                    <span>@appointment.startTime.ToString("HH:mm") - @appointment.endTime.ToString("HH:mm")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            @* --- NO APPOINTMENT UI --- *@
+            <div class="no-appointment-wrapper">
+                <div class="no-appointment-content">
+                    <i class="fa-regular fa-calendar-check empty-icon"></i>
+                    <h3>@Loc["NoAppointmentsTitle"]</h3>
+                    @if (isOneMonthView)
+                    {
+                        <button class="view-year-btn" @onclick="toggleOneYear">@Loc["CheckFullYear"]</button>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>
+<div @onclick="navChatBot" class="add-appointment-wrapper-ai">
+    <img class="shop-image" src="_content/SenangMemberApp.Shared/Images/Asset1.png" />
+</div>
+<div @onclick=navSelectShop class="add-appointment-wrapper">
+    <i class="fa-solid fa-plus"></i>
+</div>
+
+@if (shopListModalIsOpen)
+{
+    <div @onclick="toggleShopListModal" class="backdrop">
+        <div @onclick:stopPropagation="true" class="modal-wrapper">
+            <div class="shop-list-wrapper">
+                <div class="modal-top">
+                    <div class="left-header-div"></div>
+                    <div class="center-header-div"><span>@Loc["SelectShopModalTitle"]</span></div>
+                    <div @onclick="toggleShopListModal" class="close-button right-header-div"><i class="fa-solid fa-xmark"></i></div>
+                </div>
+                <div class="search-wrapper">
+                    <div class="search-box">
+                        <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input class="search-textbox" type="text" placeholder="@Loc["SearchPlaceholder"]" @bind="shopSearchText" @bind:event="oninput" />
+                    </div>
+                </div>
+                <div class="shop-grid-wrapper">
+                    @* <div @onclick="selectAllShop" class="shop-grid-layout">
+                        <img class="shop-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" />
+                        <span class="shop-name">@Loc["AllShops"]</span>
+                    </div> *@
+                    @foreach (var shop in filteredShops)
+                    {
+
+                        <div @onclick="() => selectShop(shop.CompanyCode, shop.ShopName)" class="shop-grid-layout">
+                            <img class="shop-image" src="@shop.LogoPath" />
+                            <span class="shop-name">@shop.ShopName</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (appointmentMoreModalIsOpen)
+{
+    <div @onclick="CloseAppointmentMoreModal" class="backdrop">
+        <div @onclick:stopPropagation="true" class="modal-wrapper-more">
+            <div class="shop-list-wrapper">
+                <div class="modal-top">
+                    <div class="left-header-div"></div>
+                    <div class="center-header-div"><span>@Loc["MoreOptions"]</span></div>
+                    <div @onclick="CloseAppointmentMoreModal" class="close-button right-header-div"><i class="fa-solid fa-xmark"></i></div>
+                </div>
+                <div @onclick:stopPropagation="true" style="padding-top: 2%;" class="catalog-wrapper">
+                    <div class="catalog-item-wrapper">
+                        <div class="catalog-tiles" @onclick="OpenMap">
+                            <div class="more-options-card">
+                                <div class="catalog-info">
+                                    <span class="more-option"><i class="fa-regular fa-map"></i> @Loc["Map"]</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="catalog-tiles" @onclick="OpenCall">
+                            <div class="more-options-card">
+                                <div class="catalog-info">
+                                    <span class="more-option"><i class="fa-solid fa-phone"></i> @Loc["Call"]</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="catalog-tiles" @onclick="OpenWhatsApp">
+                            <div class="more-options-card">
+                                <div class="catalog-info">
+                                    <span class="more-option"><i class="fa-brands fa-whatsapp"></i> @Loc["Chat"]</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (warningModalIsOpen)
+{
+    <div class="modal-backdrop" @onclick="CloseWarningModal">
+        <div class="modal-container" @onclick:stopPropagation="true">
+            <div class="modal-icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: var(--color-warning);"></i>
+            </div>
+            <h3 class="modal-title">@warningModalTitle</h3>
+            <p class="modal-message">@warningModalMessage</p>
+            <div class="modal-actions">
+                <button class="btn-ok" @onclick="CloseWarningModal">@Loc["Ok"]</button>
+            </div>
+        </div>
+    </div>
+}
+

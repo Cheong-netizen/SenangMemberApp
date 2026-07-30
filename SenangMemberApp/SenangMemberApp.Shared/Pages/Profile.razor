@@ -1,0 +1,107 @@
+﻿@page "/profile"
+
+@using Microsoft.Extensions.Localization
+
+
+@inject IStringLocalizer<Profile> Loc
+
+<div class="page-wrapper">
+
+    <div class="profile-header">
+
+        <div class="profile-header-title">@Loc["PageTitle"]</div>
+
+        <div class="logout-btn" @onclick="ShowLogoutConfirmation">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </div>
+    </div>
+
+    <div class="profile-hero">
+        <div class="profile-pic-wrapper">
+            <img src="_content/SenangMemberApp.Shared/Images/senang_profile_pic.png" class="profile-pic" alt="User Profile" />
+        </div>
+
+        <div class="profile-info">
+            <div class="profile-name">@if (UserProfile != null && UserProfile.AccountName != null) {
+            @UserProfile.AccountName
+                        }
+</div>
+            <div class="profile-phone">@if (UserProfile != null && UserProfile.Phone != null) {
+            @UserProfile.Phone
+                        }
+</div>
+        </div>
+    </div>
+
+    <div class="profile-menu-list">
+
+        <div class="menu-item" @onclick="NavToEditProfile">
+            <div class="menu-left">
+                <div class="menu-icon-box">
+                    <i class="fa-solid fa-user-pen"></i>
+                </div>
+                <span>@Loc["EditProfile"]</span>
+            </div>
+            <div class="menu-chevron">
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+        </div>
+        <div class="menu-item" @onclick="NavToChangePassword">
+            <div class="menu-left">
+                <div class="menu-icon-box">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <span>@Loc["ChangePassword"]</span>
+            </div>
+            <div class="menu-chevron">
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+        </div>
+        <div class="menu-item" @onclick="NavToDeleteAcc">
+            <div class="menu-left">
+                <div class="menu-icon-box">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+                <span>@Loc["DeleteAccount"]</span>
+            </div>
+            <div class="menu-chevron">
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-left">
+                <div class="menu-icon-box">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+                <span>@Loc["Language"]</span>
+            </div>
+            <div class="lang-toggle-group">
+                <button class="lang-btn @(CurrentCulture == "en-US" ? "active" : "")"
+                        @onclick='() => ChangeLanguage("en-US")'>
+                    EN
+                </button>
+                <button class="lang-btn @(CurrentCulture == "zh-CN" ? "active" : "")"
+                        @onclick='() => ChangeLanguage("zh-CN")'>
+                    中文
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+@if (IsLogoutModalVisible)
+{
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <div class="modal-icon">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <h3 class="modal-title">@Loc["LogoutConfirmTitle"]</h3>
+            <p class="modal-message">@Loc["LogoutConfirmMessage"]</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" @onclick="CancelLogout">@Loc["Cancel"]</button>
+                <button class="btn-confirm" @onclick="ConfirmLogout">@Loc["ConfirmLogout"]</button>
+            </div>
+        </div>
+    </div>
+}

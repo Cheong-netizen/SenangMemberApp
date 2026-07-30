@@ -1,0 +1,285 @@
+﻿.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 41px 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+/* --- Notification/Message List Styles --- */
+.notification-list {
+    padding: 0 7% 40px 7%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Spacing between cards */
+}
+
+.notification-card {
+    align-items: center;
+    background-color: white;
+    padding: 15px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    gap: 15px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+    .notification-card:active {
+        background-color: var(--color-gray-50);
+    }
+
+/* Avatar / Icon Section */
+.message-avatar {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+    /* Active/Unread Avatar style (Primary Color) */
+    .message-avatar.unread {
+        background-color: var(--color-primary-light);
+        color: var(--color-primary);
+    }
+
+/* Content Section */
+.message-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow: hidden; /* Prevents text overflowing */
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sender-name {
+    font-size: 16px;
+    font-weight: var(--bold-lg);
+    color: var(--text-main);
+}
+
+.message-time {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.message-preview {
+    font-size: 14px;
+    color: var(--text-muted);
+/*    white-space: nowrap;*/
+    overflow: hidden;
+/*    text-overflow: ellipsis;*/
+/*    max-width: 100%;*/
+}
+
+/* Bold the preview if unread */
+.unread-text {
+    font-weight: var(--bold-sm);
+    color: var(--text-main);
+}
+
+/* =========================================
+   1. SELECT SHOP BUTTON (TRIGGER)
+   ========================================= */
+.shop-wrapper {
+    padding: 0 7% 0 7%;
+}
+
+.shop-dropdown {
+    background-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.shop-dropdown-placeholder {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 20px;
+    font-size: var(--fontsize-text);
+    font-weight: var(--bold-lg);
+    color: white;
+    height: 70px;
+}
+
+/* =========================================
+   2. MODAL BACKDROP & ANIMATION
+   ========================================= */
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--backdrop);
+    backdrop-filter: var(--backdrop-blur);
+    z-index: 2000;
+    display: flex;
+    align-items: flex-end;
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100px) scale(0.96);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* =========================================
+   3. MODAL CONTAINER & HEADER
+   ========================================= */
+.modal-wrapper {
+    height: 90%;
+    width: 100%;
+    background-color: var(--bg-surface); /* or white based on your variables */
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.05s;
+}
+
+.shop-list-wrapper {
+    height: 100%;
+}
+
+.modal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2% 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    font-weight: var(--bold-sm);
+    color: var(--color-primary);
+}
+
+.left-header-div {
+    flex: 1;
+}
+
+.center-header-div {
+    flex: 4;
+    text-align: center;
+}
+
+.right-header-div {
+    flex: 1;
+    text-align: right;
+}
+
+.close-button {
+    font-weight: normal;
+    cursor: pointer;
+}
+
+/* =========================================
+   4. MODAL SEARCH BOX
+   ========================================= */
+.search-wrapper {
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+    margin: 0 7% 0 7%;
+    background-color: white;
+}
+
+.search-box {
+    padding: 7px 7px 7px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .search-box span {
+        padding: 0 15px;
+    }
+
+.search-textbox {
+    flex: 1;
+    padding: 5px 0;
+    border: none;
+    outline: none; /* Good practice for inputs */
+}
+
+/* =========================================
+   5. MODAL SHOP GRID (LIST)
+   ========================================= */
+.shop-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 2% 7%;
+    gap: 10px;
+    height: 85%;
+    align-content: start;
+    overflow-y: scroll;
+}
+
+.shop-grid-layout {
+    display: grid;
+    grid-template-rows: auto auto;
+    box-shadow: var(--shadow-lg);
+    border-top-right-radius: var(--radius-md);
+    border-top-left-radius: var(--radius-md);
+    cursor: pointer;
+    background-color: white; /* Ensures tiles have a solid background */
+}
+
+.shop-image {
+    width: 100%;
+    aspect-ratio: 1/1; /* Keeps images consistently square if needed */
+    object-fit: cover; /* Prevents image distortion */
+    border-top-right-radius: var(--radius-md);
+    border-top-left-radius: var(--radius-md);
+}
+
+.shop-name {
+    text-align: center;
+    padding: 10px; /* Replaced padding-bottom: 20px for better vertical centering */
+    font-weight: var(--bold-sm);
+}
+
+
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

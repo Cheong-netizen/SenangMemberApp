@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <!--
+      Keep generated paths short. Android produces deeply nested Java wrapper
+      paths, and this repository may live below a long OneDrive directory.
+    -->
+    <ShortProjectName Condition="'$(MSBuildProjectName)' == 'SenangMemberApp'">a</ShortProjectName>
+    <ShortProjectName Condition="'$(MSBuildProjectName)' == 'SenangMemberApp.Shared'">s</ShortProjectName>
+    <ShortProjectName Condition="'$(MSBuildProjectName)' == 'SenangMemberApp.Web'">w</ShortProjectName>
+    <ShortProjectName Condition="'$(ShortProjectName)' == ''">$(MSBuildProjectName)</ShortProjectName>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)o\$(ShortProjectName)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)b\$(ShortProjectName)\</BaseOutputPath>
+  </PropertyGroup>
+</Project>

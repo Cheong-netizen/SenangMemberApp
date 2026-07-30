@@ -1,0 +1,463 @@
+﻿.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    padding-bottom: 90px;
+}
+
+/*select shop button*/
+.shop-wrapper {
+    padding: 0 7% 0 7%;
+}
+
+.shop-dropdown {
+    background-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+}
+
+.shop-dropdown-placeholder {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px 20px;
+    font-size: var(--fontsize-text);
+    font-weight: var(--bold-lg);
+    color: white;
+}
+
+/*header*/
+.appointment-header {
+    padding: 41px 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+/*upcoming and history tab*/
+.booking-category {
+    display: flex;
+    margin: 2% 7% 2% 7%;
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary-light);
+}
+
+.booking-button {
+    width: 50%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.booking-button.active {
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+}
+
+.add-appointment-wrapper {
+    /* Positioning */
+    position: fixed; /* Keeps it in place when scrolling */
+    bottom: 80px; /* Distance from bottom */
+    right: 20px; /* Distance from right */
+    z-index: 1000; /* Ensures it stays on top of other content */
+    /* Shape & Size */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Makes it a perfect circle */
+    /* Colors */
+    background-color: var(--color-primary); /* Change to your brand color */
+    color: white;
+    /* Centering the icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* visual flair */
+    box-shadow: var(--shadow-sm); /* Adds a shadow to make it "float" */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.add-appointment-wrapper-ai {
+    /* Positioning */
+    position: fixed; /* Keeps it in place when scrolling */
+    bottom: 160px; /* Distance from bottom */
+    right: 20px; /* Distance from right */
+    z-index: 1000; /* Ensures it stays on top of other content */
+    /* Shape & Size */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Makes it a perfect circle */
+    /* Colors */
+    background-color: var(--color-primary); /* Change to your brand color */
+    color: white;
+    /* Centering the icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* visual flair */
+    box-shadow: var(--shadow-sm); /* Adds a shadow to make it "float" */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.add-appointment-wrapper:active {
+    transform: translateY(2px);
+    background-color: var(--color-secondary);
+}
+
+/*Appointment List*/
+.company-image {
+    border-radius: 50%;
+    width: 60px;
+    aspect-ratio: 1/1;
+}
+
+.appointment-card {
+    background-color: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-all-around);
+/*    border: 1px solid var(--color-gray-100);*/
+}
+
+.appointment-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 15px 0 26px;
+}
+
+    .appointment-card-header i {
+        color: var(--text-muted);
+    }
+
+.card-name {
+    font-weight: var(--bold-lg);
+}
+
+.card-branch {
+    font-size: var(--fontsize-subtitle);
+    color: var(--text-muted);
+}
+
+.appointment-image-name {
+    display: flex;
+    flex-direction: row;
+}
+
+.appointment-name-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-info {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 15px 15px 15px;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.chip-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+    .chip-info i {
+        color: var(--color-primary);
+        padding: 10px;
+        width: 35px;
+        text-align: center;
+        border-radius: var(--radius-md);
+    }
+
+.appointment-info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-info-subtitle {
+    font-size: var(--fontsize-subtitle);
+    color: var(--text-muted);
+}
+
+.appointment-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.appointment-list {
+    padding: 0 7% 0 7%;
+}
+
+/*Catalog*/
+.catalog-wrapper {
+    padding: 2% 7% 2% 7%;
+    display: grid;
+    grid-row: auto auto;
+    gap: 5px;
+}
+
+.catalog-image {
+    aspect-ratio: 1/1;
+    width: 60px;
+    border-top-left-radius: var(--radius-md);
+    border-top-right-radius: var(--radius-md);
+}
+
+.catalog-tiles {
+    background-color: white;
+    border-radius: var(--radius-md);
+    /*    border: 1px solid var(--color-gray-300);*/
+    box-shadow: var(--shadow-all-around);
+}
+
+.catalog-card {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.catalog-name {
+    font-weight: var(--bold-lg);
+}
+
+.catalog-info {
+    display: grid;
+    grid-row: auto auto;
+}
+
+.catalog-item-wrapper {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+}
+
+/*search wrapper*/
+.search-wrapper {
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+    margin: 0 7% 0 7%;
+    background-color: white;
+}
+
+.search-textbox {
+    border: none;
+}
+
+.search-box {
+    padding: 7px 7px 7px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .search-box span {
+        padding: 0 15px;
+    }
+
+.search-textbox {
+    flex: 1;
+    padding: 5px 0;
+}
+
+/*modal*/
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--backdrop);
+    backdrop-filter: var(--backdrop-blur);
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+}
+
+.shop-list-wrapper {
+    height: 100%;
+}
+
+.modal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2% 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    font-weight: var(--bold-sm);
+    color: var(--color-primary);
+}
+
+.modal-wrapper {
+    height: 90%;
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+}
+
+.left-header-div {
+    flex: 1;
+}
+
+.center-header-div {
+    flex: 4;
+    text-align: center;
+}
+
+.right-header-div {
+    flex: 1;
+    text-align: right;
+}
+
+.close-button {
+    font-weight: normal;
+}
+
+.more-options-card {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+.more-option {
+    padding: 10px;
+    font-weight: var(--bold-lg);
+}
+
+.modal-wrapper-more {
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    background: white;
+    border-radius: 8px;
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.05s; /* Slight delay for layered effect */
+}
+
+/* 1. Smoother fade-in for backdrop */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 2. Enhanced slide-up with better timing */
+@keyframes slideUp {
+    from {
+        transform: translateY(100px) scale(0.96);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* 3. Backdrop with staggered timing */
+.backdrop {
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* 4. Modal with refined spring effect */
+.modal-wrapper {
+    background: white;
+    border-radius: 8px;
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.05s; /* Slight delay for layered effect */
+}
+
+/*shop modal list*/
+.shop-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 2% 7%;
+    gap: 10px;
+    height: 85%;
+    align-content: start;
+    overflow-y: scroll;
+}
+
+.shop-image {
+    max-width: 100%;
+    border-top-right-radius: var(--radius-md);
+    border-top-left-radius: var(--radius-md);
+    max-height: 180px;
+}
+
+.shop-grid-layout {
+    display: grid;
+    grid-template-rows: 0.7fr 0.3fr;
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-md);
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
+    align-items: center;
+}
+
+.shop-name {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.no-appointment-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    padding: 20px;
+    text-align: center;
+}
+
+.no-appointment-content {
+    background: white;
+    padding: 40px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 400px;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: #cbd5e0;
+    margin-bottom: 20px;
+}
+
+.no-appointment-content h3 {
+    font-size: 1.2rem;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.no-appointment-content p {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 20px;
+}
+
+.view-year-btn {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}

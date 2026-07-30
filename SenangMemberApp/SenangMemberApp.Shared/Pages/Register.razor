@@ -1,0 +1,193 @@
+﻿@page "/register"
+@using Microsoft.Extensions.Localization
+@layout EmptyLayout
+
+@inject IStringLocalizer<Register> Loc
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2 style="font-weight: var(--bold-lg); color: var(--text-main);">@Loc["PageTitle"]</h2>
+            <p style="color: var(--text-muted); font-size: var(--fontsize-subtitle);">@Loc["Subtitle"]</p>
+        </div>
+
+        <EditForm Model="@registerRequest" OnValidSubmit="HandleRegister">
+            <DataAnnotationsValidator />
+
+            <div class="form-group">
+                <label class="form-label form-row">
+                    @Loc["FullNameLabel"]
+                    <InputText @bind-Value="registerRequest.Name" class="custom-input" placeholder="@Loc["FullNamePlaceholder"]" />
+                </label>
+                <ValidationMessage For="@(() => registerRequest.Name)" class="validation-msg" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label form-row">
+                    @Loc["EmailLabel"]
+                    <InputText @bind-Value="registerRequest.Email" type="email" class="custom-input" placeholder="@Loc["EmailPlaceholder"]" />
+                </label>
+                <ValidationMessage For="@(() => registerRequest.Email)" class="validation-msg" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label form-row">
+                    @Loc["PhoneLabel"]
+                    <InputText @bind-Value="registerRequest.Phone" type="tel" class="custom-input" placeholder="@Loc["PhonePlaceholder"]" />
+                </label>
+                <ValidationMessage For="@(() => registerRequest.Phone)" class="validation-msg" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label form-row">
+                    @Loc["PasswordLabel"]
+                    <InputText @bind-Value="registerRequest.Password" type="password" class="custom-input" placeholder="••••••••" />
+                </label>
+                <ValidationMessage For="@(() => registerRequest.Password)" class="validation-msg" />
+            </div>
+
+            <button type="submit" class="btn-login" disabled="@isLoading">
+                @if (isLoading)
+                {
+                    <span>@Loc["LoadingText"]</span>
+                }
+                else
+                {
+                    <span>@Loc["RegisterButton"]</span>
+                }
+            </button>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert-error">
+                    @errorMessage
+                </div>
+            }
+        </EditForm>
+
+        <div class="login-footer">
+            <a href="/" class="forgot-link">@Loc["SignInLink"]</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Container: Uses your body background */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: var(--bg-body);
+        padding: 20px;
+    }
+
+    /* Card: Uses your shadow and radius variables */
+    .login-card {
+        width: 100%;
+        max-width: 400px;
+        background-color: var(--bg-input);
+        padding: 2.5rem;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-all-around);
+        border: var(--border-md);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    /* Form Styling */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-main);
+        font-weight: var(--bold-sm);
+        font-size: 0.9rem;
+    }
+
+    /* Custom Input using your border and focus colors */
+    ::deep .custom-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        background-color: var(--bg-input);
+        color: var(--text-main);
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+        ::deep .custom-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+        }
+
+    /* Button using your Primary Brand Color */
+    .btn-login {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: var(--color-primary);
+        color: var(--text-inverse);
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        font-weight: var(--bold-sm);
+        cursor: pointer;
+        transition: background-color 0.2s;
+        margin-top: 1rem;
+    }
+
+        .btn-login:hover:not(:disabled) {
+            background-color: var(--color-primary-hover);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+    /* Utility Links & Text */
+    .login-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+    .forgot-link {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+        .forgot-link:hover {
+            color: var(--color-primary);
+        }
+
+    ::deep .validation-msg {
+        color: var(--color-danger);
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .alert-error {
+        margin-top: 1rem;
+        padding: 0.75rem;
+        background-color: #fee2e2;
+        color: var(--color-danger);
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .form-row {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

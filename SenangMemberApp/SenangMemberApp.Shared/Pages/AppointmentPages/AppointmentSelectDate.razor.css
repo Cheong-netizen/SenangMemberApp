@@ -1,0 +1,217 @@
+﻿.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 41px 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+/*steps*/
+.steps-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2% 7% 2% 7%;
+}
+
+.steps-ball {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-primary-light);
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: var(--radius-circle);
+}
+
+.steps-ball-outer {
+    width: 85%;
+    border-radius: var(--radius-circle);
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps-component {
+    max-width: 50px;
+    font-size: var(--fontsize-subtitle);
+    text-align: center;
+}
+
+.steps-line {
+    background-color: var(--color-primary-light);
+    height: 4px;
+    flex: 1;
+    margin-top: 23px;
+}
+
+.active {
+    background-color: var(--color-primary);
+    color: white;
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
+}
+
+/*next button at the bottom*/
+.next-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 7%;
+    z-index: 1000;
+}
+
+.next-button-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-md);
+}
+
+    .next-button-content span {
+        padding: 15px;
+        font-size: var(--fontsize-text);
+        font-weight: var(--bold-sm);
+        color: white;
+    }
+
+/*Date*/
+.date-selection-wrapper{
+    margin: 2% 7% 2% 7%;
+    padding-bottom: 110px;
+}
+
+.date-navigator{
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.month-year{
+    flex: 2;
+    font-weight: var(--bold-lg);
+}
+
+.nav-left{
+    flex: 1;
+}
+
+    .nav-left i {
+        background-color: var(--color-primary-light);
+        border-radius: var(--radius-circle);
+        padding: 12px 15px;
+    }
+
+.nav-right{
+    flex: 1;
+}
+
+    .nav-right i {
+        background-color: var(--color-primary-light);
+        border-radius: var(--radius-circle);
+        padding: 12px 15px;
+    }
+
+.week-day {
+    display: flex;
+    justify-content: space-between;
+    padding: 4% 0 2% 0;
+    gap: 5px;
+}
+
+.day-wrapper {
+    display: grid;
+    text-align: center;
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-md);
+    flex: 1;
+    box-shadow: var(--shadow-sm);
+    padding: 6px 0px;
+}
+
+.day-header{
+    font-size: var(--fontsize-subtitle);
+}
+
+.day-date{
+    font-weight: var(--bold-sm);
+    font-size: var(--fontsize-text);
+}
+
+.active-day {
+    background-color: var(--color-primary);
+    color: var(--text-inverse);
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
+}
+
+.time-slots-grid {
+    display: grid;
+    /* This automatically fits as many 90px slots as possible, then wraps */
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.time-btn {
+    cursor: pointer;
+    text-align: center;
+    border-radius: 50px; /* Pill shape is friendlier for time slots */
+    padding: 10px 5px;
+    background-color: var(--bg-input); /* White background */
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: var(--bold-sm);
+    transition: all 0.2s ease-in-out;
+    /* Prevent text selection */
+    user-select: none;
+}
+
+.selected {
+    border: 1.5px solid var(--color-primary);
+    background-color: var(--color-primary-light);
+    transform: scale(1.05);
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
+}
+
+.disabled {
+    opacity: 50%;
+}
+
+.slots-title {
+    font-size: var(--text-main);
+    margin: 2% 0;
+}
+
+.slots-area{
+    margin: 2% 0;
+}
+
+.hour-header{
+    font-size: var(--fontsize-text);
+    font-weight: var(--bold-sm);
+}
+
+.time-btn.disabled {
+    background-color: #e0e0e0; /* Grey out */
+    color: #a0a0a0;
+    cursor: not-allowed;
+    border: 1px solid #dcdcdc;
+    pointer-events: none; /* Prevents clicks */
+    opacity: 0.6;
+}

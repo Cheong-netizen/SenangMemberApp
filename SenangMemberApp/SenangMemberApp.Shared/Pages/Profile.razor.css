@@ -1,0 +1,230 @@
+﻿.page-wrapper {
+    height: 100vh;
+}
+/* --- Profile Specific Header --- */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 41px 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+.profile-header-title {
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+.logout-btn {
+    color: var(--color-danger); /* Red color for logout */
+    font-size: 20px;
+    cursor: pointer;
+    padding-left: 10px; /* Larger touch target */
+    transition: transform 0.2s;
+}
+
+    .logout-btn:active {
+        transform: scale(0.9);
+    }
+
+/* --- Hero Section (Image + Phone) --- */
+.profile-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.profile-pic-wrapper {
+    position: relative;
+    padding: 5px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-info {
+    text-align: center;
+}
+
+.profile-name {
+    font-size: var(--fontsize-text);
+    font-weight: var(--bold-lg);
+    color: var(--text-main);
+}
+
+.profile-phone {
+    font-size: var(--fontsize-subtitle);
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+/* --- Menu List Options --- */
+.profile-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 7%;
+    margin-top: 20px;
+    padding-bottom: 100px;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .menu-item:active {
+        background-color: var(--color-gray-100);
+    }
+
+.menu-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: var(--bold-sm);
+    color: var(--text-main);
+}
+
+.menu-icon-box {
+    width: 35px;
+    height: 35px;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-chevron {
+    color: var(--color-gray-300);
+}
+
+.lang-toggle-group {
+    display: flex;
+    background: #f0f0f0;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.lang-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+    .lang-btn.active {
+        background: #ffffff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        font-weight: bold;
+        color: var(--color-primary); /* Adjust to your app's theme color */
+    }
+
+/* --- Modal Styles --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    backdrop-filter: blur(2px);
+}
+
+.modal-container {
+    background-color: white;
+    width: 85%;
+    max-width: 350px;
+    padding: 30px 20px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    font-size: 1.2rem;
+    font-weight: var(--bold-lg);
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.modal-message {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+    .modal-actions button {
+        flex: 1;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        font-weight: var(--bold-sm);
+        cursor: pointer;
+    }
+
+.btn-cancel {
+    background-color: var(--color-gray-100);
+    color: var(--text-main);
+}
+
+.btn-confirm {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+    .btn-confirm:active, .btn-cancel:active {
+        opacity: 0.8;
+    }

@@ -1,0 +1,276 @@
+﻿.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 41px 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+/*steps*/
+.steps-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2% 7% 2% 7%;
+}
+
+.steps-ball {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-primary-light);
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: var(--radius-circle);
+}
+
+.steps-ball-outer {
+    width: 85%;
+    border-radius: var(--radius-circle);
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps-component {
+    max-width: 50px;
+    font-size: var(--fontsize-subtitle);
+    text-align: center;
+}
+
+.steps-line {
+    background-color: var(--color-primary-light);
+    height: 4px;
+    flex: 1;
+    margin-top: 23px;
+}
+
+.active {
+    background-color: var(--color-primary);
+    transition: background-color ease-out 0.3s, width ease-out 0.3s;
+    color: white;
+}
+
+/*next button at the bottom*/
+.next-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 7%;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.next-button-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-md);
+    flex: 1;
+    color: white;
+}
+
+.cancel-button-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: var(--radius-md);
+    flex: 1;
+    border: 2px solid var(--color-primary);
+}
+
+    .next-button-content span {
+        padding: 15px;
+        font-size: var(--fontsize-text);
+        font-weight: var(--bold-sm);
+    }
+
+    .cancel-button-content span {
+        padding: 15px;
+        font-size: var(--fontsize-text);
+        font-weight: var(--bold-sm);
+    }
+
+/* -----------------------------------------------------------------
+   BOOKING SUMMARY (CARD MODIFICATIONS)
+   This section is modified to separate details into cards.
+----------------------------------------------------------------- */
+
+.summary-info {
+    margin: 2% 7%;
+    /* Removed background-color: var(--bg-surface); to allow cards to stand out */
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Increased gap for better separation between cards */
+    margin-bottom: 100px;
+}
+
+/* Apply Card Styles specifically to the child containers 
+   instead of generic padding on children 
+*/
+.store-info-wrapper, 
+.date, 
+.services-wrapper, 
+.staff {
+    background-color: var(--bg-input); /* White background */
+    border-radius: var(--radius-lg);   /* Rounded corners */
+    box-shadow: var(--shadow-sm);      /* Subtle shadow */
+    padding: 15px;                     /* Internal padding for the card */
+}
+
+/* -----------------------------------------------------------------
+   CONTENT STYLING
+----------------------------------------------------------------- */
+.store-image {
+    width: 80px;
+    border-radius: var(--radius-md);
+}
+
+.store-info-wrapper {
+    display: flex;
+    /* Flex is needed here, but also inherited from card grouping above, safe to keep */
+}
+
+.store-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.staff-image {
+    width: 60px;
+    border-radius: var(--radius-circle);
+    border: var(--border-md);
+}
+
+.subtitle-text {
+    font-size: var(--fontsize-subtitle);
+    color: var(--text-muted);
+}
+
+.header-text {
+    margin-bottom: 8px;
+    font-size: var(--fontsize-text);
+    font-weight: var(--bold-sm);
+    color: var(--text-muted);
+}
+
+.normal-text {
+}
+
+.services {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.services:not(:last-child){
+    border-bottom: var(--border-md);
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+}
+
+.staff {
+    display: flex;
+    flex-direction: column;
+}
+
+.staff-info-wrapper {
+    display: flex;
+}
+
+.staff-info {
+    margin-left: 10px;
+}
+
+.icon{
+    color: var(--color-primary);
+}
+
+/*modal*/
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--backdrop);
+    backdrop-filter: var(--backdrop-blur);
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.modal-wrapper {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 50%;
+    width: 80%;
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    transition: opacity 0.5s ease;
+}
+
+.modal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2% 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    font-weight: var(--bold-sm);
+    color: var(--color-primary);
+}
+
+.button-wrapper{
+    display: flex;
+    gap: 10px;
+}
+
+.modal-content-wrapper {
+    margin: 2% 7% 2% 7%;
+}
+
+.button-wrapper{
+    display: flex;
+    margin: 10px;
+}
+
+.button {
+    border-radius: var(--radius-md);
+    padding: 10px 0;
+    flex: 1;
+    text-align: center;
+}
+
+.confirm-button{
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.cancel-button {
+    border: 2px solid var(--color-primary);
+}
+

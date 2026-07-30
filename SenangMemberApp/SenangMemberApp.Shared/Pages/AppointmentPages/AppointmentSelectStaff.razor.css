@@ -1,0 +1,178 @@
+﻿.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 41px 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+/*steps*/
+.steps-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2% 7% 2% 7%;
+}
+
+.steps-ball {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-primary-light);
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: var(--radius-circle);
+}
+
+.steps-ball-outer {
+    width: 85%;
+    border-radius: var(--radius-circle);
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps-component {
+    max-width: 50px;
+    font-size: var(--fontsize-subtitle);
+    text-align: center;
+}
+
+.steps-line {
+    background-color: var(--color-primary-light);
+    height: 4px;
+    flex: 1;
+    margin-top: 23px;
+}
+
+.active {
+    background-color: var(--color-primary);
+    transition: background-color ease-out 0.3s, width ease-out 0.3s;
+}
+
+/* Container for the sliding pills */
+.category-filter-bar {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto; /* Allows horizontal scrolling */
+    white-space: nowrap; /* Prevents wrapping to next line */
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--color-gray-300);
+    /* Hide scrollbar for a cleaner mobile look */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+    .category-filter-bar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+/* The individual buttons (Pills) */
+.category-pill {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: #f0f2f5;
+    color: #666;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    /* Prevent pill from shrinking */
+    flex-shrink: 0;
+}
+
+    /* Active State */
+    .category-pill.active {
+        background-color: var(--color-primary);
+        color: white;
+    }
+
+/*next button at the bottom*/
+.next-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 7%;
+    z-index: 1000;
+}
+
+.next-button-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-md);
+}
+
+    .next-button-content span {
+        padding: 15px;
+        font-size: var(--fontsize-text);
+        font-weight: var(--bold-sm);
+    }
+
+/* 1. The Grid Container */
+.staff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* Space between rows and columns */
+    margin: 0 7% 0 7%;
+    margin-bottom: 120px;
+}
+
+.staff-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-wrapper img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    display: block; 
+}
+
+.card-content {
+    padding: 5px;
+    flex-grow: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+    .card-content button {
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+.selected {
+    border: 1.5px solid var(--color-primary);
+    background-color: var(--color-primary-light);
+    transform: scale(1.05);
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.disabled {
+    opacity: 50%;
+}

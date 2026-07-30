@@ -1,0 +1,200 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Login.resx~RF6b3dac.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="10.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Layout\MainLayout.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MainLayout.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\Announcement.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Announcement.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\AppointmentPages\Appointment.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Appointment.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\AppointmentPages\AppointmentSelectDate.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppointmentSelectDate.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\AppointmentPages\AppointmentSelectOutlet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppointmentSelectOutlet.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\AppointmentPages\AppointmentSelectShop.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppointmentSelectShop.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\AppointmentPages\AppointmentSummary.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppointmentSummary.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\CatalogPages\Catalog.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Catalog.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\CatalogPages\Product.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Product.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\ChangePassword.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangePassword.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\Credits.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Credits.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\DeleteAcc.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DeleteAcc.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\EditProfile.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditProfile.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\History.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>History.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\Home.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Home.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\Login.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Login.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\Packages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Packages.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\Profile.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Profile.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Pages\Register.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Register.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Layout\MainLayout.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainLayout.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Announcement.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Announcement.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\AppointmentPages\Appointment.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Appointment.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\AppointmentPages\AppointmentSelectDate.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppointmentSelectDate.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\AppointmentPages\AppointmentSelectOutlet.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppointmentSelectOutlet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\AppointmentPages\AppointmentSelectShop.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppointmentSelectShop.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\AppointmentPages\AppointmentSummary.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppointmentSummary.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\CatalogPages\Catalog.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Catalog.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\CatalogPages\Product.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Product.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\ChangePassword.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangePassword.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Credits.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Credits.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\DeleteAcc.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DeleteAcc.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\EditProfile.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditProfile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\History.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>History.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Home.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Home.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Login.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Login.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Packages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Packages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Profile.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Profile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Register.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Register.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

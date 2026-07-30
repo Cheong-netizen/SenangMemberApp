@@ -1,0 +1,515 @@
+﻿.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+/*This is all header*/
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*    background-color: var(--color-primary);*/
+    padding: 41px 7% 2% 7%;
+}
+
+.welcome-text {
+    font-size: var(--fontsize-text);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.welcome-name {
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+}
+
+.bell-icon {
+    color: var(--color-primary);
+    border-radius: var(--radius-circle);
+    height: 45px;
+    aspect-ratio: 1/1;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--fontsize-text);
+}
+
+.page-wrapper {
+    padding-bottom: 80px; /* Add padding to prevent content from being hidden behind navbar */
+}
+
+/*select shop button*/
+.shop-wrapper {
+    padding: 0 7% 0 7%;
+}
+
+.shop-dropdown {
+    background-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+}
+
+.shop-dropdown-placeholder {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 20px;
+    font-size: var(--fontsize-text);
+    font-weight: var(--bold-lg);
+    color: white;
+}
+
+.quick-action-wrapper {
+    padding: 0 7% 0 7%;
+    /*    justify-content: space-between;
+    gap: 15px;*/
+}
+
+.quick-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.quick-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    padding: 5px 0;
+    flex: 1;
+    font-size: var(--fontsize-subtitle);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    background-color: white;
+    border: 1px solid var(--color-gray-100);
+}
+
+    .quick-button i {
+        padding: 15px 0;
+        font-size: 30px;
+        color: var(--color-primary);
+    }
+
+/*Appointment*/
+.appointment-wrapper {
+    padding: 0 7% 0 7%;
+    width: 100%;
+}
+
+.appointment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.title-text {
+    font-size: var(--fontsize-header);
+    font-weight: var(--bold-lg);
+}
+
+.clickable-text {
+    font-size: 14px;
+    color: var(--color-primary);
+    font-weight: var(--bold-sm);
+}
+
+.company-image {
+    border-radius: 50%;
+    width: 60px;
+    aspect-ratio: 1/1;
+}
+
+.appointment-card {
+    background-color: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-all-around);
+/*    border: 1px solid var(--color-gray-100);*/
+}
+
+.ellipsis{
+    padding: 5px;
+}
+
+.appointment-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 15px 0 26px;
+}
+
+    .appointment-card-header i {
+        color: var(--text-muted);
+    }
+
+.card-name {
+    font-weight: var(--bold-lg);
+}
+
+.card-branch {
+    font-size: var(--fontsize-subtitle);
+    color: var(--text-muted);
+}
+
+.appointment-image-name {
+    display: flex;
+    flex-direction: row;
+}
+
+.appointment-name-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-info {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 15px 15px 15px;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.chip-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+    .chip-info i {
+        color: var(--color-primary);
+        padding: 10px;
+        width: 35px;
+        text-align: center;
+        border-radius: var(--radius-md);
+    }
+
+.appointment-info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-info-subtitle {
+    font-size: var(--fontsize-subtitle);
+    color: var(--text-muted);
+}
+
+.appointment-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/*Catalog*/
+.catalog-wrapper {
+    padding: 2% 7% 2% 7%;
+    display: grid;
+    grid-row: auto auto;
+    gap: 5px;
+}
+
+.catalog-image {
+    aspect-ratio: 1/1;
+    width: 60px;
+    border-top-left-radius: var(--radius-md);
+    border-top-right-radius: var(--radius-md);
+}
+
+.catalog-tiles {
+    background-color: white;
+    border-radius: var(--radius-md);
+/*    border: 1px solid var(--color-gray-300);*/
+    box-shadow: var(--shadow-all-around);
+}
+
+.catalog-card {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.catalog-name {
+    font-weight: var(--bold-lg);
+}
+
+.catalog-info {
+    display: grid;
+    grid-row: auto auto;
+}
+
+.catalog-item-wrapper {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+}
+
+/*search wrapper*/
+.search-wrapper {
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+    margin: 0 7% 0 7%;
+    background-color: white;
+}
+
+.search-textbox {
+    border: none;
+}
+
+.search-box {
+    padding: 7px 7px 7px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .search-box span {
+        padding: 0 15px;
+    }
+
+.search-textbox {
+    flex: 1;
+    padding: 5px 0;
+}
+
+/*modal*/
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--backdrop);
+    backdrop-filter: var(--backdrop-blur);
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+
+    display: flex;
+    align-items: flex-end;
+}
+
+.shop-list-wrapper{
+    height: 100%;
+}
+
+.modal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2% 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    font-weight: var(--bold-sm);
+    color: var(--color-primary);
+}
+
+.modal-wrapper {
+    height: 90%;
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+}
+
+.left-header-div{
+    flex: 1;
+}
+
+.center-header-div{
+    flex: 4;
+    text-align: center;
+}
+
+.right-header-div{
+    flex: 1;
+    text-align: right;
+}
+
+.close-button{
+    font-weight: normal;
+}
+
+.more-options-card {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+.more-option {
+    padding: 10px;
+    font-weight: var(--bold-lg);
+}
+
+.modal-wrapper-more {
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    background: white;
+    border-radius: 8px;
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.05s; /* Slight delay for layered effect */
+}
+
+/* 1. Smoother fade-in for backdrop */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 2. Enhanced slide-up with better timing */
+@keyframes slideUp {
+    from {
+        transform: translateY(100px) scale(0.96);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* 3. Backdrop with staggered timing */
+.backdrop {
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* 4. Modal with refined spring effect */
+.modal-wrapper {
+    background: white;
+    border-radius: 8px;
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.05s; /* Slight delay for layered effect */
+}
+
+/*shop modal list*/
+.shop-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 2% 7%;
+    gap: 10px;
+    height: 85%;
+    align-content: start;
+    overflow-y: scroll;
+}
+
+.shop-image {
+    max-width: 100%;
+    border-top-right-radius: var(--radius-md);
+    border-top-left-radius: var(--radius-md);
+    max-height: 180px;
+}
+
+.shop-grid-layout {
+    display: grid;
+    grid-template-rows: 0.7fr 0.3fr;
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-md);
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out, transform 0.2s ease-out;
+    align-items: center;
+}
+
+.shop-name{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.no-appointment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px dashed #ccc;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.no-appointment-icon {
+    font-size: 3rem;
+    color: #cbd5e0;
+    margin-bottom: 12px;
+}
+
+.no-appointment-text {
+    color: #718096;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.book-now-btn {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/*VOucher points and credits*/
+.digital-points-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    margin: 0 7%; /* Matches your other wrappers */
+    padding: 15px 0;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    /* Optional: Add a subtle border if desired */
+    /* border: 1px solid var(--color-gray-200); */
+}
+
+    /* Target all direct div children (the 3 columns) */
+    .digital-points-wrapper > div {
+        flex: 1; /* Makes all 3 columns equal width */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+        /* THE DIVIDER LOGIC: 
+   Add a border to the right of every item... 
+   EXCEPT the last one (:not(:last-child)) */
+        .digital-points-wrapper > div:not(:last-child) {
+            border-right: 1px solid var(--color-gray-200);
+        }
+
+        /* Top Line (Icon + Number) */
+        .digital-points-wrapper > div span:first-child {
+            font-weight: var(--bold-lg);
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Space between Icon and Number */
+            margin-bottom: 2px;
+        }
+
+        /* Bottom Line (Label) */
+        .digital-points-wrapper > div span:last-child {
+            font-size: var(--fontsize-subtitle);
+            color: var(--text-muted);
+            font-weight: var(--bold-sm);
+            text-transform: uppercase; /* Makes labels look cleaner */
+            letter-spacing: 0.5px;
+        }
+
+    /* Icon specific adjustment if needed */
+    .digital-points-wrapper i {
+        font-size: 1.1em;
+    }

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="SenangMemberApp/SenangMemberApp.Shared/SenangMemberApp.Shared.csproj" />
+  <Project Path="SenangMemberApp/SenangMemberApp.Web/SenangMemberApp.Web.csproj" />
+  <Project Path="SenangMemberApp/SenangMemberApp/SenangMemberApp.csproj">
+    <Deploy />
+  </Project>
+</Solution>

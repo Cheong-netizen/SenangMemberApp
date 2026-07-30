@@ -1,0 +1,128 @@
+@page "/History"
+
+@using Microsoft.Extensions.Localization
+
+
+@inject IStringLocalizer<History> Loc
+
+<div class="page-wrapper">
+    <div class="appointment-header">
+        @Loc["PageTitle"]
+    </div>
+
+    <div class="shop-wrapper">
+        <div @onclick="() => { if (!loading) toggleShopListModal(); }" class="shop-dropdown" style="@(loading ? "opacity: 0.5; cursor: not-allowed;" : "cursor: pointer;")">
+            <div class="shop-dropdown-placeholder">
+                @if(loading){
+                    <div class="spinner-container">
+                        <div class="loader"></div>
+                    </div>
+                }
+                else
+                {
+                    @* Check if ID is null, empty, or "0" *@
+                    @if (string.IsNullOrEmpty(currentShopId) || currentShopId == "0")
+                    {
+                        <span>@Loc["SelectAShop"]</span>
+                        <span><i class="fa-solid fa-caret-down"></i></span>
+                    }
+                    else
+                    {
+                        <span>@currentShopName</span>
+                        <span><i class="fa-solid fa-caret-down"></i></span>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="dropdown-wrapper">
+        <select class="modern-select" @onchange="OnMonthSelected" disabled="@loading">
+            <option value="0">@Loc["SelectMonth"]</option>
+            @if (availableMonth != null)
+            {
+                @foreach (var month in availableMonth)
+                {
+                    <option value="@month.yearMonth">@month.yearMonth</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="history-list-wrapper">
+        @if (AllHistory?.result != null && AllHistory.result.Any())
+        {
+            // 1. Loop through the Dictionary (The Key is the Date string, the Value is the List of items)
+            @foreach (var dateGroup in AllHistory.result)
+            {
+                // 2. Loop through the actual items inside that specific date
+                @foreach (var item in dateGroup.Value)
+                {
+                    <div class="appointment-card history-card mb-3">
+                        <div class="appointment-card-header">
+                            <div class="appointment-image-name">
+                                <div class="appointment-name-info ms-3">
+                                    <span class="card-name">@item.branch</span>
+                                    <span class="card-branch">@item.itemName</span>
+                                </div>
+                            </div>
+                            <div class="history-price">RM @item.subTotal.ToString("0.00")</div>
+                        </div>
+                        <div class="appointment-info">
+                            <div class="chip-info">
+                                <i class="fa-regular fa-calendar-check"></i>
+                                <div class="appointment-info-text">
+                                    <span>@item.recordDate.ToString("dd MMM yyyy hh:mm tt")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        else if (AllHistory?.result?.Any() == false)
+        {
+            <p>@Loc["NoRecordsFound"]</p>
+        }
+    </div>
+</div>
+
+@if (shopListModalIsOpen)
+{
+    <div @onclick="toggleShopListModal" class="backdrop">
+        <div @onclick:stopPropagation="true" class="modal-wrapper">
+            <div class="shop-list-wrapper">
+                <div class="modal-top">
+                    <div class="left-header-div"></div>
+                    <div class="center-header-div"><span>@Loc["SelectShopModalTitle"]</span></div>
+                    <div @onclick="toggleShopListModal" class="close-button right-header-div"><i class="fa-solid fa-xmark"></i></div>
+                </div>
+
+                <div class="search-wrapper">
+                    <div class="search-box">
+                        <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                        @* Binding to shopSearchText handles the filtering via the property getter *@
+                        <input class="search-textbox" type="text" placeholder="@Loc["SearchPlaceholder"]"
+                               @bind="shopSearchText" @bind:event="oninput" />
+                    </div>
+                </div>
+
+                <div class="shop-grid-wrapper">
+                    @* <div @onclick="selectAllShop" class="shop-grid-layout">
+                        <img class="shop-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" />
+                        <span class="shop-name">@Loc["AllShops"]</span>
+                    </div> *@
+
+                    @* Iterate through filteredShops instead of the raw 'shops' list *@
+                    @foreach (var shop in filteredShops)
+                    {
+                        <div @onclick="() => selectShop(shop.CompanyCode, shop.ShopName)" class="shop-grid-layout">
+                            @* Use LogoPath from the DTO *@
+                            <img class="shop-image" src="@shop.LogoPath" />
+                            <span class="shop-name">@shop.ShopName</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

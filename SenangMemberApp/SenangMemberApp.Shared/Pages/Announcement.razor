@@ -1,0 +1,120 @@
+@page "/announcement"
+@layout EmptyLayout;
+
+@using Microsoft.Extensions.Localization
+
+
+@inject IStringLocalizer<Announcement> Loc
+
+<div class="page-wrapper">
+
+    <div class="header">
+        <div>
+            <span @onclick="navBack" style="cursor: pointer;">
+                <i class="fa-solid fa-angle-left"></i>
+            </span>
+        </div>
+        <div><span>@Loc["PageTitle"]</span></div>
+        <div style="width: 20px;"></div>
+    </div>
+    <div class="shop-wrapper">
+        <div @onclick="() => { if (!loading) toggleShopListModal(); }" class="shop-dropdown" style="@(loading ? "opacity: 0.5; cursor: not-allowed;" : "cursor: pointer;")">
+            <div class="shop-dropdown-placeholder">
+                @if(loading){
+                    <div class="spinner-container">
+                        <div class="loader"></div>
+                    </div>
+                }
+                else
+                {
+                    @if (string.IsNullOrEmpty(currentShopId) || currentShopId == "0")
+                    {
+                        <span>@Loc["SelectAShop"]</span>
+                        <span><i class="fa-solid fa-caret-down"></i></span>
+                    }
+                    else
+                    {
+                        <span>@currentShopName</span>
+                        <span><i class="fa-solid fa-caret-down"></i></span>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    @if (shopListModalIsOpen)
+    {
+        <div @onclick="toggleShopListModal" class="backdrop">
+            <div @onclick:stopPropagation="true" class="modal-wrapper">
+                <div class="shop-list-wrapper">
+
+                    <div class="modal-top">
+                        <div class="left-header-div"></div>
+                        <div class="center-header-div"><span>@Loc["SelectShopModalTitle"]</span></div>
+                        <div @onclick="toggleShopListModal" class="close-button right-header-div">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </div>
+
+                    <div class="search-wrapper">
+                        <div class="search-box">
+                            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input class="search-textbox" type="text" placeholder="@Loc["SearchPlaceholder"]" @bind="shopSearchText" @bind:event="oninput" />
+                        </div>
+                    </div>
+
+                    <div class="shop-grid-wrapper">
+                        <div @onclick="selectAllShop" class="shop-grid-layout">
+                            <img class="shop-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" />
+                            <span class="shop-name">@Loc["AllShops"]</span>
+                        </div>
+
+                        @foreach (var shop in filteredShops)
+                        {
+                            <div @onclick="() => selectShop(shop.CompanyCode, shop.ShopName)" class="shop-grid-layout">
+                                <img class="shop-image" src="@shop.LogoPath" />
+                                <span class="shop-name">@shop.ShopName</span>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+    <div class="notification-list">
+
+        @if (Announcements.Count == 0)
+        {
+            <div style="text-align: center; padding-top: 50px; color: var(--text-muted);">
+                <i class="fa-regular fa-envelope" style="font-size: 40px; margin-bottom: 10px; opacity: 0.5;"></i>
+                <p>@Loc["NoMessages"]</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var msg in Announcements)
+            {
+                <div class="notification-card">
+
+                    <div class="message-avatar">
+                        <img style="width: 100%; max-width: 500px;" src="@msg.HeaderImageFileName" />
+                    </div>
+
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="sender-name">@msg.MessageHeader</span>
+                        </div>
+
+                        <div class="message-preview">
+
+                            @msg.MessageBody
+                        </div>
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+
+</div>

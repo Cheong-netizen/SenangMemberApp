@@ -1,0 +1,64 @@
+﻿@page "/"
+@using System.ComponentModel.DataAnnotations
+@using SenangMemberApp.Shared.Models
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Login> Loc
+@layout EmptyLayout
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2 style="font-weight: var(--bold-lg); color: var(--text-main);">@Loc["WelcomeTitle"]</h2>
+            <p style="color: var(--text-muted); font-size: var(--fontsize-subtitle);">@Loc["WelcomeSubtitle"]</p>
+        </div>
+
+        <EditForm Model="@loginRequest" OnValidSubmit="HandleLogin">
+            <DataAnnotationsValidator />
+
+            <div class="form-group ">
+                <label class="form-label form-row">
+                    @Loc["UsernameLabel"]
+                    <InputText @bind-Value="loginRequest.email" class="custom-input" placeholder="@Loc["UsernamePlaceholder"]" />
+                </label>
+
+                <ValidationMessage For="@(() => loginRequest.email)" class="validation-msg" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label form-row">
+                    @Loc["PasswordLabel"]
+                    <InputText @bind-Value="loginRequest.password" type="password" class="custom-input" placeholder="••••••••" />
+                </label>
+
+                <ValidationMessage For="@(() => loginRequest.password)" class="validation-msg" />
+            </div>
+
+            <button type="submit" class="btn-login">
+                @if (isLoading)
+                {
+                    <span>@Loc["LoadingButton"]</span>
+                }
+                else
+                {
+                    <span>@Loc["SignInButton"]</span>
+                }
+            </button>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert-error">
+                    @errorMessage
+                </div>
+            }
+        </EditForm>
+
+        <div class="login-footer">
+            <a href="/register" class="forgot-link">@Loc["RegisterLink"]</a>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

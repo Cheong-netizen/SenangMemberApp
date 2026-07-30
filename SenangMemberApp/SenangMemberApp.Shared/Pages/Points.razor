@@ -1,0 +1,62 @@
+﻿@page "/points"
+@inject NavigationManager NavManager
+
+
+
+<div class="page-wrapper">
+
+    <div class="header">
+        <div @onclick="GoBack" style="cursor: pointer;">
+            <span><i class="fa-solid fa-angle-left"></i></span>
+        </div>
+        <div><span>My Points</span></div>
+        <div style="width: 20px;"></div>
+    </div>
+
+    <div class="balance-wrapper">
+        <span class="balance-title">Loyalty Points</span>
+        <span class="balance-amount">@CurrentPointsBalance</span>
+    </div>
+
+    <div class="history-section-title">History</div>
+
+    <div class="history-list">
+        @foreach (var item in PointsHistory)
+        {
+            <div class="history-item">
+                <div class="history-details">
+                    <span class="history-desc">@item.Description</span>
+                    <span class="history-date">@item.Date.ToString("dd MMM yyyy")</span>
+                </div>
+                <div class="history-amount @(item.Points >= 0 ? "amount-positive" : "amount-negative")">
+                    @(item.Points >= 0 ? "+" : "")@item.Points pts
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+@code {
+    private int CurrentPointsBalance = 1250;
+
+    private List<PointTransactionModel> PointsHistory = new()
+    {
+        new PointTransactionModel { Description = "Earned: Full Body Massage", Date = DateTime.Now.AddDays(-1), Points = 150 },
+        new PointTransactionModel { Description = "Redeemed: Voucher", Date = DateTime.Now.AddDays(-5), Points = -500 },
+        new PointTransactionModel { Description = "Earned: Shampoo Purchase", Date = DateTime.Now.AddDays(-8), Points = 40 },
+        new PointTransactionModel { Description = "Birthday Bonus", Date = DateTime.Now.AddMonths(-1), Points = 200 }
+    };
+
+    private void GoBack()
+    {
+        NavManager.NavigateTo("/home");
+    }
+
+    public class PointTransactionModel
+    {
+        public string Description { get; set; } = "";
+        public DateTime Date { get; set; }
+        public int Points { get; set; }
+    }
+}

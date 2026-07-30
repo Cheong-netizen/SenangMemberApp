@@ -1,0 +1,59 @@
+﻿@page "/packages"
+@inject NavigationManager NavManager
+@layout EmptyLayout
+
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Packages> Loc
+
+<div class="page-wrapper">
+
+    <div class="header">
+        <div @onclick="GoBack" style="cursor: pointer;">
+            <span><i class="fa-solid fa-angle-left"></i></span>
+        </div>
+        @* Translated Header *@
+        <div><span>@Loc["PageTitle"]</span></div>
+        <div style="width: 20px;"></div>
+    </div>
+
+    @* Handle the loading state *@
+    @if (ShopState.IsLoading)
+    {
+        <div class="spinner">
+        </div>
+    }
+    else
+    {
+        <div class="balance-wrapper">
+            @* Translated Balance Title *@
+            <span class="balance-title">@Loc["TotalBalance"]</span>
+            <span class="balance-amount">@ShopState.currentPackageBalance.ToString("0")</span>
+        </div>
+
+        @* Translated History Title *@
+        <div class="history-section-title">@Loc["History"]</div>
+
+        <div class="history-list">
+            @if (packageDetails != null && packageDetails.Any())
+            {
+                @foreach (var item in packageDetails)
+                {
+                    <div class="history-item">
+                        <div class="history-details">
+                            <span class="history-desc">@item.packageName</span>
+                            @* Translated Labels *@
+                            <span class="history-date">@Loc["Quantity"]: @item.quantityAvailable.ToString("0")</span>
+                            <span class="history-date">@Loc["ExpiryDate"]: @item.expiryDate.ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                @* Translated Empty State *@
+                <p>@Loc["NoHistory"]</p>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,17 @@
+@using SenangMemberApp.Shared.Services.IService
+@inject NavigationManager NavigationManager
+@inject ITokenService StoreTokenService
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        var token = await StoreTokenService.GetTokenAsync();
+        if (string.IsNullOrWhiteSpace(token))
+            NavigationManager.NavigateTo("/", forceLoad: false, replace: true);
+        else
+            NavigationManager.NavigateTo("/404", forceLoad: false, replace: true);
+    }
+}

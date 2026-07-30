@@ -1,0 +1,25 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<MainLayout> Loc
+
+<div class="bottom-nav">
+    <NavLink href="/home" Match="NavLinkMatch.All" class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>@Loc["NavHome"]</span>
+    </NavLink>
+    <NavLink href="/catalog" Match="NavLinkMatch.All" class="nav-item">
+        <i class="fa-solid fa-shop"></i>
+        <span>@Loc["NavCatalog"]</span>
+    </NavLink>
+    <NavLink href="/appointment" class="nav-item">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>@Loc["NavBooking"]</span>
+    </NavLink>
+    <NavLink href="/history" class="nav-item">
+        <i class="fa-solid fa-receipt"></i>
+        <span>@Loc["NavHistory"]</span>
+    </NavLink>
+    <NavLink href="/profile" class="nav-item">
+        <i class="fa-solid fa-user"></i>
+        <span>@Loc["NavProfile"]</span>
+    </NavLink>
+</div>

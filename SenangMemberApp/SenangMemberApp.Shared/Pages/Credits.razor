@@ -1,0 +1,59 @@
+﻿@page "/credits"
+@inject NavigationManager NavManager
+@layout EmptyLayout
+
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Credits> Loc
+
+<div class="page-wrapper">
+
+    <div class="header">
+        <div @onclick="GoBack" style="cursor: pointer;">
+            <span><i class="fa-solid fa-angle-left"></i></span>
+        </div>
+        @* Translated Header *@
+        <div><span>@Loc["PageTitle"]</span></div>
+        <div style="width: 20px;"></div>
+    </div>
+
+    @if (ShopState.IsLoading)
+    {
+        <div class="spinner"></div>
+    }
+    else
+    {
+        <div class="balance-wrapper">
+            @* Translated Balance Title *@
+            <span class="balance-title">@Loc["TotalBalance"]</span>
+            <span class="balance-amount">$@ShopState.currentMemberBalance.creditBalance.ToString("0.00")</span>
+        </div>
+
+        @* Translated History Title *@
+        <div class="history-section-title">@Loc["History"]</div>
+
+        <div class="history-list">
+            @if (creditDetails != null && creditDetails.Any())
+            {
+                @foreach (var item in creditDetails)
+                {
+                    <div class="history-item">
+                        <div class="history-details">
+                            <span class="history-desc">@item.itemDescription</span>
+                            <span class="history-date">@item.memberTypeID</span>
+                        </div>
+                        <div class="history-amount">
+                            @* Translated Expiry Label *@
+                            @Loc["ExpiryDate"]: @item.dueDate
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                @* Translated Empty State *@
+                <p>@Loc["NoHistory"]</p>
+            }
+        </div>
+    }
+</div>

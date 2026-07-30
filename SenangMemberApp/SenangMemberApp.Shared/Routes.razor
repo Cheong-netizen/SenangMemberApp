@@ -1,0 +1,35 @@
+﻿@using System.Globalization
+@using SenangMemberApp.Shared.Components.AuthRoute
+@inject IJSRuntime JS
+
+<Router AppAssembly="typeof(Layout.MainLayout).Assembly">
+    <Found Context="routeData">
+        <AuthenticatedRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <AuthNotFoundRouteHandler />
+    </NotFound>
+</Router>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Try to get the saved language, default to English if empty
+            var savedCulture = await JS.InvokeAsync<string>("localStorage.getItem", "selectedCulture");
+            var culture = string.IsNullOrEmpty(savedCulture) ? "en-US" : savedCulture;
+
+            if (CultureInfo.CurrentCulture.Name != culture)
+            {
+                var cultureInfo = new CultureInfo(culture);
+                CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+                CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+                // Refresh the UI to apply the loaded culture
+                StateHasChanged();
+            }
+        }
+    }
+}

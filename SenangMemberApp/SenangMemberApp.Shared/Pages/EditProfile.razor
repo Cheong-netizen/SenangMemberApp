@@ -1,0 +1,61 @@
+﻿@page "/EditProfile"
+
+@using Microsoft.Extensions.Localization
+@layout EmptyLayout;
+
+
+@inject IStringLocalizer<EditProfile> Loc
+
+<div class="page-wrapper">
+
+    <div class="profile-header">
+        <div @onclick="GoBack" style="cursor: pointer;">
+            <span><i class="fa-solid fa-angle-left"></i></span>
+        </div>
+        <div class="profile-header-title">@Loc["PageTitle"]</div>
+        <span></span>
+    </div>
+
+    <div class="edit-profile-img-wrapper">
+        <div class="img-container">
+            <img src="_content/SenangMemberApp.Shared/Images/senang_profile_pic.png" class="edit-profile-pic" />
+        </div>
+    </div>
+
+    <div class="form-section">
+
+        <div class="form-group">
+            <label class="form-label">@Loc["AccountNameLabel"]</label>
+            <input type="text" class="form-input" @bind="UserProfile.AccountName" readonly />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">@Loc["PhoneNumberLabel"]</label>
+            <input type="tel" class="form-input" @bind="UserProfile.Phone" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-label">@Loc["EmailLabel"]</label>
+            <input type="email" class="form-input" @bind="UserProfile.Email" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">@Loc["BirthdayLabel"]</label>
+            <input style="text-align: left;" type="date" class="form-input" @bind="Birthday" readonly />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">@Loc["GenderLabel"]</label>
+            <select class="form-input" @bind="UserProfile.Gender">
+                <option value="Male">@Loc["GenderMale"]</option>
+                <option value="Female">@Loc["GenderFemale"]</option>
+                <option value="Other">@Loc["GenderOther"]</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+<div @onclick="SaveProfile" class="save-button">
+    <div class="save-button-content">
+        <span>@Loc["SaveButton"]</span>
+    </div>
+</div>

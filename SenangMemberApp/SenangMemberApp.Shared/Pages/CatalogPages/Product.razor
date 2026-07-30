@@ -1,0 +1,52 @@
+@page "/product/{CategoryId}"
+@using SenangMemberApp.Shared.Models
+@layout EmptyLayout
+
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Product> Loc
+
+<div class="page-wrapper">
+    <div class="header">
+        <div>
+            <span @onclick="navBack" style="cursor: pointer;">
+                <i class="fa-solid fa-angle-left back-icon"></i>
+            </span>
+        </div>
+        @* Using grid-column: 2 if you are using the same grid header style as Catalog *@
+        <div style="grid-column: 2;"><span class="header-title">@Loc["PageTitle"]</span></div>
+        <div style="width: 20px;"></div>
+    </div>
+
+    <div class="catalog-grid-wrapper" style="margin-top: 15px;">
+        @if (services.Count == 0)
+        {
+            <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+                @Loc["NoProductsFound"]
+            </div>
+        }
+        else
+        {
+            @foreach (var service in services)
+            {
+                <div class="catalog-grid-layout">
+                    @if (string.IsNullOrWhiteSpace(service.imagePath))
+                    {
+                        <div class="no-image-placeholder">
+                            <i class="fa-regular fa-image"></i>
+                            <span>@Loc["ImageNotAvailable"]</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <img class="catalog-image" src="@service.imagePath" />
+                    }
+                    <div class="catalog-info-container">
+                        <span class="catalog-name">@service.salesDescription</span>
+                        <span class="catalog-price">RM @service.salesPrice.ToString("0.00")</span>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

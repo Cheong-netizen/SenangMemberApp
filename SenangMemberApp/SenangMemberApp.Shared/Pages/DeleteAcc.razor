@@ -1,0 +1,56 @@
+﻿@page "/deleteAccount"
+
+@layout EmptyLayout;
+@using SenangMemberApp.Shared.Resources.Pages
+
+@using Microsoft.Extensions.Localization
+
+
+@inject IStringLocalizer<DeleteAcc> Loc
+
+<div class="page-wrapper">
+
+    <div class="profile-header">
+        <div @onclick="GoBack" style="cursor: pointer;">
+            <span><i class="fa-solid fa-angle-left"></i></span>
+        </div>
+        <div class="profile-header-title">@Loc["PageTitle"]</div>
+        <span></span>
+    </div>
+
+    <div class="edit-profile-img-wrapper">
+        <div class="img-container">
+            <img src="_content/SenangMemberApp.Shared/Images/senang_profile_pic.png" class="edit-profile-pic" />
+        </div>
+    </div>
+
+    <div class="form-section">
+
+        <div class="delete-warning" style="color: #d9534f; background-color: #fdf7f7; padding: 12px; border: 1px solid #d9534f; border-radius: 6px; margin-bottom: 20px; text-align: center; font-size: 0.9rem;">
+            <strong>@Loc["WarningLabel"]</strong> @Loc["WarningText"]
+        </div>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div style="color: red; margin-bottom: 15px; text-align: center; font-size: 0.9rem;">
+                @errorMessage
+            </div>
+        }
+
+        <div class="form-group">
+            <label class="form-label">@Loc["PhoneNumberLabel"]</label>
+            <input type="email" class="form-input" @bind="email" placeholder="@Loc["PhoneNumberPlaceholder"]" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">@Loc["PasswordLabel"]</label>
+            <input type="password" class="form-input" @bind="password" placeholder="@Loc["PasswordPlaceholder"]" />
+        </div>
+
+    </div>
+</div>
+<div @onclick="ConfirmDelete" class="save-button">
+    <div class="save-button-content">
+        <span>@Loc["DeleteButton"]</span>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿@page "/AppointmentDetails/{Id}/{FromPage}"
+@layout EmptyLayout
+
+
+
+<div class="page-wrapper">
+    <div class="header">
+        <div><span @onclick="navGoBack"><i class="fa-solid fa-angle-left"></i></span></div>
+        <div><span>Booking Details</span></div>
+        <div></div>
+    </div>
+    <div class="summary-info">
+        @if (MyAppointment != null)
+        {
+            <div class="store-info-wrapper">
+                <img class="store-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" alt="Product Image">
+                <div class="store-info">
+                    <span class="normal-text">@(MyAppointment.branchID)</span>
+                </div>
+            </div>
+            <div class="date">
+                <span class="header-text"><i class="fa-regular fa-calendar icon"></i>  Date and Time</span>
+                <span class="normal-text">@MyAppointment.startTime.ToString("dd MMMM yyyy")</span>
+                <span class="subtitle-text">@MyAppointment.startTime.ToString("hh:mm") - @MyAppointment.endTime.ToString("hh:mm")</span>
+            </div>
+            <div class="date">
+                <span class="header-text"><i class="fa-regular fa-calendar icon"></i>  Scheduled</span>
+                <span class="normal-text">@((MyAppointment.startTime - DateTime.Now).Days) days from now</span>
+            </div>
+            @* <div class="services-wrapper">
+                <span class="header-text"><i class="fa-solid fa-bag-shopping icon"></i>  Services</span>
+                @foreach (var service in AppointmentViewModelDetails.Services)
+                {
+                    <div class="services">
+                        <span class="normal-text">@service.Name</span>
+                        <span class="subtitle-text">@($"RM{service.Price}")</span>
+                    </div>
+                }
+            </div> *@
+            @* <div class="staff">
+                <span class="header-text"><i class="fa-regular fa-user icon"></i>  Staff</span>
+                <div class="staff-info-wrapper">
+                    <img class="staff-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" alt="Product Image">
+                    <div class="staff-info">
+                        <span>@(AppointmentViewModelDetails.StaffName ?? "")</span>
+                    </div>
+                </div>
+            </div> *@
+        }
+    </div>
+</div>

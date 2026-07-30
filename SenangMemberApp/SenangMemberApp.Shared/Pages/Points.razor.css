@@ -1,0 +1,101 @@
+﻿/* --- Header Styles (From your snippet) --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Added for vertical centering */
+    padding: 41px 7% 2% 7%;
+    font-size: var(--fontsize-header);
+    color: var(--color-primary);
+    font-weight: var(--bold-lg);
+    background-color: var(--bg-body); /* Ensures it sits on top if sticky */
+}
+
+/* --- Balance Card Section --- */
+.balance-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    margin: 0 7% 20px 7%;
+    background-color: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    /* border: 1px solid var(--color-gray-200); */
+}
+
+.balance-title {
+    font-size: var(--fontsize-subtitle);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.balance-amount {
+    font-size: 3rem; /* Very large text */
+    font-weight: var(--bold-lg);
+    color: var(--color-primary);
+}
+
+/* --- Transaction History List --- */
+.history-section-title {
+    padding: 0 7% 10px 7%;
+    font-size: var(--fontsize-text);
+    font-weight: var(--bold-lg);
+    color: var(--text-main);
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px; /* Creates a thin line effect if backgrounds are white */
+    margin: 0 7% 50px 7%;
+    border-radius: var(--radius-md);
+    overflow: hidden; /* Clips the corners for the first/last item */
+    box-shadow: var(--shadow-sm);
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+    .history-item:last-child {
+        border-bottom: none;
+    }
+
+.history-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.history-desc {
+    font-weight: var(--bold-sm);
+    color: var(--text-main);
+    font-size: 16px;
+}
+
+.history-date {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.history-amount {
+    font-weight: var(--bold-lg);
+    font-size: 18px;
+}
+
+/* Color coding for +/- */
+.amount-positive {
+    color: var(--color-success);
+}
+
+.amount-negative {
+    color: var(--color-danger);
+}
