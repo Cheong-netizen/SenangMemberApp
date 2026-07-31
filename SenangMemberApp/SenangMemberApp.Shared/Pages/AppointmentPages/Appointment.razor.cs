@@ -28,6 +28,8 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         ICompanyService companyService { get; set; } = default!;
         [Inject]
         IJSRuntime JSRuntime { get; set; } = default!;
+        [Inject]
+        IUrlLauncher UrlLauncher { get; set; } = default!;
 
         private bool isUpcoming = true;
         private bool shopListModalIsOpen = false;
@@ -259,7 +261,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
                 else
                 {
                     var escapedAddress = Uri.EscapeDataString(address);
-                    await JSRuntime.InvokeVoidAsync("open", $"https://maps.google.com/?q={escapedAddress}", "_blank");
+                    await UrlLauncher.OpenUrlAsync($"https://maps.google.com/?q={escapedAddress}");
                 }
             }
             else
@@ -275,7 +277,8 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         {
             if (selectedBranchForMore != null && !string.IsNullOrEmpty(selectedBranchForMore.phone))
             {
-                await JSRuntime.InvokeVoidAsync("open", $"tel:{selectedBranchForMore.phone}", "_self");
+                var phone = selectedBranchForMore.phone.Replace("-", "").Replace(" ", "").Replace("+", "").Replace("(", "").Replace(")", "");
+                await UrlLauncher.OpenUrlAsync($"tel:{phone}");
             }
             else
             {
@@ -290,8 +293,12 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         {
             if (selectedBranchForMore != null && !string.IsNullOrEmpty(selectedBranchForMore.phone))
             {
-                var phone = selectedBranchForMore.phone.Replace("-", "").Replace(" ", "").Replace("+", "");
-                await JSRuntime.InvokeVoidAsync("open", $"https://wa.me/{phone}", "_blank");
+                var phone = selectedBranchForMore.phone.Replace("-", "").Replace(" ", "").Replace("+", "").Replace("(", "").Replace(")", "");
+                if (phone.StartsWith("0"))
+                {
+                    phone = "60" + phone.Substring(1);
+                }
+                await UrlLauncher.OpenUrlAsync($"https://wa.me/{phone}");
             }
             else
             {

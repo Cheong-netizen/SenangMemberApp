@@ -50,6 +50,7 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IShopStateLocalManagement, WebShopStateLocalManagement>();
 builder.Services.AddScoped<IAppointmentDetailState, AppointmentDetailState>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<IUrlLauncher, WebUrlLauncher>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddAuthentication();

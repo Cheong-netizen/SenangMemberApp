@@ -1,4 +1,4 @@
-﻿@page "/AppointmentSelectOutlet"
+@page "/AppointmentSelectOutlet"
 @using SenangMemberApp.Shared.Models
 @using SenangMemberApp.Shared.Models.DTO.CompanyDTO
 @layout EmptyLayout
@@ -26,7 +26,7 @@
             @foreach (BranchResponseDTO outlet in filteredOutlets)
             {
                 <div @onclick="() => selectOutlet(outlet)" class="outlet-card @(outlet.branchID == appointmentState.selectedOutletId ? "selected" : "") ">
-                    <img class="outlet-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" />
+                    <img class="outlet-image" src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" />
                     <div class="outlet-info-wrapper">
                         <div class="outlet-info">
                             <span class="outlet-name">@outlet.branch</span>
@@ -43,7 +43,7 @@
     @* <div class="product-grid">
     <div class="product-card">
         <div class="image-wrapper">
-             <img src="_content/SenangMemberApp.Shared/Images/7455353.jpg" alt="Product Image">
+             <img src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" alt="Product Image">
         </div>
         <div class="card-content">
             <span>@Loc["Outlet1"]</span>
@@ -52,7 +52,7 @@
 
     <div class="product-card">
         <div class="image-wrapper">
-             <img src="_content/SenangMemberApp.Shared/Images/7455353.jpg" alt="Product Image">
+             <img src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" alt="Product Image">
         </div>
         <div class="card-content">
             <span>@Loc["Outlet2"]</span>

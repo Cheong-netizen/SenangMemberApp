@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Services;
+using SenangMemberApp.Services;
 using SenangMemberApp.Shared.ApiClient;
 using SenangMemberApp.Shared.Repositories.IRepository;
 using SenangMemberApp.Shared.Repositories.Repository;
@@ -40,6 +40,7 @@ namespace SenangMemberApp
             builder.Services.AddScoped<IShopStateLocalManagement, MobileShopStateLocalManagement>();
             builder.Services.AddScoped<IAppointmentDetailState, AppointmentDetailState>();
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+            builder.Services.AddScoped<IUrlLauncher, MobileUrlLauncher>();
             builder.Services.AddScoped<ITokenService, MobileTokenService>();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             builder.Services.AddAuthorizationCore();

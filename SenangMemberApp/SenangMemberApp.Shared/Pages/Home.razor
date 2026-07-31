@@ -166,7 +166,7 @@
                 {
                 <div class="catalog-tiles">
                         <div class="catalog-card">
-                            <img class="catalog-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" />
+                            <img class="catalog-image" src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" />
                             <div class="catalog-info">
                                 <span class="catalog-name">@services[i].Name</span>
                                 <span class="catalog-company-name">@shops.FirstOrDefault(s => s.Id == services[i].ShopId)?.Name</span>
@@ -215,7 +215,7 @@
                 </div>
                 <div class="shop-grid-wrapper">
                     @* <div @onclick="selectAllShop" class="shop-grid-layout">
-                        <img class="shop-image" src="_content/SenangMemberApp.Shared/Images/7455353.jpg" />
+                        <img class="shop-image" src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" />
                         <span class="shop-name">@Loc["AllShops"]</span>
                     </div> *@
                     @foreach (var shop in filteredShops)

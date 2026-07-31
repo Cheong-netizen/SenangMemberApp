@@ -1,11 +1,13 @@
-﻿using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.Models;
 using SenangMemberApp.Shared.Models.DTO.AppoinmentDTO;
+using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SenangMemberApp.Shared.Pages.AppointmentPages
 {
@@ -20,35 +22,145 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         [Inject]
         private NavigationManager navigationManager { get; set; } = default!;
 
-        // 1. Inject the state
         [Inject]
         public IAppointmentDetailState AppointmentState { get; set; } = default!;
 
-        // Hold the data locally for the UI to use
-        public AppointmentResponseDTO MyAppointment { get; set; }
+        [Inject]
+        private ICompanyService companyService { get; set; } = default!;
 
-        protected override void OnInitialized()
+        [Inject]
+        private IShopState ShopState { get; set; } = default!;
+
+        [Inject]
+        private IUrlLauncher UrlLauncher { get; set; } = default!;
+
+        public AppointmentResponseDTO MyAppointment { get; set; }
+        public BranchResponseDTO? BranchDetails { get; set; }
+
+        public string StoreImageUrl { get; set; } = "_content/SenangMemberApp.Shared/Images/store_placeholder.png";
+
+        public string WarningModalTitle { get; set; } = "";
+        public string WarningModalMessage { get; set; } = "";
+        public bool WarningModalIsOpen { get; set; } = false;
+
+        protected override async Task OnInitializedAsync()
         {
-            // 2. Grab the data from the shared state!
             MyAppointment = AppointmentState.SelectedAppointment;
 
-            // 3. Safety check: If the user refreshes the page manually, the state will be lost.
-            // If it's null, kick them back to the main appointment page.
             if (MyAppointment == null || MyAppointment.appointmentID != Id)
             {
                 navigationManager.NavigateTo("/Appointment");
                 return;
             }
 
-            // Note: Since you already have the data in 'MyAppointment', 
-            // you don't need to map it to 'AppointmentViewModelDetails' unless you 
-            // still need to fetch additional nested data (like Staff names, Services, etc.).
+            try
+            {
+                var response = await companyService.GetCompanyBranchDetails();
+                if (response != null && response.statusCode == 200 && response.result != null)
+                {
+                    BranchDetails = response.result.FirstOrDefault(b =>
+                        b.branchID == MyAppointment.appointmentLocation ||
+                        b.branchID == MyAppointment.branchID);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[AppointmentDetails] Error fetching branch details: {ex.Message}");
+            }
+
+            SetStoreImageUrl();
+        }
+
+        private void SetStoreImageUrl()
+        {
+            if (BranchDetails != null && !string.IsNullOrWhiteSpace(BranchDetails.imagePath))
+            {
+                StoreImageUrl = BranchDetails.imagePath;
+            }
+            else
+            {
+                var matchedCompany = ShopState.CompanyList?.FirstOrDefault(c =>
+                    c.ShopName == ShopState.CurrentShopName || c.CompanyCode == ShopState.CurrentShopId);
+
+                if (matchedCompany != null && !string.IsNullOrWhiteSpace(matchedCompany.LogoPath))
+                {
+                    StoreImageUrl = matchedCompany.LogoPath;
+                }
+                else
+                {
+                    StoreImageUrl = "_content/SenangMemberApp.Shared/Images/store_placeholder.png";
+                }
+            }
+        }
+
+        private void HandleImageError()
+        {
+            StoreImageUrl = "_content/SenangMemberApp.Shared/Images/store_placeholder.png";
+        }
+
+        private async Task OpenMap()
+        {
+            var address = BranchDetails == null
+                ? ""
+                : $"{BranchDetails.address1} {BranchDetails.address2}".Trim();
+
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                ShowWarningModal("Address Unavailable", "The address for this shop/branch is not available.");
+            }
+            else
+            {
+                var escapedAddress = Uri.EscapeDataString(address);
+                await UrlLauncher.OpenUrlAsync($"https://maps.google.com/?q={escapedAddress}");
+            }
+        }
+
+        private async Task OpenCall()
+        {
+            if (BranchDetails != null && !string.IsNullOrEmpty(BranchDetails.phone))
+            {
+                var phone = BranchDetails.phone.Replace("-", "").Replace(" ", "").Replace("+", "").Replace("(", "").Replace(")", "");
+                await UrlLauncher.OpenUrlAsync($"tel:{phone}");
+            }
+            else
+            {
+                ShowWarningModal("Phone Number Unavailable", "The phone number for this shop/branch is not available.");
+            }
+        }
+
+        private async Task OpenWhatsApp()
+        {
+            if (BranchDetails != null && !string.IsNullOrEmpty(BranchDetails.phone))
+            {
+                var phone = BranchDetails.phone.Replace("-", "").Replace(" ", "").Replace("+", "").Replace("(", "").Replace(")", "");
+                if (phone.StartsWith("0"))
+                {
+                    phone = "60" + phone.Substring(1);
+                }
+                await UrlLauncher.OpenUrlAsync($"https://wa.me/{phone}");
+            }
+            else
+            {
+                ShowWarningModal("WhatsApp Unavailable", "The WhatsApp contact details for this shop/branch are not available.");
+            }
+        }
+
+        private void ShowWarningModal(string title, string message)
+        {
+            WarningModalTitle = title;
+            WarningModalMessage = message;
+            WarningModalIsOpen = true;
+        }
+
+        private void CloseWarningModal()
+        {
+            WarningModalIsOpen = false;
         }
 
         private void navGoBack()
         {
             if (FromPage == "home") navigationManager.NavigateTo("/home");
-            if (FromPage == "Appointment") navigationManager.NavigateTo("/Appointment");
+            else navigationManager.NavigateTo("/Appointment");
         }
     }
 }
