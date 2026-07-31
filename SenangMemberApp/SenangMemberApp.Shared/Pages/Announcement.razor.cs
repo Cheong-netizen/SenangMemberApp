@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.Models;
 using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Services.IService;
@@ -41,13 +41,16 @@ namespace SenangMemberApp.Shared.Pages
         {
             get
             {
+                if (shops == null)
+                    return Enumerable.Empty<CompanyResponseDTO>();
+
                 if (string.IsNullOrWhiteSpace(shopSearchText))
                 {
                     return shops;
                 }
                 else
                 {
-                    return shops.Where(s => s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
+                    return shops.Where(s => s != null && s.ShopName != null && s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
                 }
             }
         }

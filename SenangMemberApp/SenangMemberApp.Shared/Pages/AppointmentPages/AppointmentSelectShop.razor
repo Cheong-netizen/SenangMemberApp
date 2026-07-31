@@ -29,11 +29,20 @@
         </div>
      </div> *@
     <div class="shop-grid-wrapper">
-        @foreach (var shop in filteredShops)
+        @if (filteredShops != null && filteredShops.Any())
         {
-            <div @onclick="() => selectShop(shop.CompanyCode, shop.ShopName)" class="shop-grid-layout @(shop.CompanyCode == appointmentState.selectedBookingShopId ? "selected" : "") ">
-                <img class="shop-image" src="@shop.LogoPath" />
-                <span class="shop-name">@shop.ShopName</span>
+            @foreach (var shop in filteredShops)
+            {
+                <div @onclick="() => selectShop(shop.CompanyCode, shop.ShopName)" class="shop-grid-layout @(shop.CompanyCode == appointmentState.selectedBookingShopId ? "selected" : "") ">
+                    <img class="shop-image" src="@(string.IsNullOrWhiteSpace(shop.LogoPath) ? "_content/SenangMemberApp.Shared/Images/store_placeholder.png" : shop.LogoPath)" />
+                    <span class="shop-name">@(shop.ShopName ?? "")</span>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="text-align: center; padding: 20px; color: #888; grid-column: 1 / -1;">
+                <span>No shops available</span>
             </div>
         }
     </div>

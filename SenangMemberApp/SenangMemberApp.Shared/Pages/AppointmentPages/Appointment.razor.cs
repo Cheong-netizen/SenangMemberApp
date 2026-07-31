@@ -67,19 +67,23 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         }
         private string shopSearchText = string.Empty;
         private string selectedShopToView = "0";
-        private string currentShopName = "All Shops";
+        private string currentShopName = "Select Shop";
         private bool loadingAppointment = true;
         private IEnumerable<CompanyResponseDTO> filteredShops
         {
             get
             {
+                var list = companies ?? ShopState.CompanyList;
+                if (list == null)
+                    return Enumerable.Empty<CompanyResponseDTO>();
+
                 if (string.IsNullOrWhiteSpace(shopSearchText))
                 {
-                    return companies;
+                    return list;
                 }
                 else
                 {
-                    return companies.Where(s => s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
+                    return list.Where(s => s != null && s.ShopName != null && s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
                 }
             }
         }
@@ -92,7 +96,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
                 await setupCurrentShop();
                 await setupAppointmentsData();
             }
-            else if (ShopState.CompanyList.Count == 0)
+            else if (ShopState.CompanyList == null || ShopState.CompanyList.Count == 0)
             {
                 // Safety net: Kick off initialization if nothing else in the app has started it yet
                 await ShopState.InitializeAsync();

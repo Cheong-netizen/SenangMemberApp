@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Models.DTO.LoginDTO;
 using SenangMemberApp.Shared.Models.DTO.LoginRequestDTO;
@@ -19,7 +19,7 @@ namespace SenangMemberApp.Shared.ApiClient
 
         public async Task<ApiResponseRoot<LoginResponseDTO>> LoginAsync(LoginRequestDTO loginRequest)
         {
-            var response = await PostAsync<LoginRequestDTO, ApiResponseRoot<LoginResponseDTO>>("api/PublicMember/login", loginRequest);
+            var response = await PostAnonymousAsync<LoginRequestDTO, ApiResponseRoot<LoginResponseDTO>>("api/PublicMember/login", loginRequest);
 
             if (response == null)
             {

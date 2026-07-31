@@ -21,22 +21,37 @@
         </div>
     </div>
     <div class="outlets-wrapper">
-        @if (filteredOutlets != null)
+        @if (filteredOutlets != null && filteredOutlets.Any())
         {
             @foreach (BranchResponseDTO outlet in filteredOutlets)
             {
                 <div @onclick="() => selectOutlet(outlet)" class="outlet-card @(outlet.branchID == appointmentState.selectedOutletId ? "selected" : "") ">
-                    <img class="outlet-image" src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" />
+                    <img class="outlet-image" src="@(string.IsNullOrWhiteSpace(outlet.imagePath) ? "_content/SenangMemberApp.Shared/Images/store_placeholder.png" : outlet.imagePath)" />
                     <div class="outlet-info-wrapper">
                         <div class="outlet-info">
-                            <span class="outlet-name">@outlet.branch</span>
-                            <span class="outlet-address">@outlet.address1</span>
-                            <span class="outlet-address">@outlet.address2</span>
-                            <span class="outlet-address">@outlet.phone</span>
+                            <span class="outlet-name">@(outlet.branch ?? "")</span>
+                            @if (!string.IsNullOrWhiteSpace(outlet.address1))
+                            {
+                                <span class="outlet-address">@outlet.address1</span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(outlet.address2))
+                            {
+                                <span class="outlet-address">@outlet.address2</span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(outlet.phone))
+                            {
+                                <span class="outlet-address">@outlet.phone</span>
+                            }
                         </div>
                     </div>
                 </div>
             }
+        }
+        else
+        {
+            <div style="text-align: center; padding: 20px; color: #888;">
+                <span>No outlets available for this shop</span>
+            </div>
         }
 
     </div>

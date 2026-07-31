@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.ApiClient;
+using SenangMemberApp.Shared.ApiClient;
 using SenangMemberApp.Shared.Models;
 using SenangMemberApp.Shared.Models.DTO.AppoinmentDTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
@@ -61,16 +61,18 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
         public async Task<bool> ConfirmAppointment()
         {
             string requestDateTime = selectedTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+            string requestEndTime = selectedTime.AddHours(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
 
             AppointmentCreateRequestDTO requestBody = new()
             {
                 locationBranchId = selectedOutletId,
                 appointmentDate = requestDateTime,
+                endTime = requestEndTime,
                 memo = memo
             };
 
             var response = await _appointmentAC.RequestAppointmentCreation(requestBody);
-            if (response.statusCode == 200)
+            if (response != null && response.statusCode == 200)
             {
                 return true;
             }

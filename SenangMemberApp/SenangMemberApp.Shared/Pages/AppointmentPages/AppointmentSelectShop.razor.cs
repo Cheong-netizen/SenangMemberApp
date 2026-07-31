@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.Models;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Services.ConcreteService;
 using SenangMemberApp.Shared.Services.IService;
@@ -15,19 +15,22 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         private IAppointmentState appointmentState { get; set; } = default!;
         [Inject]
         private IShopState shopState { get; set; } = default!;
-        private List<CompanyResponseDTO> shops => shopState.CompanyList;
+        private List<CompanyResponseDTO> shops => shopState.CompanyList ?? new List<CompanyResponseDTO>();
         private string shopSearchText = string.Empty;
         private IEnumerable<CompanyResponseDTO> filteredShops
         {
             get
             {
+                if (shops == null)
+                    return Enumerable.Empty<CompanyResponseDTO>();
+
                 if (string.IsNullOrWhiteSpace(shopSearchText))
                 {
                     return shops;
                 }
                 else
                 {
-                    return shops.Where(s => s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
+                    return shops.Where(s => s != null && s.ShopName != null && s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
                 }
             }
         }

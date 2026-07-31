@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Services.IService;
+using SenangMemberApp.Shared.Services.IService;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +23,7 @@ namespace SenangMemberApp.Services
             }
 
             // Fallback: Return your default ID and your default Shop Name
-            return ("0", "All Shops");
+            return ("0", "Select Shop");
         }
 
         public async Task SaveShopSelection(string id, string name)
@@ -48,6 +48,13 @@ namespace SenangMemberApp.Services
             {
                 SecureStorage.Remove(ShopNameKey);
             }
+        }
+
+        public Task ClearShopSelection()
+        {
+            SecureStorage.Remove(ShopIdKey);
+            SecureStorage.Remove(ShopNameKey);
+            return Task.CompletedTask;
         }
     }
 }

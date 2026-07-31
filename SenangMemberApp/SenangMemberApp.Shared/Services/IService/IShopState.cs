@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Models.DTO.CreditDTO;
 using System;
@@ -14,6 +14,7 @@ namespace SenangMemberApp.Shared.Services.IService
         decimal currentPackageBalance { get; }
         List<CompanyResponseDTO> CompanyList { get; }
         Task InitializeAsync(); // Add this
+        Task ResetStateAsync();
         Task SetShop(string shopId, string shopName);
         public ApiResponseRoot<List<CreditResponseDTO>> currentCreditDetails { get; }
         public double balanceCredit { get; }

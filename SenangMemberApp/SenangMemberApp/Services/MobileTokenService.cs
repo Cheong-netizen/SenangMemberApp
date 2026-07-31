@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Services.IService;
+using SenangMemberApp.Shared.Services.IService;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +15,8 @@ namespace SenangMemberApp.Services
         {
             SecureStorage.Remove(AccessTokenKey);
             SecureStorage.Remove(RefreshTokenKey);
+            SecureStorage.Remove(CompanyTokenKey);
+            SecureStorage.Remove(CompanyRefreshTokenKey);
             return Task.CompletedTask;
         }
 

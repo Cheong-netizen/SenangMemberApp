@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,5 +11,6 @@ namespace SenangMemberApp.Shared.Models.DTO.AppoinmentDTO
         public string memo { get; set; }
         public string staffId { get; set; }
         public string serviceId { get; set; }
+        public string endTime { get; set; }
     }
 }

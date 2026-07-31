@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -39,6 +39,7 @@ namespace SenangMemberApp.Shared.Pages
         {
             // 1. Clear User State/Tokens here
             // 2. Navigate to Login Page
+            await shopState.ResetStateAsync();
             await tokenService.ClearAsync();
             NavManager.NavigateTo("/");
         }
@@ -47,6 +48,8 @@ namespace SenangMemberApp.Shared.Pages
         {
             NavManager.NavigateTo("/ChangePassword");
         }
+        [Inject]
+        private IShopState shopState { get; set; } = default!;
         [Inject]
         private IJSRuntime JS { get; set; } = default!;
 
@@ -81,6 +84,7 @@ namespace SenangMemberApp.Shared.Pages
         private async Task ConfirmLogout()
         {
             IsLogoutModalVisible = false;
+            await shopState.ResetStateAsync();
             await tokenService.ClearAsync();
             NavManager.NavigateTo("/");
         }

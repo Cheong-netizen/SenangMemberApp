@@ -33,13 +33,19 @@ namespace SenangMemberApp.Web.Services
             }
 
             // Fallback: Return your default ID and your default Shop Name
-            return ("0", "All Shops");
+            return ("0", "Select Shop");
         }
 
         public async Task SaveShopSelection(string id, string name)
         {
             await _localStorage.SetAsync("SelectedShopId", id);
             await _localStorage.SetAsync("SelectedShopName", name);
+        }
+
+        public async Task ClearShopSelection()
+        {
+            await _localStorage.DeleteAsync("SelectedShopId");
+            await _localStorage.DeleteAsync("SelectedShopName");
         }
     }
 }

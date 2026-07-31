@@ -45,13 +45,16 @@ namespace SenangMemberApp.Shared.Pages.CatalogPages
         {
             get
             {
+                if (shops == null)
+                    return Enumerable.Empty<CompanyResponseDTO>();
+
                 if (string.IsNullOrWhiteSpace(shopSearchText))
                 {
                     return shops;
                 }
                 else
                 {
-                    return shops.Where(s => s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
+                    return shops.Where(s => s != null && s.ShopName != null && s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CreditDTO;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components;
@@ -21,7 +21,7 @@ namespace SenangMemberApp.Shared.Pages
 
             // If ShopState hasn't started loading yet, trigger it here 
             // (or ensure it's triggered in your MainLayout)
-            if (ShopState.IsLoading && ShopState.CompanyList.Count == 0)
+            if (ShopState.IsLoading && (ShopState.CompanyList == null || ShopState.CompanyList.Count == 0))
             {
                 await ShopState.InitializeAsync();
             }

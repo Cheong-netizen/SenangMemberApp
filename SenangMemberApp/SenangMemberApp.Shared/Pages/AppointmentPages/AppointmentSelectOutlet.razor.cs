@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.Models;
 using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Services.ConcreteService;
@@ -35,7 +35,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
                 }
                 else
                 {
-                    return outlets.Where(s => s.branch.Contains(outletSearchText, StringComparison.OrdinalIgnoreCase));
+                    return outlets.Where(s => s != null && s.branch != null && s.branch.Contains(outletSearchText, StringComparison.OrdinalIgnoreCase));
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
 
             var response = await companyService.GetCompanyBranchDetails();
 
-            outletList = response.result;
+            outletList = response?.result ?? new List<BranchResponseDTO>();
         }
 
         private void selectOutlet(BranchResponseDTO outlet)

@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.ApiClient;
+using SenangMemberApp.Shared.ApiClient;
 using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Models.DTO.CreditDTO;
@@ -34,7 +34,7 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
         public async Task<MemberBalanceDTO> GetCompanyMemberBalance()
         {
             var response = await _companyAC.FetchCompanyMemberBalance();
-            return response.result;
+            return response?.result ?? new MemberBalanceDTO();
         }
 
         public async Task<ApiResponseRoot<List<PackageResponseDTO>>> GetCompanyPackageDetails()

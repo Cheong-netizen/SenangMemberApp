@@ -52917,11 +52917,11 @@
             "version": "[26.0.11017, 26.0.11017]"
           },
           {
-            "name": "Microsoft.MacCatalyst.Runtime.maccatalyst-x64.net10.0_26.0",
+            "name": "Microsoft.MacCatalyst.Runtime.maccatalyst.net10.0_26.0",
             "version": "[26.0.11017, 26.0.11017]"
           },
           {
-            "name": "Microsoft.MacCatalyst.Runtime.maccatalyst.net10.0_26.0",
+            "name": "Microsoft.MacCatalyst.Runtime.maccatalyst-x64.net10.0_26.0",
             "version": "[26.0.11017, 26.0.11017]"
           },
           {

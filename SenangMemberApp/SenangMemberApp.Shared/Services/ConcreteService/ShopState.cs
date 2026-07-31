@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Models.DTO.CreditDTO;
 using SenangMemberApp.Shared.Services.IService;
@@ -18,7 +18,7 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
         private readonly IShopStateLocalManagement _shopStateLocalManagement;
         public List<CompanyResponseDTO> CompanyList { get; private set; } = new();
         public string CurrentShopId { get; private set; } = "0";
-        public string CurrentShopName { get; private set; } = "All Shops";
+        public string CurrentShopName { get; private set; } = "Select Shop";
         public ApiResponseRoot<List<CreditResponseDTO>> currentCreditDetails { get; private set; }
         public double balanceCredit { get; private set; }
         public MemberBalanceDTO currentMemberBalance { get; private set; } = new();
@@ -49,7 +49,7 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
             }
             await RestoreState();
 
-            CompanyList = response.result;
+            CompanyList = response.result ?? new List<CompanyResponseDTO>();
 
             IsLoading = false;
             NotifyStateChanged(); // Tell UI initialization is done
@@ -85,9 +85,12 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
         {
             ApiResponseRoot<CompanyTokenResultDTO> response = await _authService.GetCompanyTokenAsync(id);
 
-            Debug.WriteLine($"GetCompanyTokenAsync response: {response.statusCode} - {response.message}");
+            Debug.WriteLine($"GetCompanyTokenAsync response: {response?.statusCode} - {response?.message}");
 
-            await _tokenService.SaveCompanyTokenAsync(response.result.AccessToken, response.result.RefreshToken);
+            if (response?.result != null && !string.IsNullOrEmpty(response.result.AccessToken))
+            {
+                await _tokenService.SaveCompanyTokenAsync(response.result.AccessToken, response.result.RefreshToken);
+            }
         }
         public async Task setMemberBalanceDetails()
         {
@@ -103,11 +106,26 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
                 currentPackageBalance = packageResponse.result.Sum(p => p.quantityAvailable);
             }
         }
+        public async Task ResetStateAsync()
+        {
+            CompanyList = new List<CompanyResponseDTO>();
+            CurrentShopId = "0";
+            CurrentShopName = "Select Shop";
+            currentCreditDetails = null;
+            balanceCredit = 0;
+            currentMemberBalance = new MemberBalanceDTO();
+            currentPackageBalance = 0;
+            IsLoading = false;
+            await _tokenService.ClearCompanyAsync();
+            await _shopStateLocalManagement.ClearShopSelection();
+            NotifyStateChanged();
+        }
+
         private async Task RestoreState()
         {
             var (savedId, savedName) = await _shopStateLocalManagement.GetShopSelection();
 
-            if (savedId != "0")
+            if (!string.IsNullOrEmpty(savedId) && savedId != "0" && CompanyList != null && CompanyList.Any(c => c.CompanyCode == savedId))
             {
                 await SetShop(savedId, savedName);
             }

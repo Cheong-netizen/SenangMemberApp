@@ -28,7 +28,7 @@
                 }
                 else
                 {
-                    @if (currentShopId == "")
+                    @if (string.IsNullOrEmpty(currentShopId) || currentShopId == "0" || currentShopName == "Select Shop" || currentShopName == "All Shops")
                     {
                         <span>@Loc["SelectAShop"]</span>
                         <span><i class="fa-solid fa-caret-down"></i></span>

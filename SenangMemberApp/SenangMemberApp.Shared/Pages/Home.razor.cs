@@ -35,6 +35,9 @@ namespace SenangMemberApp.Shared.Pages
         {
             get
             {
+                if (ShopState.CompanyList == null)
+                    return Enumerable.Empty<CompanyResponseDTO>();
+
                 if (string.IsNullOrWhiteSpace(shopSearchText))
                 {
                     return ShopState.CompanyList;
@@ -42,7 +45,7 @@ namespace SenangMemberApp.Shared.Pages
                 else
                 {
                     return ShopState.CompanyList
-                        .Where(s => s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
+                        .Where(s => s != null && s.ShopName != null && s.ShopName.Contains(shopSearchText, StringComparison.OrdinalIgnoreCase));
                 }
             }
         }

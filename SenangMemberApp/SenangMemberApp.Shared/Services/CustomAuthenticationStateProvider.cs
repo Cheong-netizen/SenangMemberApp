@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Services.IService;
+using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 
@@ -19,9 +19,13 @@ namespace SenangMemberApp.Services
             {
                 var token = await _tokenService.GetTokenAsync();
 
-                if (string.IsNullOrWhiteSpace(token))
+                if (string.IsNullOrWhiteSpace(token) || JwtParser.IsTokenExpired(token))
                 {
-                    // No token found, user is anonymous
+                    if (!string.IsNullOrWhiteSpace(token))
+                    {
+                        await _tokenService.ClearAsync();
+                    }
+                    // No token found or token expired, user is anonymous
                     return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
                 }
 

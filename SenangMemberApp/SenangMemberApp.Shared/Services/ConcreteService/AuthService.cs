@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.ApiClient;
+using SenangMemberApp.Shared.ApiClient;
 using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Models.DTO.LoginDTO;
@@ -45,6 +45,7 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
 
             if (response.statusCode == 200 && response.result.authResponse.accessToken != null)
             {
+                await _tokenService.ClearCompanyAsync();
                 await _tokenService.SaveTokenAsync(response.result.authResponse.accessToken, response.result.authResponse.refreshToken);
                 //await _shopState.InitializeAsync();
                 return new LoginResult

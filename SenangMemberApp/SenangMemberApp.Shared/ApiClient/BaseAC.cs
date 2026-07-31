@@ -1,4 +1,6 @@
-﻿using SenangMemberApp.Shared.Services.IService;
+using SenangMemberApp.Services;
+using SenangMemberApp.Shared.Services.IService;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,16 +16,74 @@ namespace SenangMemberApp.Shared.ApiClient
         protected readonly HttpClient _httpClient;
         protected readonly JsonSerializerOptions _jsonOptions;
         private readonly ITokenService _tokenService;
+        private readonly NavigationManager? _navigationManager;
+        private readonly IShopState? _shopState;
 
-        protected BaseAC(HttpClient httpClient, ITokenService tokenService)
+        protected BaseAC(HttpClient httpClient, ITokenService tokenService, NavigationManager? navigationManager = null, IShopState? shopState = null)
         {
             _httpClient = httpClient;
             _tokenService = tokenService;
+            _navigationManager = navigationManager;
+            _shopState = shopState;
             _jsonOptions = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
                 DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
             };
+        }
+
+        protected async Task<bool> ValidateUserAccessTokenAsync()
+        {
+            var token = await _tokenService.GetTokenAsync();
+            if (string.IsNullOrEmpty(token))
+            {
+                Debug.WriteLine("[AUTH] No user access token found.");
+                return false;
+            }
+
+            if (JwtParser.IsTokenExpired(token))
+            {
+                Debug.WriteLine("[SESSION EXPIRED] User access token is expired. Triggering logout...");
+                await TriggerSessionExpiredLogoutAsync();
+                return false;
+            }
+            return true;
+        }
+
+        protected async Task<bool> ValidateCompanyAccessTokenAsync()
+        {
+            var companyToken = await _tokenService.GetCompanyTokenAsync();
+            if (string.IsNullOrEmpty(companyToken) || JwtParser.IsTokenExpired(companyToken))
+            {
+                Debug.WriteLine("[SESSION EXPIRED] Company access token is missing or expired.");
+                await _tokenService.ClearCompanyAsync();
+                return false;
+            }
+            return true;
+        }
+
+        protected async Task TriggerSessionExpiredLogoutAsync()
+        {
+            try
+            {
+                await _tokenService.ClearAsync();
+                if (_shopState != null)
+                {
+                    await _shopState.ResetStateAsync();
+                }
+                if (_navigationManager != null)
+                {
+                    var currentUri = _navigationManager.Uri;
+                    if (!currentUri.EndsWith("/") && !currentUri.EndsWith("/login", StringComparison.OrdinalIgnoreCase))
+                    {
+                        _navigationManager.NavigateTo("/");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[LOGOUT ERROR] Exception during session expired logout: {ex.Message}");
+            }
         }
 
         private async Task PrepareHeaderAsync()
@@ -47,16 +107,31 @@ namespace SenangMemberApp.Shared.ApiClient
         {
             try
             {
+                if (!await ValidateUserAccessTokenAsync())
+                {
+                    return default;
+                }
+
                 await PrepareHeaderAsync();
-                return await _httpClient.GetFromJsonAsync<TResponse>(endpoint, _jsonOptions);
+                var response = await _httpClient.GetAsync(endpoint);
+                return await HandleResponseAsync<TResponse>(response);
             }
-            catch (Exception ex) { LogException("GET", endpoint, ex); return default; }
+            catch (Exception ex)
+            {
+                LogException("GET", endpoint, ex);
+                return default;
+            }
         }
 
         protected async Task<TResponse?> PostAsync<TRequest, TResponse>(string endpoint, TRequest data)
         {
             try
             {
+                if (!await ValidateUserAccessTokenAsync())
+                {
+                    return default;
+                }
+
                 // 1. Fetch token fresh from storage
                 var token = await _tokenService.GetTokenAsync();
 
@@ -66,14 +141,12 @@ namespace SenangMemberApp.Shared.ApiClient
                 if (!string.IsNullOrEmpty(token))
                 {
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                    Debug.WriteLine($"[API] Attached Token: {token.Substring(0, 10)}...");
+                    Debug.WriteLine($"[API] Attached Token: {token.Substring(0, Math.Min(10, token.Length))}...");
                 }
 
-                // --- INSERT DEBUG HERE ---
                 var jsonPayload = JsonSerializer.Serialize(data, _jsonOptions);
                 Debug.WriteLine($"[API DEBUG] Endpoint: {endpoint}");
                 Debug.WriteLine($"[API DEBUG] Payload: {jsonPayload}");
-                // -------------------------
 
                 request.Content = JsonContent.Create(data, options: _jsonOptions);
 
@@ -92,6 +165,11 @@ namespace SenangMemberApp.Shared.ApiClient
         {
             try
             {
+                if (!await ValidateUserAccessTokenAsync())
+                {
+                    return default;
+                }
+
                 // 1. Fetch token
                 var token = await _tokenService.GetTokenAsync();
 
@@ -122,6 +200,11 @@ namespace SenangMemberApp.Shared.ApiClient
         {
             try
             {
+                if (!await ValidateUserAccessTokenAsync())
+                {
+                    return default;
+                }
+
                 // 1. Fetch token fresh
                 var token = await _tokenService.GetTokenAsync();
 
@@ -153,6 +236,13 @@ namespace SenangMemberApp.Shared.ApiClient
         // --- Helper Methods ---
         private async Task<T?> HandleResponseAsync<T>(HttpResponseMessage response)
         {
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                Debug.WriteLine("[API ERROR 401] Unauthorized. Triggering session expired logout.");
+                await TriggerSessionExpiredLogoutAsync();
+                return default;
+            }
+
             if (!response.IsSuccessStatusCode)
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
@@ -171,6 +261,11 @@ namespace SenangMemberApp.Shared.ApiClient
         {
             try
             {
+                if (!await ValidateCompanyAccessTokenAsync())
+                {
+                    return default;
+                }
+
                 // 1. Fetch token fresh from storage
                 var token = await _tokenService.GetCompanyTokenAsync();
 
@@ -180,20 +275,14 @@ namespace SenangMemberApp.Shared.ApiClient
                 if (!string.IsNullOrEmpty(token))
                 {
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                    Debug.WriteLine($"[API] Attached Token: {token.Substring(0, 10)}...");
+                    Debug.WriteLine($"[API] Attached Token: {token.Substring(0, Math.Min(10, token.Length))}...");
                 }
 
-                
-
-                // --- INSERT DEBUG HERE ---
                 var jsonPayload = JsonSerializer.Serialize(data, _jsonOptions);
                 Debug.WriteLine($"[API DEBUG] Endpoint: {endpoint}");
                 Debug.WriteLine($"[API DEBUG] Payload: {jsonPayload}");
-                // -------------------------
 
                 request.Content = JsonContent.Create(data, options: _jsonOptions);
-
-                Debug.WriteLine(request.Content);
 
                 // 3. Send
                 var response = await _httpClient.SendAsync(request);
@@ -213,11 +302,9 @@ namespace SenangMemberApp.Shared.ApiClient
                 // 1. Create the request message manually without any authorization headers
                 var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
 
-                // --- INSERT DEBUG HERE ---
                 var jsonPayload = JsonSerializer.Serialize(data, _jsonOptions);
                 Debug.WriteLine($"[API DEBUG - NO AUTH] Endpoint: {endpoint}");
                 Debug.WriteLine($"[API DEBUG - NO AUTH] Payload: {jsonPayload}");
-                // -------------------------
 
                 request.Content = JsonContent.Create(data, options: _jsonOptions);
 

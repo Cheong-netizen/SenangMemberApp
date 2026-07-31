@@ -15,6 +15,7 @@ namespace SenangMemberApp.Web.Services
         {
             await _sessionStorage.DeleteAsync("authToken");
             await _sessionStorage.DeleteAsync("refreshToken");
+            await ClearCompanyAsync();
         }
 
         public async Task ClearCompanyAsync()
