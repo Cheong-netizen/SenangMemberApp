@@ -88,6 +88,12 @@
   <data name="ApiError" xml:space="preserve">
     <value>API Error:</value>
   </data>
+  <data name="ChatSessionMissing" xml:space="preserve">
+    <value>Your login session is unavailable. Please sign in again.</value>
+  </data>
+  <data name="ChatSessionExpired" xml:space="preserve">
+    <value>Your login session has expired. Please sign in again.</value>
+  </data>
   <data name="SendingVoiceMessage" xml:space="preserve">
     <value>🎙️ Sending voice message...</value>
   </data>

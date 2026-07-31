@@ -1,5 +1,6 @@
 @page "/ChatBot"
 @using SenangMemberApp.Shared.Models
+@using System.Net.Http.Headers
 @using System.Net.Http.Json
 @using Microsoft.Extensions.Configuration
 @using Microsoft.Extensions.DependencyInjection
@@ -12,6 +13,7 @@
 @inject IServiceProvider ServiceProvider
 @inject NavigationManager NavManager
 @inject IUserProfileService UserProfileService
+@inject ITokenService TokenService
 @inject IStringLocalizer<Chat> Loc
 @layout EmptyLayout
 
@@ -307,6 +309,65 @@
         return $"{baseUrl}/{endpoint}";
     }
 
+    private async Task<HttpResponseMessage> PostAuthenticatedAsync<T>(string endpoint, T payload)
+    {
+        var token = await TokenService.GetTokenAsync();
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            throw new ChatAuthenticationException("missing_bearer_token");
+        }
+
+        using var request = new HttpRequestMessage(HttpMethod.Post, GetApiUrl(endpoint));
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        request.Content = JsonContent.Create(payload);
+
+        var response = await Http.SendAsync(request);
+
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            try
+            {
+                throw new ChatAuthenticationException(await GetAuthenticationErrorCodeAsync(response));
+            }
+            finally
+            {
+                response.Dispose();
+            }
+        }
+
+        return response;
+    }
+
+    private static async Task<string> GetAuthenticationErrorCodeAsync(HttpResponseMessage response)
+    {
+        var errorDetails = string.Empty;
+
+        if (response.Headers.TryGetValues("X-Chat-Auth-Error", out var headerValues))
+        {
+            errorDetails = string.Join(" ", headerValues);
+        }
+
+        try
+        {
+            var responseBody = await response.Content.ReadAsStringAsync();
+            errorDetails = $"{errorDetails} {responseBody}";
+        }
+        catch
+        {
+            // The authentication header is sufficient when the body cannot be read.
+        }
+
+        return errorDetails.Contains("missing_bearer_token", StringComparison.OrdinalIgnoreCase)
+            ? "missing_bearer_token"
+            : "invalid_or_expired_token";
+    }
+
+    private string GetAuthenticationMessage(string errorCode) =>
+        errorCode.Equals("missing_bearer_token", StringComparison.OrdinalIgnoreCase)
+            ? Loc["ChatSessionMissing"]
+            : Loc["ChatSessionExpired"];
+
     private string FormatMessage(string text, bool showAppointmentAddIcons = false)
     {
         if (string.IsNullOrEmpty(text)) return string.Empty;
@@ -461,7 +522,7 @@
                     Phone = LoginPhone,
                     Language = System.Globalization.CultureInfo.CurrentUICulture.Name
                 };
-                var response = await Http.PostAsJsonAsync(GetApiUrl("api/chat/login"), loginReq);
+                using var response = await PostAuthenticatedAsync("api/chat/login", loginReq);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -488,6 +549,10 @@
                     ErrorMessage = $"{Loc["ApiError"]} {response.StatusCode}";
                 }
             }
+        }
+        catch (ChatAuthenticationException ex)
+        {
+            ErrorMessage = GetAuthenticationMessage(ex.ErrorCode);
         }
         catch (Exception ex)
         { 
@@ -668,7 +733,7 @@
                     {
                         // HTTP execution
                         var req = new ChatVoiceRequest { CustomerId = CustomerId, Base64Audio = base64Audio, MimeType = mimeType };
-                        var apiResponse = await Http.PostAsJsonAsync(GetApiUrl("api/chat/voice"), req);
+                        using var apiResponse = await PostAuthenticatedAsync("api/chat/voice", req);
 
                         Messages.Remove(genericTyping);
 
@@ -681,6 +746,11 @@
                             }
                         }
                     }
+                }
+                catch (ChatAuthenticationException ex)
+                {
+                    Messages.Remove(genericTyping);
+                    Messages.Add(new ChatMessage { Sender = "Bot", Content = GetAuthenticationMessage(ex.ErrorCode) });
                 }
                 catch
                 {
@@ -767,7 +837,7 @@
             {
                 // HTTP execution
                 var req = new ChatMessageRequest { CustomerId = CustomerId, Message = userMsg };
-                var apiResponse = await Http.PostAsJsonAsync(GetApiUrl("api/chat/message"), req);
+                using var apiResponse = await PostAuthenticatedAsync("api/chat/message", req);
 
                 Messages.Remove(genericTyping);
 
@@ -780,6 +850,11 @@
                     }
                 }
             }
+        }
+        catch (ChatAuthenticationException ex)
+        {
+            Messages.Remove(genericTyping);
+            Messages.Add(new ChatMessage { Sender = "Bot", Content = GetAuthenticationMessage(ex.ErrorCode) });
         }
         catch
         {
@@ -830,5 +905,16 @@
     private async Task FocusInputAsync()
     {
         try { await chatInput.FocusAsync(); } catch { }
+    }
+
+    private sealed class ChatAuthenticationException : Exception
+    {
+        public ChatAuthenticationException(string errorCode)
+            : base(errorCode)
+        {
+            ErrorCode = errorCode;
+        }
+
+        public string ErrorCode { get; }
     }
 }
