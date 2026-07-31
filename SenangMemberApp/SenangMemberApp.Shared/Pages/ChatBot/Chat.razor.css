@@ -126,6 +126,10 @@
     overscroll-behavior-y: contain;
 }
 
+.chat-messages > :first-child {
+    margin-top: auto;
+}
+
 /* Hide scrollbar on mobile (still scrollable) */
 .chat-messages::-webkit-scrollbar {
     width: 4px;
