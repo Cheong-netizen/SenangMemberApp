@@ -456,7 +456,11 @@
             */
             {
                 // HTTP execution
-                var loginReq = new LoginRequest { Phone = LoginPhone };
+                var loginReq = new LoginRequest
+                {
+                    Phone = LoginPhone,
+                    Language = System.Globalization.CultureInfo.CurrentUICulture.Name
+                };
                 var response = await Http.PostAsJsonAsync(GetApiUrl("api/chat/login"), loginReq);
 
                 if (response.IsSuccessStatusCode)

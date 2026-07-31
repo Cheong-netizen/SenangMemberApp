@@ -7,6 +7,7 @@ namespace SenangMemberApp.Shared.Models
     {
         public string Phone { get; set; } = string.Empty;
         public string? Name { get; set; } // ADDED: Accept Name during Login
+        public string? Language { get; set; }
     }
 
     public class LoginResponse
