@@ -19,13 +19,9 @@ namespace SenangMemberApp.Services
             {
                 var token = await _tokenService.GetTokenAsync();
 
-                if (string.IsNullOrWhiteSpace(token) || JwtParser.IsTokenExpired(token))
+                if (string.IsNullOrWhiteSpace(token))
                 {
-                    if (!string.IsNullOrWhiteSpace(token))
-                    {
-                        await _tokenService.ClearAsync();
-                    }
-                    // No token found or token expired, user is anonymous
+                    // No token found, user is anonymous
                     return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
                 }
 
