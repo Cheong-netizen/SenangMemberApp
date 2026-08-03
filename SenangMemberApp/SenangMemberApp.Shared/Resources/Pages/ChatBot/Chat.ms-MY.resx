@@ -37,7 +37,7 @@
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
               <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
@@ -58,55 +58,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdministrativeAI" xml:space="preserve">
-    <value>行政 AI 助手</value>
-  </data>
-  <data name="AlwaysHereToHelp" xml:space="preserve">
-    <value>随时为您服务</value>
-  </data>
-  <data name="Retry" xml:space="preserve">
-    <value>重试</value>
-  </data>
-  <data name="TapIdToSelect" xml:space="preserve">
-    <value>点击 ID 进行选择：</value>
-  </data>
-  <data name="TypeMessagePlaceholder" xml:space="preserve">
-    <value>输入消息...</value>
-  </data>
-  <data name="LoadingProfile" xml:space="preserve">
-    <value>正在加载您的个人资料...</value>
-  </data>
-  <data name="SyncingAppointments" xml:space="preserve">
-    <value>正在同步预约信息...</value>
-  </data>
-  <data name="NoPhoneFound" xml:space="preserve">
-    <value>在您的个人资料中未找到已注册的电话号码。</value>
-  </data>
-  <data name="InitFailed" xml:space="preserve">
-    <value>初始化失败：</value>
-  </data>
-  <data name="ApiError" xml:space="preserve">
-    <value>API 错误：</value>
-  </data>
   <data name="ChatSessionMissing" xml:space="preserve">
-    <value>您的登录会话不可用。请重新登录。</value>
+    <value>Sesi log masuk anda tidak tersedia. Sila log masuk semula.</value>
   </data>
   <data name="ChatSessionExpired" xml:space="preserve">
-    <value>您的登录会话已过期。请重新登录。</value>
-  </data>
-  <data name="SendingVoiceMessage" xml:space="preserve">
-    <value>🎙️ 正在发送语音消息...</value>
-  </data>
-  <data name="UnderstandAudioError" xml:space="preserve">
-    <value>抱歉，无法识别语音内容。请重试或输入您的文字消息。</value>
-  </data>
-  <data name="VoiceNetworkError" xml:space="preserve">
-    <value>由于网络错误，语音处理失败。</value>
-  </data>
-  <data name="NetworkError" xml:space="preserve">
-    <value>网络连接错误，请重试。</value>
-  </data>
-  <data name="JumpToLatest" xml:space="preserve">
-    <value>跳转至最新消息</value>
+    <value>Sesi log masuk anda telah tamat tempoh. Sila log masuk semula.</value>
   </data>
 </root>
