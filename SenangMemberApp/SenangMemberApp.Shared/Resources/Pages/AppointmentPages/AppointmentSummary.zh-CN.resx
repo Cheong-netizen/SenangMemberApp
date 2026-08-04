@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -139,7 +139,7 @@
     <value>日期和时间</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>总结</value>
+    <value>预约摘要</value>
   </data>
   <data name="Staff" xml:space="preserve">
     <value>员工</value>
@@ -154,6 +154,6 @@
     <value>员工</value>
   </data>
   <data name="StepSummary" xml:space="preserve">
-    <value>总结</value>
+    <value>预约摘要</value>
   </data>
 </root>

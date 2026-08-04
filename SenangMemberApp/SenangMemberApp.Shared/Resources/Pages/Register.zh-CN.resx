@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -137,6 +137,9 @@
   </data>
   <data name="PasswordLabel" xml:space="preserve">
     <value>密码</value>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>请输入密码</value>
   </data>
   <data name="PhoneLabel" xml:space="preserve">
     <value>手机号码</value>

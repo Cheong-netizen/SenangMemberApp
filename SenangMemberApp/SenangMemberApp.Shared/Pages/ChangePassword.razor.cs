@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
@@ -39,22 +39,28 @@ namespace SenangMemberApp.Shared.Pages
                 string.IsNullOrWhiteSpace(NewPassword) ||
                 string.IsNullOrWhiteSpace(ConfirmPassword))
             {
-                ErrorMessage = "Please fill in all password fields.";
+                ErrorMessage = Loc["EmptyFieldsError"];
                 return;
             }
 
-            // 2. Validate that the new passwords match
+            // 2. Validate password length (4 to 6 characters)
+            if (NewPassword.Length < 4 || NewPassword.Length > 6)
+            {
+                ErrorMessage = Loc["PasswordLengthError"];
+                return;
+            }
+
+            // 3. Validate that the new passwords match
             if (NewPassword != ConfirmPassword)
             {
-                ErrorMessage = "The new passwords do not match.";
+                ErrorMessage = Loc["PasswordMismatchError"];
                 return;
             }
 
-            // 3. Optional client-side check for current password
-            // Note: In production, it's safer to have the API validate the current password. 
+            // 4. Client-side check for current password
             if (!string.IsNullOrEmpty(UserProfile.MemberPassword) && CurrentPassword != UserProfile.MemberPassword)
             {
-                ErrorMessage = "The current password you entered is incorrect.";
+                ErrorMessage = Loc["CurrentPasswordError"];
                 return;
             }
 

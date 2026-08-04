@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.ApiClient;
+using SenangMemberApp.Shared.ApiClient;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -32,9 +32,7 @@ namespace SenangMemberApp.Shared.Pages
                     registerRequest.Password
                 );
 
-                // Assuming your API returns true/success status in response.result or similar.
-                // You may need to adjust this conditional based on how your ApiResponseRoot is structured.
-                if (response != null && response.result != null)
+                if (response != null && !response.IsError && (response.Result != null || response.Status == 200 || response.StatusCode == 200))
                 {
                     // Success! Redirect to login page
                     NavManager.NavigateTo("/");
@@ -42,7 +40,22 @@ namespace SenangMemberApp.Shared.Pages
                 else
                 {
                     // Registration failed, show error message from API if available
-                    errorMessage = response?.message ?? "Registration failed. Please check your details and try again.";
+                    if (response != null && !string.IsNullOrWhiteSpace(response.Title))
+                    {
+                        errorMessage = response.Title;
+                    }
+                    else if (response != null && !string.IsNullOrWhiteSpace(response.Message))
+                    {
+                        errorMessage = response.Message;
+                    }
+                    else if (response != null && !string.IsNullOrWhiteSpace(response.Details))
+                    {
+                        errorMessage = response.Details;
+                    }
+                    else
+                    {
+                        errorMessage = "Registration failed. Please check your details and try again.";
+                    }
                 }
             }
             catch (Exception ex)
@@ -63,7 +76,7 @@ namespace SenangMemberApp.Shared.Pages
             public string Name { get; set; } = "";
 
             [Required(ErrorMessage = "Email Address is required.")]
-            [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
+            [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")]
             public string Email { get; set; } = "";
 
             [Required(ErrorMessage = "Phone Number is required.")]

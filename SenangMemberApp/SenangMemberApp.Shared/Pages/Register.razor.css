@@ -1,22 +1,37 @@
-﻿/* Container: Uses your body background */
+/* Container: Seamless Salon Aesthetic Background for mobile and web */
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: var(--bg-body);
+    width: 100%;
     padding: 20px;
+    background-color: #5c2432; /* Matching ambient fallback */
+    /* Mobile Screen: Blurred Salon Interior */
+    background-image: url('_content/SenangMemberApp.Shared/Images/login_bg_mobile.png'), url('Images/login_bg_mobile.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
-/* Card: Uses your shadow and radius variables */
+/* Web Desktop & Tablet Screen (Widescreen 16:9) */
+@media (min-width: 769px) {
+    .login-container {
+        background-image: url('_content/SenangMemberApp.Shared/Images/login_bg_web.png'), url('Images/login_bg_web.png');
+    }
+}
+
+/* Card: Modern Glassmorphic Container */
 .login-card {
     width: 100%;
-    max-width: 400px;
-    background-color: var(--bg-input); /* Using white/input bg for contrast */
+    max-width: 440px;
+    background-color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 2.5rem;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-all-around);
-    border: var(--border-md);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .login-header {

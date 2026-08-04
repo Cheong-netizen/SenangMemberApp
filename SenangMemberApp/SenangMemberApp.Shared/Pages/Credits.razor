@@ -1,4 +1,4 @@
-﻿@page "/credits"
+@page "/credits"
 @inject NavigationManager NavManager
 @layout EmptyLayout
 
@@ -44,7 +44,7 @@
                         </div>
                         <div class="history-amount">
                             @* Translated Expiry Label *@
-                            @Loc["ExpiryDate"]: @item.dueDate
+                            @Loc["ExpiryDate"]: @item.dueDate.ToString("dd/MM/yyyy")
                         </div>
                     </div>
                 }

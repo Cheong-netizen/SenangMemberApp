@@ -1,4 +1,4 @@
-﻿@page "/deleteAccount"
+@page "/deleteAccount"
 
 @layout EmptyLayout;
 @using SenangMemberApp.Shared.Resources.Pages
@@ -39,7 +39,7 @@
 
         <div class="form-group">
             <label class="form-label">@Loc["PhoneNumberLabel"]</label>
-            <input type="email" class="form-input" @bind="email" placeholder="@Loc["PhoneNumberPlaceholder"]" />
+            <input type="tel" class="form-input" @bind="phone" placeholder="@Loc["PhoneNumberPlaceholder"]" />
         </div>
 
         <div class="form-group">

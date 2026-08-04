@@ -98,6 +98,15 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
             StoreImageUrl = "_content/SenangMemberApp.Shared/Images/store_placeholder.png";
         }
 
+        private string GetScheduledText(DateTime appointmentDate)
+        {
+            var days = (appointmentDate.Date - DateTime.Now.Date).Days;
+            if (days == 0) return Loc["Today"];
+            if (days == 1) return Loc["Tomorrow"];
+            if (days > 1) return string.Format(Loc["DaysFromNow"], days);
+            return Loc["Passed"];
+        }
+
         private async Task OpenMap()
         {
             var address = BranchDetails == null
@@ -106,7 +115,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
 
             if (string.IsNullOrWhiteSpace(address))
             {
-                ShowWarningModal("Address Unavailable", "The address for this shop/branch is not available.");
+                ShowWarningModal(Loc["AddressEmptyTitle"], Loc["AddressEmptyMessage"]);
             }
             else
             {
@@ -124,7 +133,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
             }
             else
             {
-                ShowWarningModal("Phone Number Unavailable", "The phone number for this shop/branch is not available.");
+                ShowWarningModal(Loc["PhoneEmptyTitle"], Loc["PhoneEmptyMessage"]);
             }
         }
 
@@ -141,7 +150,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
             }
             else
             {
-                ShowWarningModal("WhatsApp Unavailable", "The WhatsApp contact details for this shop/branch are not available.");
+                ShowWarningModal(Loc["WhatsAppEmptyTitle"], Loc["WhatsAppEmptyMessage"]);
             }
         }
 

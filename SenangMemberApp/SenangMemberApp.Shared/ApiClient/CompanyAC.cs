@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Models.DTO.CreditDTO;
 using SenangMemberApp.Shared.Models.DTO.LoginDTO;
@@ -107,7 +107,7 @@ namespace SenangMemberApp.Shared.ApiClient
             return response;
         }
 
-        public async Task<ApiResponseRoot<RegisterResponseDTO>> RegisterAccount(string name, string email, string phoneNumber, string password)
+        public async Task<RegisterApiResponseDTO?> RegisterAccount(string name, string email, string phoneNumber, string password)
         {
             var request = new RegisterRequestDTO
             {
@@ -117,7 +117,7 @@ namespace SenangMemberApp.Shared.ApiClient
                 Password = password
             };
 
-            var response = await PostAnonymousAsync<RegisterRequestDTO, ApiResponseRoot<RegisterResponseDTO>>("api/PublicMember/Register", request);
+            var response = await PostAnonymousAsync<RegisterRequestDTO, RegisterApiResponseDTO>("api/PublicMember/Register", request);
 
             return response;
         }

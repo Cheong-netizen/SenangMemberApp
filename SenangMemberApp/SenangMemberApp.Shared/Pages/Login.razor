@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @using System.ComponentModel.DataAnnotations
 @using SenangMemberApp.Shared.Models
 @using Microsoft.Extensions.Localization
@@ -19,7 +19,7 @@
             <div class="form-group ">
                 <label class="form-label form-row">
                     @Loc["UsernameLabel"]
-                    <InputText @bind-Value="loginRequest.email" class="custom-input" placeholder="@Loc["UsernamePlaceholder"]" />
+                    <InputText @bind-Value="loginRequest.email" type="tel" class="custom-input" placeholder="@Loc["UsernamePlaceholder"]" />
                 </label>
 
                 <ValidationMessage For="@(() => loginRequest.email)" class="validation-msg" />
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label class="form-label form-row">
                     @Loc["PasswordLabel"]
-                    <InputText @bind-Value="loginRequest.password" type="password" class="custom-input" placeholder="••••••••" />
+                    <InputText @bind-Value="loginRequest.password" type="password" class="custom-input" placeholder="@Loc["PasswordPlaceholder"]" />
                 </label>
 
                 <ValidationMessage For="@(() => loginRequest.password)" class="validation-msg" />

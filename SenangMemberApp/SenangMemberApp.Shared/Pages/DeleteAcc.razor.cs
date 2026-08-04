@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -16,7 +16,7 @@ namespace SenangMemberApp.Shared.Pages
 
         private UserProfileResponseDTO UserProfile = new();
 
-        private string email = "";
+        private string phone = "";
         private string password = "";
         private string errorMessage = ""; // Used to show validation errors to the user
 
@@ -34,11 +34,14 @@ namespace SenangMemberApp.Shared.Pages
             // Reset error message on every new attempt
             errorMessage = "";
 
-            // 1. Validate inputs against retrieved profile
-            bool isEmailValid = string.Equals(email, UserProfile.Phone, StringComparison.OrdinalIgnoreCase);
+            // Normalize and compare phone numbers
+            var inputPhone = phone?.Trim().Replace("-", "").Replace(" ", "").Replace("+", "");
+            var userPhone = UserProfile.Phone?.Trim().Replace("-", "").Replace(" ", "").Replace("+", "");
+
+            bool isPhoneValid = !string.IsNullOrEmpty(inputPhone) && string.Equals(inputPhone, userPhone, StringComparison.OrdinalIgnoreCase);
             bool isPasswordValid = password == UserProfile.MemberPassword;
 
-            if (isEmailValid && isPasswordValid)
+            if (isPhoneValid && isPasswordValid)
             {
                 // 2. Credentials match, proceed to trigger deletion
                 var request = new UserProfileRequestDTO
@@ -48,10 +51,8 @@ namespace SenangMemberApp.Shared.Pages
                     MemberPassword = UserProfile.MemberPassword,
                     Gender = UserProfile.Gender,
                     Email = UserProfile.Email
-                    // Add any specific flags your backend requires to mark the account for deletion here
                 };
 
-                // Note: Make sure this service call is hitting the correct API endpoint for deletion
                 await UserProfileService.ChangeUserProfile(request);
 
                 // Navigate away after successful deletion request
@@ -60,7 +61,7 @@ namespace SenangMemberApp.Shared.Pages
             else
             {
                 // 3. Credentials do not match
-                errorMessage = "The email or password entered is incorrect. Please try again.";
+                errorMessage = Loc["ErrorMessage"];
             }
         }
 

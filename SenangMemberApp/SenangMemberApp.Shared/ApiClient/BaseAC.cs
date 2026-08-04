@@ -223,13 +223,32 @@ namespace SenangMemberApp.Shared.ApiClient
 
                 // 2. Send the request
                 var response = await _httpClient.SendAsync(request);
-                return await HandleResponseAsync<TResponse>(response);
+                return await HandleAnonymousResponseAsync<TResponse>(response);
             }
             catch (Exception ex)
             {
                 LogException("POST (No Auth)", endpoint, ex);
                 return default;
             }
+        }
+
+        private async Task<T?> HandleAnonymousResponseAsync<T>(HttpResponseMessage response)
+        {
+            try
+            {
+                var contentString = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine($"[API RESPONSE - NO AUTH] Status: {response.StatusCode}, Body: {contentString}");
+
+                if (!string.IsNullOrWhiteSpace(contentString))
+                {
+                    return JsonSerializer.Deserialize<T>(contentString, _jsonOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[API ERROR - NO AUTH DESERIALIZATION] {ex.Message}");
+            }
+            return default;
         }
     }
 }

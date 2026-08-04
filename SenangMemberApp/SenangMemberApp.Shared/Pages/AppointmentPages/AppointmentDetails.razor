@@ -1,10 +1,12 @@
 @page "/AppointmentDetails/{Id}/{FromPage}"
 @layout EmptyLayout
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AppointmentDetails> Loc
 
 <div class="page-wrapper">
     <div class="header">
         <div><span @onclick="navGoBack"><i class="fa-solid fa-angle-left"></i></span></div>
-        <div><span>Booking Details</span></div>
+        <div><span>@Loc["PageTitle"]</span></div>
         <div></div>
     </div>
     <div class="summary-info">
@@ -21,13 +23,13 @@
                 </div>
             </div>
             <div class="date">
-                <span class="header-text"><i class="fa-regular fa-calendar icon"></i>  Date and Time</span>
-                <span class="normal-text">@MyAppointment.startTime.ToString("dd MMMM yyyy")</span>
+                <span class="header-text"><i class="fa-regular fa-calendar icon"></i>  @Loc["DateAndTime"]</span>
+                <span class="normal-text">@MyAppointment.startTime.ToString("dd/MM/yyyy")</span>
                 <span class="subtitle-text">@MyAppointment.startTime.ToString("HH:mm") - @MyAppointment.endTime.ToString("HH:mm")</span>
             </div>
             <div class="date">
-                <span class="header-text"><i class="fa-regular fa-clock icon"></i>  Scheduled</span>
-                <span class="normal-text">@((MyAppointment.startTime.Date - DateTime.Now.Date).Days) days from now</span>
+                <span class="header-text"><i class="fa-regular fa-clock icon"></i>  @Loc["Scheduled"]</span>
+                <span class="normal-text">@GetScheduledText(MyAppointment.startTime.Date)</span>
             </div>
 
             <!-- Quick Action Options: Map, Call, WhatsApp -->
@@ -35,17 +37,17 @@
                 <div class="catalog-item-wrapper" style="display: flex; gap: 10px; justify-content: space-around;">
                     <div class="catalog-tiles" @onclick="OpenMap" style="flex: 1; text-align: center; padding: 12px; border-radius: 10px; background: var(--color-card-bg, #ffffff); box-shadow: 0 2px 6px rgba(0,0,0,0.08); cursor: pointer;">
                         <span class="more-option" style="display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 500;">
-                            <i class="fa-regular fa-map" style="font-size: 1.3rem;"></i> Map
+                            <i class="fa-regular fa-map" style="font-size: 1.3rem;"></i> @Loc["Map"]
                         </span>
                     </div>
                     <div class="catalog-tiles" @onclick="OpenCall" style="flex: 1; text-align: center; padding: 12px; border-radius: 10px; background: var(--color-card-bg, #ffffff); box-shadow: 0 2px 6px rgba(0,0,0,0.08); cursor: pointer;">
                         <span class="more-option" style="display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 500;">
-                            <i class="fa-solid fa-phone" style="font-size: 1.3rem;"></i> Call
+                            <i class="fa-solid fa-phone" style="font-size: 1.3rem;"></i> @Loc["Call"]
                         </span>
                     </div>
                     <div class="catalog-tiles" @onclick="OpenWhatsApp" style="flex: 1; text-align: center; padding: 12px; border-radius: 10px; background: var(--color-card-bg, #ffffff); box-shadow: 0 2px 6px rgba(0,0,0,0.08); cursor: pointer;">
                         <span class="more-option" style="display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 500;">
-                            <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem; color: #25D366;"></i> Chat
+                            <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem; color: #25D366;"></i> @Loc["Chat"]
                         </span>
                     </div>
                 </div>

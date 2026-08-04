@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Services;
+using SenangMemberApp.Services;
 using SenangMemberApp.Shared.Models;
 using SenangMemberApp.Shared.Models.DTO.LoginDTO;
 using SenangMemberApp.Shared.Models.DTO.LoginRequestDTO;
@@ -48,24 +48,43 @@ namespace SenangMemberApp.Shared.Pages
 
         private async Task HandleLogin()
         {
+            errorMessage = "";
             isLoading = true;
 
-            loginResult = await authService.LoginAsync(loginRequest);
-
-            isLoading = false;
-
-            if (loginResult.Success == true)
+            try
             {
-                // Notify Blazor that the user's auth state has changed!
-                var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
-                customAuthStateProvider.NotifyUserStatusChanged();
+                loginResult = await authService.LoginAsync(loginRequest);
 
-                navigationManager.NavigateTo("/home", replace: true);
+                if (loginResult != null && loginResult.Success == true)
+                {
+                    // Notify Blazor that the user's auth state has changed!
+                    var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+                    customAuthStateProvider.NotifyUserStatusChanged();
+
+                    navigationManager.NavigateTo("/home", replace: true);
+                }
+                else
+                {
+                    var msg = loginResult?.message;
+                    if (string.IsNullOrWhiteSpace(msg))
+                    {
+                        errorMessage = Loc["DefaultLoginError"];
+                    }
+                    else
+                    {
+                        errorMessage = msg;
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Only show error if success is false
-                errorMessage = loginResult.message;
+                System.Diagnostics.Debug.WriteLine($"[Login] Exception: {ex.Message}");
+                errorMessage = Loc["NetworkError"];
+            }
+            finally
+            {
+                isLoading = false;
+                StateHasChanged();
             }
         }
     }

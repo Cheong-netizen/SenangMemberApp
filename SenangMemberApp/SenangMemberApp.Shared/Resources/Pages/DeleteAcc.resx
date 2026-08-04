@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -140,5 +140,8 @@
   </data>
   <data name="WarningText" xml:space="preserve">
     <value>Your account will be deleted forever. If you log in within 7 days, the account deletion will be canceled.</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>The phone number or password entered is incorrect. Please try again.</value>
   </data>
 </root>

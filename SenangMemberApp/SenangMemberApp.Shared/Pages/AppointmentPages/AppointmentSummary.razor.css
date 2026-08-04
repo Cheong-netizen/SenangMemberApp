@@ -234,7 +234,7 @@
 .modal-wrapper {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    height: 50%;
+    height: 30%;
     width: 80%;
     background-color: var(--bg-surface);
     border-radius: var(--radius-lg);
