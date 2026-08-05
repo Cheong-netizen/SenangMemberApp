@@ -66,7 +66,9 @@ namespace SenangMemberApp.Shared.Pages
                 else
                 {
                     var msg = loginResult?.message;
-                    if (string.IsNullOrWhiteSpace(msg))
+                    if (string.IsNullOrWhiteSpace(msg) ||
+                        msg == "An error occurred while processing the request." ||
+                        msg == "Fail to request from API")
                     {
                         errorMessage = Loc["DefaultLoginError"];
                     }

@@ -25,7 +25,7 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
         {
             ApiResponseRoot<LoginResponseDTO> response = await _authAC.LoginAsync(loginRequest);
 
-            if(response == null)
+            if (response == null)
             {
                 return new LoginResult
                 {
@@ -34,16 +34,7 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
                 };
             }
 
-            if(response.result == null)
-            {
-                return new LoginResult
-                {
-                    Success = false,
-                    message = response.message
-                };
-            }
-
-            if (response.statusCode == 200 && response.result.authResponse.accessToken != null)
+            if (response.statusCode == 200 && response.result?.authResponse?.accessToken != null)
             {
                 await _tokenService.ClearCompanyAsync();
                 await _tokenService.SaveTokenAsync(response.result.authResponse.accessToken, response.result.authResponse.refreshToken);
@@ -55,10 +46,14 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
                 };
             }
 
+            string errorMsg = !string.IsNullOrWhiteSpace(response.message)
+                ? response.message
+                : "Email or password is wrong";
+
             return new LoginResult
             {
                 Success = false,
-                message = response.message
+                message = errorMsg
             };
         }
 

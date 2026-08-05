@@ -153,13 +153,21 @@ namespace SenangMemberApp.Shared.ApiClient
         // --- Helper Methods ---
         private async Task<T?> HandleResponseAsync<T>(HttpResponseMessage response)
         {
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine($"[API ERROR] {response.StatusCode}: {errorContent}");
-                return default;
+                var contentString = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine($"[API RESPONSE] Status: {response.StatusCode}, Body: {contentString}");
+
+                if (!string.IsNullOrWhiteSpace(contentString))
+                {
+                    return JsonSerializer.Deserialize<T>(contentString, _jsonOptions);
+                }
             }
-            return await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[API ERROR DESERIALIZATION] {ex.Message}");
+            }
+            return default;
         }
 
         private void LogException(string method, string endpoint, Exception ex)
