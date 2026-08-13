@@ -1,4 +1,4 @@
-﻿.page-wrapper {
+.page-wrapper {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -56,6 +56,10 @@
     margin-top: 23px;
 }
 
+.steps-ball-fill span {
+    color: white;
+}
+
 .active {
     background-color: var(--color-primary);
     color: white;
@@ -80,6 +84,7 @@
     align-items: center;
     background-color: var(--color-primary);
     border-radius: var(--radius-md);
+    color: white;
 }
 
     .next-button-content span {

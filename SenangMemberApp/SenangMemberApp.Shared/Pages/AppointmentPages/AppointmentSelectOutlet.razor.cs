@@ -41,16 +41,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         }
         protected override async Task OnInitializedAsync()
         {
-            //shopId = appointmentState.CurrentAppointment.ShopId;
-
-            if (appointmentState.selectedBookingShopId == "0")
-            {
-                navManager.NavigateTo("/AppointmentSelectShop");
-                return;
-            }
-
             var response = await companyService.GetCompanyBranchDetails();
-
             outletList = response?.result ?? new List<BranchResponseDTO>();
         }
 
@@ -61,14 +52,14 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         }
         private void navSelectServices()
         {
-            if(appointmentState.selectedOutletId != "")
+            if(!string.IsNullOrEmpty(appointmentState.selectedOutletId))
             {
-                navManager.NavigateTo("/AppointmentSelectDate");
+                navManager.NavigateTo("/AppointmentSelectServices");
             }
         }
         private void navBack()
         {
-            navManager.NavigateTo("/AppointmentSelectShop");
+            navManager.NavigateTo("/appointment");
         }
     }
 }

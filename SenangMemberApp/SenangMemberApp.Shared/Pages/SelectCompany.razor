@@ -1,0 +1,53 @@
+@page "/select-company"
+@using SenangMemberApp.Shared.Models
+@using SenangMemberApp.Shared.Models.DTO.CompanyDTO
+@layout EmptyLayout
+
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SelectCompany> Loc
+
+<div class="page-wrapper select-company-wrapper">
+    <div class="select-company-header">
+        <h2>@Loc["PageTitle"]</h2>
+        <p>@Loc["Subtitle"]</p>
+    </div>
+
+    <div class="search-wrapper">
+        <div class="search-box">
+            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input class="search-textbox" type="text" placeholder="@Loc["SearchPlaceholder"]" @bind="companySearchText" @bind:event="oninput" />
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="spinner-container" style="display: flex; justify-content: center; padding: 40px;">
+            <div class="loader"></div>
+        </div>
+    }
+    else
+    {
+        <div class="company-grid-wrapper">
+            @if (filteredCompanies != null && filteredCompanies.Any())
+            {
+                @foreach (var company in filteredCompanies)
+                {
+                    <div @onclick="() => selectCompany(company.CompanyCode, company.ShopName)" class="company-card">
+                        <img class="company-logo" src="@(string.IsNullOrWhiteSpace(company.LogoPath) ? "_content/SenangMemberApp.Shared/Images/store_placeholder.png" : company.LogoPath)" alt="@company.ShopName" />
+                        <div class="company-info">
+                            <span class="company-name">@company.ShopName</span>
+                            <span class="company-code">@company.CompanyCode</span>
+                        </div>
+                        <i class="fa-solid fa-angle-right arrow-icon"></i>
+                    </div>
+                }
+            }
+            else
+            {
+                <div style="text-align: center; padding: 30px; color: var(--text-muted);">
+                    <span>@Loc["NoCompaniesFound"]</span>
+                </div>
+            }
+        </div>
+    }
+</div>

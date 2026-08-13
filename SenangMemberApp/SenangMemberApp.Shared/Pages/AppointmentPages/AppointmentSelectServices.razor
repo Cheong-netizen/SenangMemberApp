@@ -1,1 +1,111 @@
-﻿
+@page "/AppointmentSelectServices"
+@using SenangMemberApp.Shared.Models
+@layout EmptyLayout
+
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<AppointmentSelectServices> Loc
+
+<div class="page-wrapper">
+    <div class="header">
+        <div><span @onclick="navBack"><i class="fa-solid fa-angle-left"></i></span></div>
+        <div><span>@Loc["PageTitle"]</span></div>
+        <div></div>
+    </div>
+    <div class="steps-wrapper">
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill">
+                        <span>1</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepServices"]</span>
+        </div>
+        <div class="steps-line"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer">
+                    <div class="steps-ball-fill">
+                        <span>2</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepStaff"]</span>
+        </div>
+        <div class="steps-line"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer">
+                    <div class="steps-ball-fill">
+                        <span>3</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepDate"]</span>
+        </div>
+        <div class="steps-line"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer">
+                    <div class="steps-ball-fill">
+                        <span>4</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepSummary"]</span>
+        </div>
+    </div>
+    <div class="search-wrapper">
+        <div class="search-box">
+            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input class="search-textbox" type="text" placeholder="@Loc["SearchPlaceholder"]" @bind="servicesSearchText" @bind:event="oninput" />
+        </div>
+    </div>
+    <div class="category-filter-bar">
+        <button class="category-pill @(_selectedCategoryId == 0 ? "active" : "")" @onclick="() => FilterByCategory(0)">All</button>
+        @foreach (var category in Categories)
+        {
+            <button class="category-pill @(_selectedCategoryId == category.Id ? "active" : "")" @onclick="() => FilterByCategory(category.Id)">@category.Name</button>
+        }
+    </div>
+    <div class="product-grid">
+        @foreach (var service in FilteredItems)
+        {
+            <div class="product-info-wrapper @(SelectedServiceIds.Contains(service.Id) ? "selected" : "")" 
+                 @onpointerdown="async (e) => await itemClicked(service.Id, e)" 
+                 @onpointerup="() => itemReleased(service.Id)" 
+                 @onpointermove="onPointerMove">
+                <div class="product-info">
+                    <span class="product-name">@service.Name</span>
+                    <span class="product-info-subtitle">@service.Description</span>
+                    <span class="product-info-subtitle">RM @service.Price | @service.EstimatedDuration.TotalMinutes mins</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div @onclick="navSelectStaff" class="next-button">
+    <div class="next-button-content @(SelectedServiceIds.Count < 1 ? "disabled" : "")">
+        <span>@Loc["NextButton"]</span>
+    </div>
+</div>
+
+@if (servicesModalIsOpen)
+{
+    <div @onclick="closeServiceModal" class="backdrop">
+        <div @onclick:stopPropagation="true" class="modal-wrapper">
+            <div class="modal-top">
+                <div></div>
+                <div><span>@serviceToShowInModal.Name</span></div>
+                <div @onclick="closeServiceModal" class="close-button"><i class="fa-solid fa-xmark"></i></div>
+            </div>
+            <div class="modal-content" style="padding: 20px;">
+                <p><strong>Description:</strong> @serviceToShowInModal.Description</p>
+                <p><strong>Price:</strong> RM @serviceToShowInModal.Price</p>
+                <p><strong>Duration:</strong> @serviceToShowInModal.EstimatedDuration.TotalMinutes mins</p>
+            </div>
+        </div>
+    </div>
+}

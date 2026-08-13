@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
@@ -37,7 +37,7 @@
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
               <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
@@ -58,10 +58,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdministrativeAI" xml:space="preserve">
+    <value>AI Pentadbiran</value>
+  </data>
+  <data name="AlwaysHereToHelp" xml:space="preserve">
+    <value>Sentiasa sedia membantu</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Cuba semula</value>
+  </data>
+  <data name="TapIdToSelect" xml:space="preserve">
+    <value>Ketik ID untuk memilih:</value>
+  </data>
+  <data name="TypeMessagePlaceholder" xml:space="preserve">
+    <value>Taip mesej...</value>
+  </data>
+  <data name="LoadingProfile" xml:space="preserve">
+    <value>Memuatkan profil anda...</value>
+  </data>
+  <data name="SyncingAppointments" xml:space="preserve">
+    <value>Menyenaraikan tempahan anda...</value>
+  </data>
+  <data name="NoPhoneFound" xml:space="preserve">
+    <value>Tiada nombor telefon berdaftar ditemui pada profil anda.</value>
+  </data>
+  <data name="InitFailed" xml:space="preserve">
+    <value>Penyiapan gagal:</value>
+  </data>
+  <data name="ApiError" xml:space="preserve">
+    <value>Ralat API:</value>
+  </data>
   <data name="ChatSessionMissing" xml:space="preserve">
     <value>Sesi log masuk anda tidak tersedia. Sila log masuk semula.</value>
   </data>
   <data name="ChatSessionExpired" xml:space="preserve">
     <value>Sesi log masuk anda telah tamat tempoh. Sila log masuk semula.</value>
+  </data>
+  <data name="SendingVoiceMessage" xml:space="preserve">
+    <value>ðŸŽ™ï¸ Menghantar mesej suara...</value>
+  </data>
+  <data name="UnderstandAudioError" xml:space="preserve">
+    <value>Maaf, audio tidak dapat difahami. Sila cuba lagi atau taip mesej anda.</value>
+  </data>
+  <data name="VoiceNetworkError" xml:space="preserve">
+    <value>Pemprosesan suara gagal disebabkan ralat rangkaian.</value>
+  </data>
+  <data name="NetworkError" xml:space="preserve">
+    <value>Ralat sambungan. Sila cuba lagi.</value>
+  </data>
+  <data name="JumpToLatest" xml:space="preserve">
+    <value>Pergi ke mesej terkini</value>
   </data>
 </root>

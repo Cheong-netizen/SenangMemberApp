@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace SenangMemberApp.Shared.Pages
 {
-    public partial class Home
+    public partial class Home : IDisposable
     {
         private bool shopListModalIsOpen = false;
         private bool appointmentMoreModalIsOpen = false;
@@ -71,13 +71,14 @@ namespace SenangMemberApp.Shared.Pages
         private List<AppointmentResponseDTO> allUpcomingAppointments = new();
         private List<BranchResponseDTO> currentBranches = new();
 
-        protected async override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            ShopState.OnStateChange += OnShopStateChanged;
             loading = true;
             services = ServiceProducts.GetServices();
+            await LoadCompanyData();
             currentShopId = ShopState.CurrentShopId;
             currentShopName = ShopState.CurrentShopName;
-            await LoadCompanyData();
             var response = await userProfile.GetUserProfile();
             if (response != null && response.statusCode == 200 && response.result != null)
             {
@@ -86,8 +87,22 @@ namespace SenangMemberApp.Shared.Pages
             await LoadAppointmentData();
             loading = false;
             StateHasChanged();
+        }
 
-            // Initial load of data
+        private void OnShopStateChanged()
+        {
+            InvokeAsync(async () =>
+            {
+                currentShopId = ShopState.CurrentShopId;
+                currentShopName = ShopState.CurrentShopName;
+                await LoadAppointmentData();
+                StateHasChanged();
+            });
+        }
+
+        public void Dispose()
+        {
+            ShopState.OnStateChange -= OnShopStateChanged;
         }
 
         private async Task LoadCompanyData()
@@ -156,6 +171,11 @@ namespace SenangMemberApp.Shared.Pages
         public void navAppointment()
         {
             navManager.NavigateTo("/Appointment");
+        }
+
+        public void navSelectCompany()
+        {
+            navManager.NavigateTo("/select-company");
         }
 
         private void toggleShopListModal()

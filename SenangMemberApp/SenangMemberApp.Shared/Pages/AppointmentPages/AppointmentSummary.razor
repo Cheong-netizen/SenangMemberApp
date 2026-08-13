@@ -2,8 +2,6 @@
 @layout EmptyLayout
 
 @using Microsoft.Extensions.Localization
-
-
 @inject IStringLocalizer<AppointmentSummary> Loc
 
 <div class="page-wrapper">
@@ -13,7 +11,7 @@
         <div></div>
     </div>
     <div class="steps-wrapper">
-        @* <div class="steps-component">
+        <div class="steps-component">
             <div class="steps-ball">
                 <div class="steps-ball-outer active">
                     <div class="steps-ball-fill">
@@ -33,25 +31,24 @@
                 </div>
             </div>
             <span>@Loc["StepStaff"]</span>
-        </div> *@
+        </div>
         <div class="steps-line active"></div>
         <div class="steps-component">
             <div class="steps-ball">
                 <div class="steps-ball-outer active">
                     <div class="steps-ball-fill">
-                        <span>1</span>
+                        <span>3</span>
                     </div>
                 </div>
             </div>
             <span>@Loc["StepDate"]</span>
         </div>
-        <div class="steps-line active">
-        </div>
+        <div class="steps-line active"></div>
         <div class="steps-component">
             <div class="steps-ball">
                 <div class="steps-ball-outer active">
                     <div class="steps-ball-fill">
-                        <span>2</span>
+                        <span>4</span>
                     </div>
                 </div>
             </div>
@@ -59,28 +56,52 @@
         </div>
     </div>
     <div class="summary-info">
-        <div class="store-info-wrapper">
-            <img class="store-image" src="@appointmentState.selectedOutlet.imagePath" alt="Product Image">
-            <div class="store-info">
-                <span class="normal-text">@(appointmentState.selectedOutlet.companyName ?? "")</span>
-                <span class="subtitle-text">@(appointmentState.selectedOutlet.branch ?? "")</span>
-            </div>
-        </div>
-        <div class="date">
-            <span class="header-text"><i class="fa-regular fa-calendar icon"></i>  @Loc["DateAndTime"]</span>
-            <span class="normal-text">@appointmentState.selectedTime.ToString("dd/MM/yyyy, HH:mm")</span>
-            @* <span class="subtitle-text">@timeRequired.ToString(@"hh\:mm")</span> *@
-        </div>
-
-        @* <div class="staff">
-            <span class="header-text"><i class="fa-regular fa-user icon"></i>  @Loc["Staff"]</span>
-            <div class="staff-info-wrapper">
-                <img class="staff-image" src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" alt="Product Image">
-                <div class="staff-info">
-                    <span>@(staffDetails?.LastName ?? "")</span>
+        @if (appointmentState.selectedOutlet != null)
+        {
+            <div class="store-info-wrapper">
+                <img class="store-image" src="@(string.IsNullOrWhiteSpace(appointmentState.selectedOutlet.imagePath) ? "_content/SenangMemberApp.Shared/Images/store_placeholder.png" : appointmentState.selectedOutlet.imagePath)" alt="Store Image">
+                <div class="store-info">
+                    <span class="normal-text">@(appointmentState.selectedOutlet.companyName ?? "")</span>
+                    <span class="subtitle-text">@(appointmentState.selectedOutlet.branch ?? "")</span>
                 </div>
             </div>
-        </div> *@
+        }
+
+        @if (servicesDetails != null && servicesDetails.Any())
+        {
+            <div class="services-wrapper">
+                <span class="header-text"><i class="fa-solid fa-list icon"></i> @Loc["StepServices"]</span>
+                @foreach (var service in servicesDetails)
+                {
+                    <div class="services">
+                        <span class="normal-text">@service.Name</span>
+                        <span class="subtitle-text">RM @service.Price | @service.EstimatedDuration.TotalMinutes mins</span>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(appointmentState.selectedStaffName))
+        {
+            <div class="staff">
+                <span class="header-text"><i class="fa-regular fa-user icon"></i> @Loc["Staff"]</span>
+                <div class="staff-info-wrapper">
+                    <img class="staff-image" src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" alt="Staff Image">
+                    <div class="staff-info">
+                        <span class="normal-text">@appointmentState.selectedStaffName</span>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="date">
+            <span class="header-text"><i class="fa-regular fa-calendar icon"></i> @Loc["DateAndTime"]</span>
+            <span class="normal-text">@appointmentState.selectedTime.ToString("dd/MM/yyyy, HH:mm")</span>
+            @if (appointmentState.TotalEstimateTime > TimeSpan.Zero)
+            {
+                <span class="subtitle-text">Est. Duration: @appointmentState.TotalEstimateTime.TotalMinutes mins</span>
+            }
+        </div>
     </div>
 </div>
 <div class="next-button">
@@ -99,7 +120,7 @@
             <div class="modal-top">
                 <div class="left-header-div"></div>
                 <div class="center-header-div"><span>@Loc["CancelModalTitle"]</span></div>
-                <div @onclick="closeCancelModal" class="close-button right-header-div"></div>
+                <div @onclick="closeCancelModal" class="close-button right-header-div"><i class="fa-solid fa-xmark"></i></div>
             </div>
             <div class="modal-content-wrapper">
                 <span>@Loc["CancelModalContent"]</span>
@@ -108,7 +129,7 @@
                 <div @onclick="closeCancelModal" class="button cancel-button">
                     <span>@Loc["CancelButton"]</span>
                 </div>
-                <div class="button confirm-button">
+                <div @onclick="navAppointment" class="button confirm-button">
                     <span>@Loc["ConfirmButton"]</span>
                 </div>
             </div>

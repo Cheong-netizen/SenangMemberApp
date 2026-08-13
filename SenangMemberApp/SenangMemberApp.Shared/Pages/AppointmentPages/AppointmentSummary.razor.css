@@ -56,6 +56,10 @@
     margin-top: 23px;
 }
 
+.steps-ball-fill span {
+    color: white;
+}
+
 .active {
     background-color: var(--color-primary);
     transition: background-color ease-out 0.3s, width ease-out 0.3s;
@@ -100,6 +104,7 @@
         padding: 15px;
         font-size: var(--fontsize-text);
         font-weight: var(--bold-sm);
+        color: white;
     }
 
     .cancel-button-content span {

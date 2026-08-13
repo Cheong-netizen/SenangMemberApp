@@ -47,9 +47,9 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
                 NotifyStateChanged();
                 return;
             }
-            await RestoreState();
-
             CompanyList = response.result ?? new List<CompanyResponseDTO>();
+
+            await RestoreState();
 
             IsLoading = false;
             NotifyStateChanged(); // Tell UI initialization is done

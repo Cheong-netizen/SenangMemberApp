@@ -40,8 +40,8 @@ namespace SenangMemberApp.Shared.Pages
                 // If the user's identity is already authenticated...
                 if (authState.User.Identity?.IsAuthenticated == true)
                 {
-                    // Bounce them straight to the home page!
-                    navigationManager.NavigateTo("/home", replace: true);
+                    // Bounce them to the select-company page!
+                    navigationManager.NavigateTo("/select-company", replace: true);
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace SenangMemberApp.Shared.Pages
                     var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
                     customAuthStateProvider.NotifyUserStatusChanged();
 
-                    navigationManager.NavigateTo("/home", replace: true);
+                    navigationManager.NavigateTo("/select-company", replace: true);
                 }
                 else
                 {

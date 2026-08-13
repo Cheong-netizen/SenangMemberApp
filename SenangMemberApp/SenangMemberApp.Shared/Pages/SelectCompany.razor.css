@@ -1,0 +1,111 @@
+.select-company-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 7% 40px 7%;
+    min-height: 100vh;
+    background-color: var(--bg-main, #f4f6f8);
+}
+
+.select-company-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.select-company-header h2 {
+    font-size: 1.6rem;
+    font-weight: var(--bold-lg);
+    color: var(--color-primary);
+    margin-bottom: 6px;
+}
+
+.select-company-header p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.search-wrapper {
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-300);
+    background: white;
+}
+
+.search-box {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-box span {
+    color: var(--text-muted);
+    padding-left: 5px;
+}
+
+.search-textbox {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: transparent;
+}
+
+.company-grid-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.company-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-200, #e5e7eb);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.company-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-primary);
+}
+
+.company-logo {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    padding: 4px;
+    background-color: #f9fafb;
+    border: 1px solid var(--color-gray-200, #eee);
+    flex-shrink: 0;
+}
+
+.company-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    flex: 1;
+}
+
+.company-name {
+    font-size: 1.05rem;
+    font-weight: var(--bold-sm);
+    color: var(--text-main);
+}
+
+.company-code {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.arrow-icon {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+}

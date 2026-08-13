@@ -1,4 +1,4 @@
-﻿@page "/profile"
+@page "/profile"
 
 @using Microsoft.Extensions.Localization
 
@@ -83,6 +83,10 @@
                 <button class="lang-btn @(CurrentCulture == "zh-CN" ? "active" : "")"
                         @onclick='() => ChangeLanguage("zh-CN")'>
                     中文
+                </button>
+                <button class="lang-btn @(CurrentCulture == "ms-MY" ? "active" : "")"
+                        @onclick='() => ChangeLanguage("ms-MY")'>
+                    BM
                 </button>
             </div>
         </div>

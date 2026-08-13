@@ -9,10 +9,39 @@
 /*This is all header*/
 .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between;;
     /*    background-color: var(--color-primary);*/
-    padding: 41px 7% 2% 7%;
+    padding: 2% 7% 2% 7%;
+}
+
+.top-company-selector {
+    display: inline-flex;
+    width: 100px;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: var(--bold-sm, 600);
+    transition: all 0.2s ease;
+    user-select: none;
+    box-shadow: var(--shadow-sm);
+    margin: 6% 7% 0% 7%;
+}
+
+.top-company-selector:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.top-company-selector .back-icon {
+    font-size: 0.9rem;
+}
+
+.top-company-selector .caret-icon {
+    font-size: 0.75rem;
 }
 
 .welcome-text {

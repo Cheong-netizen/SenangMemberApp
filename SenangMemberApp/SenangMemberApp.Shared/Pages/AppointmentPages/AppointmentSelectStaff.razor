@@ -1,1 +1,78 @@
-﻿
+@page "/AppointmentSelectStaff"
+@using SenangMemberApp.Shared.Models
+@layout EmptyLayout
+
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<AppointmentSelectStaff> Loc
+
+<div class="page-wrapper">
+    <div class="header">
+        <div><span @onclick="navBack"><i class="fa-solid fa-angle-left"></i></span></div>
+        <div><span>@Loc["PageTitle"]</span></div>
+        <div></div>
+    </div>
+    <div class="steps-wrapper">
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill">
+                        <span>1</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepServices"]</span>
+        </div>
+        <div class="steps-line active"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill">
+                        <span>2</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepStaff"]</span>
+        </div>
+        <div class="steps-line"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer">
+                    <div class="steps-ball-fill">
+                        <span>3</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepDate"]</span>
+        </div>
+        <div class="steps-line"></div>
+        <div class="steps-component">
+            <div class="steps-ball">
+                <div class="steps-ball-outer">
+                    <div class="steps-ball-fill">
+                        <span>4</span>
+                    </div>
+                </div>
+            </div>
+            <span>@Loc["StepSummary"]</span>
+        </div>
+    </div>
+    <div class="staff-grid">
+        @foreach (var staff in staffs)
+        {
+            <div @onclick='() => selectStaff(staff.Id, $"{staff.FirstName} {staff.LastName}")' class="staff-card @(selectedStaffId == staff.Id ? "selected" : "")">
+                <div class="image-wrapper">
+                    <img src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" alt="Staff Image" />
+                </div>
+                <div class="card-content">
+                    <span>@staff.FirstName @staff.LastName</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div @onclick="navSelectDate" class="next-button">
+    <div class="next-button-content @(selectedStaffId < 1 ? "disabled" : "")">
+        <span>@Loc["NextButton"]</span>
+    </div>
+</div>

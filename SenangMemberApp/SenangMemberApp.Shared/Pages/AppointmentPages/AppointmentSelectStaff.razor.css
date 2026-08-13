@@ -1,4 +1,4 @@
-﻿.page-wrapper {
+.page-wrapper {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -56,8 +56,13 @@
     margin-top: 23px;
 }
 
+.steps-ball-fill span {
+    color: white;
+}
+
 .active {
     background-color: var(--color-primary);
+    color: white;
     transition: background-color ease-out 0.3s, width ease-out 0.3s;
 }
 
@@ -117,12 +122,14 @@
     align-items: center;
     background-color: var(--color-primary);
     border-radius: var(--radius-md);
+    color: white;
 }
 
     .next-button-content span {
         padding: 15px;
         font-size: var(--fontsize-text);
         font-weight: var(--bold-sm);
+        color: white;
     }
 
 /* 1. The Grid Container */

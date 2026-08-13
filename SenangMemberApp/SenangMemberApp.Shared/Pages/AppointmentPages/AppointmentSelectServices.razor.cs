@@ -1,153 +1,152 @@
-﻿//using Microsoft.AspNetCore.Components;
-//using SenangMemberApp.Shared.Models;
-//using SenangMemberApp.Shared.Services.IService; // Import the Interface namespace
-//using System.Collections.Generic;
-//using System.Linq;
-//using Microsoft.AspNetCore.Components.Web;
-//using SenangMemberApp.Shared.Services.ConcreteService;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-//namespace SenangMemberApp.Shared.Pages.AppointmentPages
-//{
-//    public partial class AppointmentSelectServices
-//    {
-//        [Inject]
-//        public required IServiceProducts ProductService { get; set; } 
+namespace SenangMemberApp.Shared.Pages.AppointmentPages
+{
+    public partial class AppointmentSelectServices
+    {
+        [Inject]
+        public required IServiceProducts ProductService { get; set; }
 
-//        [Inject]
-//        public required NavigationManager NavManager { get; set; }
-//        [Inject]
-//        private IAppointmentState appointmentState { get; set; } = default!;
-//        private string servicesSearchText = string.Empty;
+        [Inject]
+        public required NavigationManager NavManager { get; set; }
 
-//        private int _selectedCategoryId = 0; // 0 represents "All"
+        [Inject]
+        private IAppointmentState appointmentState { get; set; } = default!;
 
-//        private List<CategoryModel> Categories = new();
-//        private List<ServicesModel> AllItems = new();
-//        private DateTime timeClick { get; set; }
-//        private DateTime timeRelease { get; set; }
-//        private bool servicesModalIsOpen = false;
-//        private HashSet<int> SelectedServiceIds = new();
-//        private CancellationTokenSource? pressCts;
-//        private bool isLongPress = false;
-//        private double startX;
-//        private double startY;
-//        private int MoveThreshold = 10;
-//        private int modalServiceIdToDisplay = 0;
-//        private ServicesModel serviceToShowInModal = new();
-//        private IEnumerable<ServicesModel> FilteredItems
-//        {
-//            get
-//            {
-//                IEnumerable<ServicesModel> query = AllItems.AsEnumerable();
+        private string servicesSearchText = string.Empty;
+        private int _selectedCategoryId = 0; // 0 represents "All"
 
-//                if(_selectedCategoryId != 0)
-//                {
-//                    query = query.Where(q => q.CategoryId == _selectedCategoryId);
-//                }
+        private List<CategoryModel> Categories = new();
+        private List<ServicesModel> AllItems = new();
+        private bool servicesModalIsOpen = false;
+        private HashSet<int> SelectedServiceIds = new();
+        private CancellationTokenSource? pressCts;
+        private bool isLongPress = false;
+        private double startX;
+        private double startY;
+        private int MoveThreshold = 10;
+        private int modalServiceIdToDisplay = 0;
+        private ServicesModel serviceToShowInModal = new();
 
-//                if (!string.IsNullOrEmpty(servicesSearchText))
-//                {
-//                    query = query.Where(s => s.Name.Contains(servicesSearchText, StringComparison.OrdinalIgnoreCase));
-//                }
+        private IEnumerable<ServicesModel> FilteredItems
+        {
+            get
+            {
+                IEnumerable<ServicesModel> query = AllItems.AsEnumerable();
 
-//                return query;
-//            }
-//        }
+                if (_selectedCategoryId != 0)
+                {
+                    query = query.Where(q => q.CategoryId == _selectedCategoryId);
+                }
 
-//        protected override void OnInitialized()
-//        {
-//            Categories = ProductService.GetCategories();
-//            AllItems = ProductService.GetServicesByStoreId(appointmentState.CurrentAppointment.ShopId);
-//        }
+                if (!string.IsNullOrEmpty(servicesSearchText))
+                {
+                    query = query.Where(s => s.Name.Contains(servicesSearchText, StringComparison.OrdinalIgnoreCase));
+                }
 
-//        private void FilterByCategory(int categoryId)
-//        {
-//            _selectedCategoryId = categoryId;
-//        }
+                return query;
+            }
+        }
 
-//        private void navSelectStaff()
-//        {
-//            if (SelectedServiceIds.Count < 1)
-//                return;
+        protected override void OnInitialized()
+        {
+            Categories = ProductService.GetCategories() ?? new List<CategoryModel>();
+            AllItems = ProductService.GetServices() ?? new List<ServicesModel>();
 
-//            TimeSpan totalEstimateTime = getTotalEstimatedTime(SelectedServiceIds);
-//            appointmentState.SetService(SelectedServiceIds, totalEstimateTime);
-//            NavManager.NavigateTo("/AppointmentSelectStaff");
-//        }
-//        private TimeSpan getTotalEstimatedTime(HashSet<int> selectedServiceIds)
-//        {
-//            TimeSpan totalTime = AllItems
-//                .Where(s => selectedServiceIds.Contains(s.Id))
-//                .Aggregate(TimeSpan.Zero, (total, next) => total + next.EstimatedDuration);
+            if (appointmentState.SelectedServiceIds != null && appointmentState.SelectedServiceIds.Any())
+            {
+                SelectedServiceIds = new HashSet<int>(appointmentState.SelectedServiceIds);
+            }
+        }
 
-//            return totalTime;
-//        }
-//        private async Task itemClicked(int serviceId, PointerEventArgs e)
-//        {
-//            //timeClick = DateTime.Now;
-//            startX = e.ClientX;
-//            startY = e.ClientY;
-//            isLongPress = false;
-//            pressCts = new CancellationTokenSource();
-//            try
-//            {
-//                await Task.Delay(400, pressCts.Token);
+        private void FilterByCategory(int categoryId)
+        {
+            _selectedCategoryId = categoryId;
+        }
 
-//                isLongPress = true;
-//                servicesModalIsOpen = true;
-//                modalServiceIdToDisplay = serviceId;
-//                serviceToShowInModal = AllItems.First(i => i.Id == serviceId);
-//            }
-//            catch (TaskCanceledException)
-//            {
+        private void navSelectStaff()
+        {
+            if (SelectedServiceIds.Count < 1)
+                return;
 
-//            }
-//        }
+            TimeSpan totalEstimateTime = getTotalEstimatedTime(SelectedServiceIds);
+            appointmentState.SetSelectedService(SelectedServiceIds, totalEstimateTime);
+            NavManager.NavigateTo("/AppointmentSelectStaff");
+        }
 
-//        private void itemReleased(int serviceId)
-//        {
-//            //timeRelease = DateTime.Now;
-//            //TimeSpan duration = timeRelease - timeClick;
-//            //if (duration.TotalMilliseconds > 400) 
-//            //{
-//            //    servicesModalIsOpen = true;
-//            //}
-//            //else
-//            //{
-//            //    SelectedServiceIds.Add(serviceId);
-//            //}
-//            pressCts?.Cancel();
+        private TimeSpan getTotalEstimatedTime(HashSet<int> selectedServiceIds)
+        {
+            TimeSpan totalTime = AllItems
+                .Where(s => selectedServiceIds.Contains(s.Id))
+                .Aggregate(TimeSpan.Zero, (total, next) => total + next.EstimatedDuration);
 
-//            if (isLongPress)
-//                return;
+            return totalTime;
+        }
 
-//            if (!SelectedServiceIds.Add(serviceId))
-//            {
-//                SelectedServiceIds.Remove(serviceId);
-//            }
+        private async Task itemClicked(int serviceId, PointerEventArgs e)
+        {
+            startX = e.ClientX;
+            startY = e.ClientY;
+            isLongPress = false;
+            pressCts = new CancellationTokenSource();
+            try
+            {
+                await Task.Delay(400, pressCts.Token);
 
-//            else
-//            {
-//                SelectedServiceIds.Add(serviceId);
-//            }
-//        }
-//        private void onPointerMove(PointerEventArgs e)
-//        {
-//            double dx = Math.Abs(e.ClientX - startX);
-//            double dy = Math.Abs(e.ClientY - startY);
+                isLongPress = true;
+                servicesModalIsOpen = true;
+                modalServiceIdToDisplay = serviceId;
+                serviceToShowInModal = AllItems.FirstOrDefault(i => i.Id == serviceId) ?? new ServicesModel();
+            }
+            catch (TaskCanceledException)
+            {
+            }
+        }
 
-//            if (dx > MoveThreshold || dy > MoveThreshold)
-//            {
-//                pressCts?.Cancel();
-//            }
-//        }
-//        private void closeServiceModal()
-//        {
-//            servicesModalIsOpen = false;
-//        }
-//        private void navBack()
-//        {
-//            NavManager.NavigateTo("/AppointmentSelectOutlet");
-//        }
-//    }
-//}
+        private void itemReleased(int serviceId)
+        {
+            pressCts?.Cancel();
+
+            if (isLongPress)
+                return;
+
+            if (SelectedServiceIds.Contains(serviceId))
+            {
+                SelectedServiceIds.Remove(serviceId);
+            }
+            else
+            {
+                SelectedServiceIds.Add(serviceId);
+            }
+        }
+
+        private void onPointerMove(PointerEventArgs e)
+        {
+            double dx = Math.Abs(e.ClientX - startX);
+            double dy = Math.Abs(e.ClientY - startY);
+
+            if (dx > MoveThreshold || dy > MoveThreshold)
+            {
+                pressCts?.Cancel();
+            }
+        }
+
+        private void closeServiceModal()
+        {
+            servicesModalIsOpen = false;
+        }
+
+        private void navBack()
+        {
+            NavManager.NavigateTo("/AppointmentSelectOutlet");
+        }
+    }
+}

@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.Models;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components;
 
@@ -156,7 +156,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
 
         private void navBack()
         {
-            navigationManager.NavigateTo("/AppointmentSelectOutlet");
+            navigationManager.NavigateTo("/AppointmentSelectStaff");
         }
     }
 }

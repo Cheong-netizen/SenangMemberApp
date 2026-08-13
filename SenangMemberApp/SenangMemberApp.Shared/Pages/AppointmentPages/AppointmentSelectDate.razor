@@ -1,4 +1,4 @@
-﻿@page "/AppointmentSelectDate"
+@page "/AppointmentSelectDate"
 @layout EmptyLayout
 
 @using Microsoft.Extensions.Localization
@@ -14,7 +14,7 @@
     </div>
 
     <div class="steps-wrapper">
-        @* <div class="steps-component">
+        <div class="steps-component">
             <div class="steps-ball">
                 <div class="steps-ball-outer active">
                     <div class="steps-ball-fill"><span>1</span></div>
@@ -30,12 +30,12 @@
                 </div>
             </div>
             <span>@Loc["StepStaff"]</span>
-        </div> *@
-        <div class="steps-line @(loaded ? "active" : "")"></div>
+        </div>
+        <div class="steps-line active"></div>
         <div class="steps-component">
             <div class="steps-ball">
-                <div class="steps-ball-outer @(loaded ? "active" : "")">
-                    <div class="steps-ball-fill"><span>1</span></div>
+                <div class="steps-ball-outer active">
+                    <div class="steps-ball-fill"><span>3</span></div>
                 </div>
             </div>
             <span>@Loc["StepDate"]</span>
@@ -44,7 +44,7 @@
         <div class="steps-component">
             <div class="steps-ball">
                 <div class="steps-ball-outer">
-                    <div class="steps-ball-fill"><span>2</span></div>
+                    <div class="steps-ball-fill"><span>4</span></div>
                 </div>
             </div>
             <span>@Loc["StepSummary"]</span>

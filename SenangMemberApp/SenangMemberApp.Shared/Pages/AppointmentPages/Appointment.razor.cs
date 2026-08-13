@@ -173,7 +173,12 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
 
         public void navSelectShop()
         {
-            navManager.NavigateTo("/AppointmentSelectShop");
+            navManager.NavigateTo("/AppointmentSelectOutlet");
+        }
+
+        public void navSelectOutlet()
+        {
+            navManager.NavigateTo("/AppointmentSelectOutlet");
         }
 
         private void toggleOneMonth()
