@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SenangMemberApp.Shared.Pages
 {
-    public partial class ResetPassword
+    public partial class ResetPassword : IDisposable
     {
         [Inject]
         private HttpClient HttpClient { get; set; } = default!;
@@ -15,7 +16,7 @@ namespace SenangMemberApp.Shared.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; } = default!;
 
-        private string phoneNumber = "60183208832";
+        private string phoneNumber = "";
         private string inputOtpCode = "";
         private string generatedOtpCode = "";
         private bool isCodeSent = false;
@@ -23,8 +24,35 @@ namespace SenangMemberApp.Shared.Pages
         private bool isSuccess = false;
         private string errorMessage = "";
         private string successMessage = "";
+        private int resendCountdown = 0;
+        private bool isCooldownActive => resendCountdown > 0;
+        private System.Threading.CancellationTokenSource? _countdownCts;
 
         private const string GreenApiUrl = "https://7105.api.greenapi.com/waInstance7105472363/sendMessage/5a7db8f511c24d7abbefd0e2cec36ba50c07b35615fe44c19d";
+
+        private async Task StartResendCountdown(int seconds = 10)
+        {
+            _countdownCts?.Cancel();
+            _countdownCts = new System.Threading.CancellationTokenSource();
+            var token = _countdownCts.Token;
+
+            resendCountdown = seconds;
+            StateHasChanged();
+
+            try
+            {
+                while (resendCountdown > 0 && !token.IsCancellationRequested)
+                {
+                    await Task.Delay(1000, token);
+                    resendCountdown--;
+                    StateHasChanged();
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // Ignored when cancelled or disposed
+            }
+        }
 
         private async Task HandleSendCode()
         {
@@ -71,6 +99,7 @@ namespace SenangMemberApp.Shared.Pages
                 {
                     isCodeSent = true;
                     successMessage = $"A 6-digit verification code has been sent to your WhatsApp ({phoneNumber}).";
+                    _ = StartResendCountdown(10);
                 }
                 else
                 {
@@ -91,7 +120,11 @@ namespace SenangMemberApp.Shared.Pages
 
         private async Task HandleResendCode()
         {
-            isCodeSent = false;
+            if (isLoading || isCooldownActive)
+            {
+                return;
+            }
+
             await HandleSendCode();
         }
 
@@ -121,6 +154,12 @@ namespace SenangMemberApp.Shared.Pages
             await Task.Delay(1500);
 
             NavigationManager.NavigateTo("/", replace: true);
+        }
+
+        public void Dispose()
+        {
+            _countdownCts?.Cancel();
+            _countdownCts?.Dispose();
         }
     }
 }

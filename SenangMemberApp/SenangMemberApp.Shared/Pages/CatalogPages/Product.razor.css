@@ -265,17 +265,3 @@
     font-size: 2.2rem;
     color: var(--color-gray-300);
 }
-
-.empty-catalog-message {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-muted, #8e8e93);
-    width: 100%;
-    min-height: 50vh;
-    height: 100%;
-}
