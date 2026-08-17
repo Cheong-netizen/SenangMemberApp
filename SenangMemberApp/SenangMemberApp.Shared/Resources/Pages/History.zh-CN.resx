@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -137,5 +137,17 @@
   </data>
   <data name="SelectShopModalTitle" xml:space="preserve">
     <value>选择商店</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>评价</value>
+  </data>
+  <data name="ReviewErrorTitle" xml:space="preserve">
+    <value>无法打开链接</value>
+  </data>
+  <data name="ReviewErrorMessage" xml:space="preserve">
+    <value>无法打开评价链接，请重试。</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>确定</value>
   </data>
 </root>

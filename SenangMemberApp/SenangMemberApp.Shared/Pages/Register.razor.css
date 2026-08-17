@@ -112,11 +112,41 @@
     display: block;
 }
 
+.btn-resend {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.btn-resend:hover:not(:disabled) {
+    color: var(--color-primary-hover);
+}
+
+.btn-resend:disabled {
+    color: var(--text-muted);
+    cursor: not-allowed;
+    text-decoration: none;
+    opacity: 0.6;
+}
+
 .alert-error {
     margin-top: 1rem;
     padding: 0.75rem;
     background-color: #fee2e2; /* Light red background */
     color: var(--color-danger);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.alert-success {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: #d1fae5;
+    color: #065f46;
     border-radius: var(--radius-sm);
     font-size: 0.9rem;
     text-align: center;

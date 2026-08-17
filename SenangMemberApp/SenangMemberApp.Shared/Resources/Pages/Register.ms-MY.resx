@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -155,5 +155,29 @@
   </data>
   <data name="Subtitle" xml:space="preserve">
     <value>Sila isi butiran di bawah untuk mendaftar.</value>
+  </data>
+  <data name="OtpSubtitle" xml:space="preserve">
+    <value>Masukkan kod pengesahan 6-digit yang dihantar ke WhatsApp anda.</value>
+  </data>
+  <data name="OtpLabel" xml:space="preserve">
+    <value>Kod Pengesahan 6-Digit</value>
+  </data>
+  <data name="OtpPlaceholder" xml:space="preserve">
+    <value>Masukkan kod 6-digit</value>
+  </data>
+  <data name="VerifyAndRegister" xml:space="preserve">
+    <value>Sahkan &amp; Daftar</value>
+  </data>
+  <data name="ResendCode" xml:space="preserve">
+    <value>Hantar Semula Kod</value>
+  </data>
+  <data name="ChangeDetails" xml:space="preserve">
+    <value>Tukar Butiran Pendaftaran</value>
+  </data>
+  <data name="SendingCode" xml:space="preserve">
+    <value>Menghantar Kod...</value>
+  </data>
+  <data name="Verifying" xml:space="preserve">
+    <value>Mengesahkan &amp; Mendaftar...</value>
   </data>
 </root>

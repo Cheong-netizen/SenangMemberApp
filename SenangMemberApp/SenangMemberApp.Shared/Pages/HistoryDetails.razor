@@ -65,11 +65,22 @@
         </div>
     </div>
 
+    <!-- Review Section -->
+    <div class="details-section">
+        <h6>Review</h6>
+        <button class="btn-review" @onclick="OpenReview">
+            <i class="fa-regular fa-star"></i> Leave a Review
+        </button>
+    </div>
+
 </div>
 
 @code {
     [Parameter]
     public int HistoryId { get; set; }
+
+    [Inject]
+    SenangMemberApp.Shared.Services.IService.IUrlLauncher UrlLauncher { get; set; } = default!;
 
     void GoBack()
     {
@@ -78,5 +89,10 @@
     async Task PrintPage()
     {
         await JS.InvokeVoidAsync("window.print");
+    }
+    async Task OpenReview()
+    {
+        var query = Uri.EscapeDataString("Wellness Spa Center Full Body Massage review");
+        await UrlLauncher.OpenUrlAsync($"https://www.google.com/search?q={query}");
     }
 }

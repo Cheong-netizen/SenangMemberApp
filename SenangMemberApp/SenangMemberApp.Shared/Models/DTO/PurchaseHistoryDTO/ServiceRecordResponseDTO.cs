@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,5 +26,6 @@ namespace SenangMemberApp.Shared.Models.DTO.PurchaseHistoryDTO
         public string inventoryTypeName { get; set; }
         public string branchID { get; set; }
         public string remarks { get; set; }
+        public string? reviewUrl { get; set; }
     }
 }

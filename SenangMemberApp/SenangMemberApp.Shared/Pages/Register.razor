@@ -8,62 +8,120 @@
     <div class="login-card">
         <div class="login-header">
             <h2 style="font-weight: var(--bold-lg); color: var(--text-main);">@Loc["PageTitle"]</h2>
-            <p style="color: var(--text-muted); font-size: var(--fontsize-subtitle);">@Loc["Subtitle"]</p>
-        </div>
-
-        <EditForm Model="@registerRequest" OnValidSubmit="HandleRegister">
-            <DataAnnotationsValidator />
-
-            <div class="form-group">
-                <label class="form-label form-row">
-                    @Loc["FullNameLabel"]
-                    <InputText @bind-Value="registerRequest.Name" class="custom-input" placeholder="@Loc["FullNamePlaceholder"]" />
-                </label>
-                <ValidationMessage For="@(() => registerRequest.Name)" class="validation-msg" />
-            </div>
-
-            <div class="form-group">
-                <label class="form-label form-row">
-                    @Loc["EmailLabel"]
-                    <InputText @bind-Value="registerRequest.Email" type="email" class="custom-input" placeholder="@Loc["EmailPlaceholder"]" />
-                </label>
-                <ValidationMessage For="@(() => registerRequest.Email)" class="validation-msg" />
-            </div>
-
-            <div class="form-group">
-                <label class="form-label form-row">
-                    @Loc["PhoneLabel"]
-                    <InputText @bind-Value="registerRequest.Phone" type="tel" class="custom-input" placeholder="@Loc["PhonePlaceholder"]" />
-                </label>
-                <ValidationMessage For="@(() => registerRequest.Phone)" class="validation-msg" />
-            </div>
-
-            <div class="form-group">
-                <label class="form-label form-row">
-                    @Loc["PasswordLabel"]
-                    <InputText @bind-Value="registerRequest.Password" type="password" class="custom-input" placeholder="@Loc["PasswordPlaceholder"]" />
-                </label>
-                <ValidationMessage For="@(() => registerRequest.Password)" class="validation-msg" />
-            </div>
-
-            <button type="submit" class="btn-login" disabled="@isLoading">
-                @if (isLoading)
+            <p style="color: var(--text-muted); font-size: var(--fontsize-subtitle);">
+                @if (!isCodeSent)
                 {
-                    <span>@Loc["LoadingText"]</span>
+                    @Loc["Subtitle"]
                 }
                 else
                 {
-                    <span>@Loc["RegisterButton"]</span>
+                    @Loc["OtpSubtitle"]
                 }
-            </button>
+            </p>
+        </div>
 
-            @if (!string.IsNullOrEmpty(errorMessage))
-            {
-                <div class="alert-error">
-                    @errorMessage
+        @if (!isCodeSent)
+        {
+            <EditForm Model="@registerRequest" OnValidSubmit="HandleSendVerificationCode">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label class="form-label form-row">
+                        @Loc["FullNameLabel"]
+                        <InputText @bind-Value="registerRequest.Name" class="custom-input" placeholder="@Loc["FullNamePlaceholder"]" />
+                    </label>
+                    <ValidationMessage For="@(() => registerRequest.Name)" class="validation-msg" />
                 </div>
-            }
-        </EditForm>
+
+                <div class="form-group">
+                    <label class="form-label form-row">
+                        @Loc["EmailLabel"]
+                        <InputText @bind-Value="registerRequest.Email" type="email" class="custom-input" placeholder="@Loc["EmailPlaceholder"]" />
+                    </label>
+                    <ValidationMessage For="@(() => registerRequest.Email)" class="validation-msg" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label form-row">
+                        @Loc["PhoneLabel"]
+                        <InputText @bind-Value="registerRequest.Phone" type="tel" class="custom-input" placeholder="@Loc["PhonePlaceholder"]" />
+                    </label>
+                    <ValidationMessage For="@(() => registerRequest.Phone)" class="validation-msg" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label form-row">
+                        @Loc["PasswordLabel"]
+                        <InputText @bind-Value="registerRequest.Password" type="password" class="custom-input" placeholder="@Loc["PasswordPlaceholder"]" />
+                    </label>
+                    <ValidationMessage For="@(() => registerRequest.Password)" class="validation-msg" />
+                </div>
+
+                <button type="submit" class="btn-login" disabled="@isLoading">
+                    @if (isLoading)
+                    {
+                        <span>@Loc["SendingCode"]</span>
+                    }
+                    else
+                    {
+                        <span>@Loc["RegisterButton"]</span>
+                    }
+                </button>
+            </EditForm>
+        }
+        else
+        {
+            <EditForm Model="@this" OnValidSubmit="HandleVerifyAndRegister">
+                <div class="form-group">
+                    <label class="form-label form-row">
+                        @Loc["OtpLabel"]
+                        <InputText @bind-Value="inputOtpCode" class="custom-input" placeholder="@Loc["OtpPlaceholder"]" maxlength="6" />
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-login" disabled="@(isLoading || isSuccess)">
+                    @if (isLoading)
+                    {
+                        <span>@Loc["Verifying"]</span>
+                    }
+                    else
+                    {
+                        <span>@Loc["VerifyAndRegister"]</span>
+                    }
+                </button>
+
+                <div style="text-align: center; margin-top: 1rem; display: flex; flex-direction: column; gap: 8px;">
+                    <button type="button" class="btn-resend" @onclick="HandleResendCode" disabled="@(isLoading || isCooldownActive)">
+                        @if (isCooldownActive)
+                        {
+                            <span>@Loc["ResendCode"] (@(resendCountdown)s)</span>
+                        }
+                        else
+                        {
+                            <span>@Loc["ResendCode"]</span>
+                        }
+                    </button>
+
+                    <button type="button" class="btn-resend" @onclick="ChangeDetails" disabled="@isLoading" style="color: var(--text-muted); font-size: 0.85rem;">
+                        @Loc["ChangeDetails"]
+                    </button>
+                </div>
+            </EditForm>
+        }
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert-error">
+                @errorMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="alert-success">
+                @successMessage
+            </div>
+        }
 
         <div class="login-footer">
             <a href="/" class="forgot-link">@Loc["SignInLink"]</a>

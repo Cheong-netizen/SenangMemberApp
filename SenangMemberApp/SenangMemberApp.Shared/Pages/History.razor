@@ -51,6 +51,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="history-card-footer">
+                            <button class="btn-review" @onclick="() => OpenReview(item)">
+                                <i class="fa-regular fa-star"></i>
+                                <span>@Loc["Review"]</span>
+                            </button>
+                        </div>
                     </div>
                 }
             }
@@ -61,5 +67,21 @@
         }
     </div>
 </div>
+
+@if (warningModalIsOpen)
+{
+    <div class="modal-backdrop" @onclick="CloseWarningModal">
+        <div class="modal-container" @onclick:stopPropagation="true">
+            <div class="modal-icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: var(--color-warning);"></i>
+            </div>
+            <h3 class="modal-title">@warningModalTitle</h3>
+            <p class="modal-message">@warningModalMessage</p>
+            <div class="modal-actions">
+                <button class="btn-ok" @onclick="CloseWarningModal">@Loc["Ok"]</button>
+            </div>
+        </div>
+    </div>
+}
 
 

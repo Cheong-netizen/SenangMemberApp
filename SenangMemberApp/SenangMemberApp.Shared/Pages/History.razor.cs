@@ -29,7 +29,13 @@ namespace SenangMemberApp.Shared.Pages
         PurchaseHistoryAC purchaseHistoryAC { get; set; } = default!;
         [Inject]
         IShopState shopState { get; set; } = default!;
-        private bool isReviewModalOpen = false;
+        [Inject]
+        IUrlLauncher UrlLauncher { get; set; } = default!;
+
+        private bool warningModalIsOpen = false;
+        private string warningModalTitle = string.Empty;
+        private string warningModalMessage = string.Empty;
+
         protected override async Task OnInitializedAsync()
         {
             loading = true;
@@ -59,13 +65,43 @@ namespace SenangMemberApp.Shared.Pages
         }
         [Inject]
         IShopState ShopState { get; set; } = default!;
-        private void OpenReviewModal()
+
+        private void ShowWarningModal(string title, string message)
         {
-            isReviewModalOpen = true;
+            warningModalTitle = title;
+            warningModalMessage = message;
+            warningModalIsOpen = true;
+            StateHasChanged();
         }
-        private void CloseReviewModal()
+
+        private void CloseWarningModal()
         {
-            isReviewModalOpen = false;
+            warningModalIsOpen = false;
+        }
+
+        private async Task OpenReview(ServiceRecordResponseDTO item)
+        {
+            if (item == null) return;
+
+            string? url = item.reviewUrl;
+
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                var query = Uri.EscapeDataString($"{item.branch} {item.itemName} review");
+                url = $"https://www.google.com/search?q={query}";
+            }
+
+            try
+            {
+                await UrlLauncher.OpenUrlAsync(url);
+            }
+            catch (Exception)
+            {
+                ShowWarningModal(
+                    Loc["ReviewErrorTitle"] ?? "Unable to Open Link",
+                    Loc["ReviewErrorMessage"] ?? "Could not open the review link. Please try again."
+                );
+            }
         }
         private void toggleShopListModal()
         {

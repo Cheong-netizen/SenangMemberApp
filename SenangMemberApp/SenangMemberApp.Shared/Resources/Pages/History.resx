@@ -138,4 +138,16 @@
   <data name="SelectShopModalTitle" xml:space="preserve">
     <value>Select Shop</value>
   </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="ReviewErrorTitle" xml:space="preserve">
+    <value>Unable to Open Link</value>
+  </data>
+  <data name="ReviewErrorMessage" xml:space="preserve">
+    <value>Could not open the review link. Please try again.</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
 </root>
