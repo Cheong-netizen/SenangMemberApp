@@ -73,13 +73,12 @@
 
             @if (userProfileData != null && !string.IsNullOrEmpty(userProfileData.AccountName))
             {
-                <div class="settings-user-card" @onclick="NavToProfile">
+                <div class="settings-user-card static">
                     <img src="_content/SenangMemberApp.Shared/Images/senang_profile_pic.png" class="settings-user-avatar" alt="Profile" />
                     <div class="settings-user-info">
                         <span class="settings-user-name">@userProfileData.AccountName</span>
                         <span class="settings-user-phone">@userProfileData.Phone</span>
                     </div>
-                    <i class="fa-solid fa-angle-right user-card-arrow"></i>
                 </div>
             }
 

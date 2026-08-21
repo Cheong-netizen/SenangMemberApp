@@ -29,15 +29,8 @@
         {
             @foreach (var service in services)
             {
-                <div class="catalog-grid-layout">
-                    @if (string.IsNullOrWhiteSpace(service.imagePath))
-                    {
-                        <div class="no-image-placeholder">
-                            <i class="fa-regular fa-image"></i>
-                            <span>@Loc["ImageNotAvailable"]</span>
-                        </div>
-                    }
-                    else
+                <div class="catalog-grid-layout @(string.IsNullOrWhiteSpace(service.imagePath) ? "no-image" : "")">
+                    @if (!string.IsNullOrWhiteSpace(service.imagePath))
                     {
                         <img class="catalog-image" src="@service.imagePath" />
                     }

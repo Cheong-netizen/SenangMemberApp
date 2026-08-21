@@ -50,11 +50,11 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
             appointmentState.SetOutlet(outlet.branchID);
             appointmentState.SetOutlet(outlet);
         }
-        private void navSelectServices()
+        private void navSelectDate()
         {
             if(!string.IsNullOrEmpty(appointmentState.selectedOutletId))
             {
-                navManager.NavigateTo("/AppointmentSelectServices");
+                navManager.NavigateTo("/AppointmentSelectDate");
             }
         }
         private void navBack()

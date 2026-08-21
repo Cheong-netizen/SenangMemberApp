@@ -236,8 +236,7 @@ namespace SenangMemberApp.Shared.Pages
             [Required(ErrorMessage = "Full Name is required.")]
             public string Name { get; set; } = "";
 
-            [Required(ErrorMessage = "Email Address is required.")]
-            [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")]
+            [RegularExpression(@"^$|^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")]
             public string Email { get; set; } = "";
 
             [Required(ErrorMessage = "Phone Number is required.")]

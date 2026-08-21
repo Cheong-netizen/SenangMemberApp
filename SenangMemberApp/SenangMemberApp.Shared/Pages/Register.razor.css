@@ -52,6 +52,12 @@
     font-size: 0.9rem;
 }
 
+.required-asterisk {
+    color: var(--color-danger, #ef4444);
+    font-weight: bold;
+    margin-left: 2px;
+}
+
 /* Custom Input using your border and focus colors */
 ::deep .custom-input {
     width: 100%;

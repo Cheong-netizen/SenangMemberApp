@@ -19,28 +19,6 @@
                     </div>
                 </div>
             </div>
-            <span>@Loc["StepServices"]</span>
-        </div>
-        <div class="steps-line active"></div>
-        <div class="steps-component">
-            <div class="steps-ball">
-                <div class="steps-ball-outer active">
-                    <div class="steps-ball-fill">
-                        <span>2</span>
-                    </div>
-                </div>
-            </div>
-            <span>@Loc["StepStaff"]</span>
-        </div>
-        <div class="steps-line active"></div>
-        <div class="steps-component">
-            <div class="steps-ball">
-                <div class="steps-ball-outer active">
-                    <div class="steps-ball-fill">
-                        <span>3</span>
-                    </div>
-                </div>
-            </div>
             <span>@Loc["StepDate"]</span>
         </div>
         <div class="steps-line active"></div>
@@ -48,7 +26,7 @@
             <div class="steps-ball">
                 <div class="steps-ball-outer active">
                     <div class="steps-ball-fill">
-                        <span>4</span>
+                        <span>2</span>
                     </div>
                 </div>
             </div>
@@ -63,33 +41,6 @@
                 <div class="store-info">
                     <span class="normal-text">@(appointmentState.selectedOutlet.companyName ?? "")</span>
                     <span class="subtitle-text">@(appointmentState.selectedOutlet.branch ?? "")</span>
-                </div>
-            </div>
-        }
-
-        @if (servicesDetails != null && servicesDetails.Any())
-        {
-            <div class="services-wrapper">
-                <span class="header-text"><i class="fa-solid fa-list icon"></i> @Loc["StepServices"]</span>
-                @foreach (var service in servicesDetails)
-                {
-                    <div class="services">
-                        <span class="normal-text">@service.Name</span>
-                        <span class="subtitle-text">RM @service.Price | @service.EstimatedDuration.TotalMinutes mins</span>
-                    </div>
-                }
-            </div>
-        }
-
-        @if (!string.IsNullOrEmpty(appointmentState.selectedStaffName))
-        {
-            <div class="staff">
-                <span class="header-text"><i class="fa-regular fa-user icon"></i> @Loc["Staff"]</span>
-                <div class="staff-info-wrapper">
-                    <img class="staff-image" src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" alt="Staff Image">
-                    <div class="staff-info">
-                        <span class="normal-text">@appointmentState.selectedStaffName</span>
-                    </div>
                 </div>
             </div>
         }

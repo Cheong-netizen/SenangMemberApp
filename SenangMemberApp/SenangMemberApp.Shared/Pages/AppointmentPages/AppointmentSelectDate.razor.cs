@@ -156,7 +156,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
 
         private void navBack()
         {
-            navigationManager.NavigateTo("/AppointmentSelectStaff");
+            navigationManager.NavigateTo("/AppointmentSelectOutlet");
         }
     }
 }
