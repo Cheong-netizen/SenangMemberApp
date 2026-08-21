@@ -24,6 +24,18 @@ namespace SenangMemberApp.Shared.Pages
         private bool isLoading = false;
         private bool isSuccess = false;
         private bool isCodeSent = false;
+        private bool isPhonePadOpen = false;
+
+        private void OpenPhonePad()
+        {
+            isPhonePadOpen = true;
+        }
+
+        private void OnPhoneSelected(string phone)
+        {
+            registerRequest.Phone = phone;
+            StateHasChanged();
+        }
         private string inputOtpCode = "";
         private string generatedOtpCode = "";
         private string errorMessage = "";

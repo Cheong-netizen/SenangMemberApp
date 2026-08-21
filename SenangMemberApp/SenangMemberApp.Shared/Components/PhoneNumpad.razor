@@ -1,0 +1,263 @@
+@inject LanguageService LangSvc
+
+@if (IsOpen)
+{
+    <div class="modal-overlay phone-numpad-overlay" style="z-index: @ZIndexBackdrop;" @onclick="Close">
+        <div class="modal-content numpad-modal" style="max-width: 380px; position: relative;" @onclick:stopPropagation>
+            <!-- Header -->
+            <div class="numpad-header">
+                <button type="button" class="numpad-close-btn" @onclick="Close" aria-label="Close">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <div class="numpad-title">@GetCountryName()</div>
+                <div class="numpad-globe-container">
+                    <button type="button" class="numpad-globe-btn" @onclick="ToggleDropdown" aria-label="Select Country">
+                        <i class="bi bi-globe"></i>
+                    </button>
+                    @if (showDropdown)
+                    {
+                        <div class="numpad-dropdown-menu">
+                            <button type="button" class="numpad-dropdown-item @(selectedPrefix == "60" ? "active" : "")" @onclick='() => SelectCountry("60")'>
+                                @LangSvc.GetText("MalaysiaCountry") (+60)
+                            </button>
+                            <button type="button" class="numpad-dropdown-item @(selectedPrefix == "65" ? "active" : "")" @onclick='() => SelectCountry("65")'>
+                                @LangSvc.GetText("SingaporeCountry") (+65)
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="modal-body" style="padding: 1.5rem 1rem 1rem;">
+                <!-- Display Number -->
+                <div class="numpad-display">
+                    @GetFormattedDisplay()
+                </div>
+
+                <!-- Keypad Grid -->
+                <div class="numpad-grid">
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("1")'>1</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("2")'>2</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("3")'>3</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("4")'>4</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("5")'>5</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("6")'>6</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("7")'>7</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("8")'>8</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("9")'>9</button>
+                    <button type="button" class="numpad-btn action-btn" @onclick="ClearDigits">CLR</button>
+                    <button type="button" class="numpad-btn" @onclick='() => AppendDigit("0")'>0</button>
+                    <button type="button" class="numpad-btn action-btn" @onclick="BackspaceDigit" aria-label="Backspace">
+                        <i class="bi bi-backspace"></i>
+                    </button>
+                </div>
+
+                <!-- Save Action Button -->
+                <div style="margin-top: 1.25rem;">
+                    <button type="button" class="numpad-save-btn" @onclick="Save" disabled="@(!IsValidPhone())">@LangSvc.GetText("Save")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public string? PhoneNumber { get; set; }
+
+    [Parameter]
+    public EventCallback<string> PhoneNumberChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnSave { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    [Parameter]
+    public int ZIndexBackdrop { get; set; } = 9999;
+
+    private string selectedPrefix = "60";
+    private string currentDigits = "";
+    private bool showDropdown = false;
+    private bool prevIsOpen = false;
+
+    protected override void OnParametersSet()
+    {
+        if (IsOpen && !prevIsOpen)
+        {
+            InitializeFromPhoneNumber(PhoneNumber);
+        }
+        prevIsOpen = IsOpen;
+    }
+
+    private void InitializeFromPhoneNumber(string? raw)
+    {
+        showDropdown = false;
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            selectedPrefix = "60";
+            currentDigits = "";
+            return;
+        }
+
+        var clean = new string(raw.Where(char.IsDigit).ToArray());
+
+        if (clean.StartsWith("65") && clean.Length >= 2)
+        {
+            selectedPrefix = "65";
+            currentDigits = clean.Substring(2);
+        }
+        else if (clean.StartsWith("60") && clean.Length >= 2)
+        {
+            selectedPrefix = "60";
+            currentDigits = clean.Substring(2);
+        }
+        else if (clean.StartsWith("0") && clean.Length >= 1)
+        {
+            selectedPrefix = "60";
+            currentDigits = clean.Substring(1);
+        }
+        else
+        {
+            selectedPrefix = "60";
+            currentDigits = clean;
+        }
+    }
+
+    private string GetCountryName()
+    {
+        if (selectedPrefix == "60")
+        {
+            return $"{LangSvc.GetText("MalaysiaCountry")} (+60)";
+        }
+        else if (selectedPrefix == "65")
+        {
+            return $"{LangSvc.GetText("SingaporeCountry")} (+65)";
+        }
+        return $"+{selectedPrefix}";
+    }
+
+    private void ToggleDropdown()
+    {
+        showDropdown = !showDropdown;
+    }
+
+    private void SelectCountry(string prefix)
+    {
+        selectedPrefix = prefix;
+        showDropdown = false;
+    }
+
+    private string GetFormattedDisplay()
+    {
+        if (string.IsNullOrEmpty(currentDigits))
+        {
+            return $"+{selectedPrefix}";
+        }
+
+        if (selectedPrefix == "60")
+        {
+            // Malaysia formatting
+            if (currentDigits.StartsWith("11"))
+            {
+                // Format: +60 11-XXXX XXXX
+                if (currentDigits.Length <= 2)
+                    return $"+60 {currentDigits}";
+                if (currentDigits.Length <= 6)
+                    return $"+60 11-{currentDigits.Substring(2)}";
+                return $"+60 11-{currentDigits.Substring(2, 4)} {currentDigits.Substring(6)}";
+            }
+            else
+            {
+                // Format: +60 1X-XXX XXXX or general
+                if (currentDigits.Length <= 2)
+                    return $"+60 {currentDigits}";
+                if (currentDigits.Length <= 5)
+                    return $"+60 {currentDigits.Substring(0, 2)}-{currentDigits.Substring(2)}";
+                return $"+60 {currentDigits.Substring(0, 2)}-{currentDigits.Substring(2, 3)} {currentDigits.Substring(5)}";
+            }
+        }
+        else if (selectedPrefix == "65")
+        {
+            // Singapore formatting: +65 XXXX XXXX
+            if (currentDigits.Length <= 4)
+                return $"+65 {currentDigits}";
+            return $"+65 {currentDigits.Substring(0, 4)} {currentDigits.Substring(4)}";
+        }
+
+        return $"+{selectedPrefix} {currentDigits}";
+    }
+
+    private void AppendDigit(string digit)
+    {
+        if (selectedPrefix == "65" && currentDigits.Length >= 8)
+            return;
+        if (selectedPrefix == "60" && currentDigits.Length >= 11)
+            return;
+        if (currentDigits.Length >= 12)
+            return;
+
+        currentDigits += digit;
+    }
+
+    private void ClearDigits()
+    {
+        currentDigits = "";
+    }
+
+    private void BackspaceDigit()
+    {
+        if (currentDigits.Length > 0)
+        {
+            currentDigits = currentDigits.Substring(0, currentDigits.Length - 1);
+        }
+    }
+
+    private bool IsValidPhone()
+    {
+        if (string.IsNullOrWhiteSpace(currentDigits))
+            return false;
+
+        if (selectedPrefix == "60")
+        {
+            return currentDigits.Length >= 8 && currentDigits.Length <= 11;
+        }
+        else if (selectedPrefix == "65")
+        {
+            return currentDigits.Length == 8;
+        }
+
+        return currentDigits.Length >= 7;
+    }
+
+    private async Task Save()
+    {
+        if (!IsValidPhone())
+            return;
+
+        var fullNumber = $"{selectedPrefix}{currentDigits}";
+        showDropdown = false;
+        IsOpen = false;
+
+        await IsOpenChanged.InvokeAsync(false);
+        await PhoneNumberChanged.InvokeAsync(fullNumber);
+        await OnSave.InvokeAsync(fullNumber);
+        await OnClose.InvokeAsync();
+    }
+
+    private async Task Close()
+    {
+        showDropdown = false;
+        IsOpen = false;
+
+        await IsOpenChanged.InvokeAsync(false);
+        await OnClose.InvokeAsync();
+    }
+}

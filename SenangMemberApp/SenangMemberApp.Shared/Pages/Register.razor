@@ -44,7 +44,12 @@
                 <div class="form-group">
                     <label class="form-label form-row">
                         @Loc["PhoneLabel"]
-                        <InputText @bind-Value="registerRequest.Phone" type="tel" class="custom-input" placeholder="@Loc["PhonePlaceholder"]" />
+                        <div class="phone-input-group" @onclick="OpenPhonePad">
+                            <InputText @bind-Value="registerRequest.Phone" type="tel" class="custom-input" placeholder="@Loc["PhonePlaceholder"]" readonly />
+                            <button type="button" class="btn-numpad-trigger" @onclick="OpenPhonePad" @onclick:stopPropagation aria-label="Open Keypad">
+                                <i class="bi bi-grid-3x3-gap-fill"></i>
+                            </button>
+                        </div>
                     </label>
                     <ValidationMessage For="@(() => registerRequest.Phone)" class="validation-msg" />
                 </div>
@@ -128,5 +133,7 @@
         </div>
     </div>
 </div>
+
+<PhoneNumpad @bind-IsOpen="isPhonePadOpen" PhoneNumber="@registerRequest.Phone" OnSave="OnPhoneSelected" />
 
 

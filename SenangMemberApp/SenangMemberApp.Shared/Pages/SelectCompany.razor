@@ -7,9 +7,14 @@
 @inject IStringLocalizer<SelectCompany> Loc
 
 <div class="page-wrapper select-company-wrapper">
-    <div class="select-company-header">
-        <h2>@Loc["PageTitle"]</h2>
-        <p>@Loc["Subtitle"]</p>
+    <div class="select-company-top-header">
+        <div class="header-text-container">
+            <h2>@Loc["PageTitle"]</h2>
+            <p>@Loc["Subtitle"]</p>
+        </div>
+        <button type="button" class="btn-settings" @onclick="OpenSettingsModal" aria-label="Settings">
+            <i class="fa-solid fa-gear"></i>
+        </button>
     </div>
 
     <div class="search-wrapper">
@@ -51,3 +56,108 @@
         </div>
     }
 </div>
+
+@if (isSettingsModalVisible)
+{
+    <div class="modal-backdrop settings-backdrop" @onclick="CloseSettingsModal">
+        <div class="settings-modal-card" @onclick:stopPropagation>
+            <div class="settings-modal-header">
+                <div class="settings-title-group">
+                    <i class="fa-solid fa-gear settings-header-icon"></i>
+                    <h3>Settings</h3>
+                </div>
+                <button type="button" class="btn-close-settings" @onclick="CloseSettingsModal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            @if (userProfileData != null && !string.IsNullOrEmpty(userProfileData.AccountName))
+            {
+                <div class="settings-user-card" @onclick="NavToProfile">
+                    <img src="_content/SenangMemberApp.Shared/Images/senang_profile_pic.png" class="settings-user-avatar" alt="Profile" />
+                    <div class="settings-user-info">
+                        <span class="settings-user-name">@userProfileData.AccountName</span>
+                        <span class="settings-user-phone">@userProfileData.Phone</span>
+                    </div>
+                    <i class="fa-solid fa-angle-right user-card-arrow"></i>
+                </div>
+            }
+
+            <div class="settings-menu-list">
+                <!-- Language Selector -->
+                <div class="settings-menu-item lang-item">
+                    <div class="menu-item-left">
+                        <div class="menu-item-icon">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <span>Language</span>
+                    </div>
+                    <div class="lang-toggle-group">
+                        <button class="lang-btn @(CurrentCulture == "en-US" ? "active" : "")"
+                                @onclick='() => ChangeLanguage("en-US")'>
+                            EN
+                        </button>
+                        <button class="lang-btn @(CurrentCulture == "zh-CN" ? "active" : "")"
+                                @onclick='() => ChangeLanguage("zh-CN")'>
+                            中文
+                        </button>
+                        <button class="lang-btn @(CurrentCulture == "ms-MY" ? "active" : "")"
+                                @onclick='() => ChangeLanguage("ms-MY")'>
+                            BM
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Edit Profile -->
+                <div class="settings-menu-item" @onclick="NavToEditProfile">
+                    <div class="menu-item-left">
+                        <div class="menu-item-icon">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </div>
+                        <span>Edit Profile</span>
+                    </div>
+                    <i class="fa-solid fa-angle-right menu-chevron"></i>
+                </div>
+
+                <!-- Change Password -->
+                <div class="settings-menu-item" @onclick="NavToChangePassword">
+                    <div class="menu-item-left">
+                        <div class="menu-item-icon">
+                            <i class="fa-solid fa-key"></i>
+                        </div>
+                        <span>Change Password</span>
+                    </div>
+                    <i class="fa-solid fa-angle-right menu-chevron"></i>
+                </div>
+
+                <!-- Log Out -->
+                <div class="settings-menu-item logout-item" @onclick="ShowLogoutConfirmation">
+                    <div class="menu-item-left">
+                        <div class="menu-item-icon logout-icon">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </div>
+                        <span>Logout</span>
+                    </div>
+                    <i class="fa-solid fa-angle-right menu-chevron"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (isLogoutModalVisible)
+{
+    <div class="modal-backdrop logout-backdrop" style="z-index: 10002;" @onclick="CancelLogout">
+        <div class="modal-container" @onclick:stopPropagation>
+            <div class="modal-icon">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <h3 class="modal-title">Logout?</h3>
+            <p class="modal-message">Are you sure you want to logout?</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" @onclick="CancelLogout">Cancel</button>
+                <button class="btn-confirm" @onclick="ConfirmLogout">Logout</button>
+            </div>
+        </div>
+    </div>
+}

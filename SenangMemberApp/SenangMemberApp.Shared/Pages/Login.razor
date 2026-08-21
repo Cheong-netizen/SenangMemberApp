@@ -16,10 +16,15 @@
         <EditForm Model="@loginRequest" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
 
-            <div class="form-group ">
+            <div class="form-group">
                 <label class="form-label form-row">
                     @Loc["UsernameLabel"]
-                    <InputText @bind-Value="loginRequest.email" type="tel" class="custom-input" placeholder="@Loc["UsernamePlaceholder"]" />
+                    <div class="phone-input-group" @onclick="OpenPhonePad">
+                        <InputText @bind-Value="loginRequest.email" type="tel" class="custom-input" placeholder="@Loc["UsernamePlaceholder"]" readonly />
+                        <button type="button" class="btn-numpad-trigger" @onclick="OpenPhonePad" @onclick:stopPropagation aria-label="Open Keypad">
+                            <i class="bi bi-grid-3x3-gap-fill"></i>
+                        </button>
+                    </div>
                 </label>
 
                 <ValidationMessage For="@(() => loginRequest.email)" class="validation-msg" />
@@ -59,6 +64,8 @@
         </div>
     </div>
 </div>
+
+<PhoneNumpad @bind-IsOpen="isPhonePadOpen" PhoneNumber="@loginRequest.email" OnSave="OnPhoneSelected" />
 
 @code {
 

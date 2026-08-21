@@ -18,6 +18,18 @@ namespace SenangMemberApp.Shared.Pages
         private LoginResult loginResult = new();
         private string errorMessage = "";
         private bool isLoading = false;
+        private bool isPhonePadOpen = false;
+
+        private void OpenPhonePad()
+        {
+            isPhonePadOpen = true;
+        }
+
+        private void OnPhoneSelected(string phone)
+        {
+            loginRequest.email = phone;
+            StateHasChanged();
+        }
 
         [Inject]
         IAuthService authService { get; set; } = default!;

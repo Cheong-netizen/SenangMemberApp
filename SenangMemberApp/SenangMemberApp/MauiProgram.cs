@@ -43,6 +43,7 @@ namespace SenangMemberApp
             builder.Services.AddScoped<IUrlLauncher, MobileUrlLauncher>();
             builder.Services.AddScoped<ITokenService, MobileTokenService>();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            builder.Services.AddScoped<LanguageService>();
             builder.Services.AddAuthorizationCore();
             builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 

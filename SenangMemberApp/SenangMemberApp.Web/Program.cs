@@ -52,6 +52,7 @@ builder.Services.AddScoped<IAppointmentDetailState, AppointmentDetailState>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<IUrlLauncher, WebUrlLauncher>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+builder.Services.AddScoped<LanguageService>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();

@@ -22,6 +22,18 @@ namespace SenangMemberApp.Shared.Pages
         private bool isCodeSent = false;
         private bool isLoading = false;
         private bool isSuccess = false;
+        private bool isPhonePadOpen = false;
+
+        private void OpenPhonePad()
+        {
+            isPhonePadOpen = true;
+        }
+
+        private void OnPhoneSelected(string phone)
+        {
+            phoneNumber = phone;
+            StateHasChanged();
+        }
         private string errorMessage = "";
         private string successMessage = "";
         private int resendCountdown = 0;

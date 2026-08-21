@@ -7,22 +7,61 @@
     background-color: var(--bg-main, #f4f6f8);
 }
 
-.select-company-header {
-    text-align: center;
+.select-company-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
     margin-bottom: 10px;
 }
 
-.select-company-header h2 {
+.header-text-container {
+    flex: 1;
+    text-align: center;
+    padding: 0 45px;
+}
+
+.header-text-container h2 {
     font-size: 1.6rem;
     font-weight: var(--bold-lg);
     color: var(--color-primary);
     margin-bottom: 6px;
 }
 
-.select-company-header p {
+.header-text-container p {
     font-size: 0.95rem;
     color: var(--text-muted);
 }
+
+.btn-settings {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid var(--color-gray-200, #e5e7eb);
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+}
+
+    .btn-settings:hover {
+        background-color: var(--color-primary-light, #F7EDEF);
+        color: var(--color-primary-hover, #9E3F55);
+        transform: rotate(45deg);
+        box-shadow: 0 4px 12px rgba(176, 78, 100, 0.2);
+    }
+
+    .btn-settings:active {
+        transform: scale(0.92) rotate(45deg);
+    }
 
 .search-wrapper {
     box-shadow: var(--shadow-sm);
@@ -108,4 +147,319 @@
 .arrow-icon {
     color: var(--color-primary);
     font-size: 1.1rem;
+}
+
+/* --- Settings Modal Styles --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    padding: 20px;
+}
+
+.settings-modal-card {
+    background-color: white;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.settings-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--color-gray-200, #eee);
+}
+
+.settings-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-header-icon {
+    font-size: 1.2rem;
+    color: var(--color-primary);
+}
+
+.settings-title-group h3 {
+    font-size: 1.2rem;
+    font-weight: var(--bold-lg, 700);
+    color: var(--text-main);
+    margin: 0;
+}
+
+.btn-close-settings {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+    .btn-close-settings:hover {
+        color: var(--color-primary);
+        background-color: var(--color-gray-100);
+    }
+
+.settings-user-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: var(--color-gray-50, #f9fafb);
+    border-bottom: 1px solid var(--color-gray-200, #eee);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .settings-user-card:hover {
+        background-color: var(--color-primary-light, #F7EDEF);
+    }
+
+.settings-user-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-primary-light, #F7EDEF);
+    background-color: white;
+}
+
+.settings-user-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+    flex: 1;
+}
+
+.settings-user-name {
+    font-size: 1rem;
+    font-weight: var(--bold-lg, 700);
+    color: var(--text-main);
+}
+
+.settings-user-phone {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.user-card-arrow {
+    color: var(--color-gray-300, #d1d5db);
+    font-size: 0.95rem;
+}
+
+.settings-menu-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 1rem 1.25rem;
+    gap: 6px;
+}
+
+.settings-menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+    .settings-menu-item:hover {
+        background-color: var(--color-gray-100, #f3f4f6);
+    }
+
+    .settings-menu-item:active {
+        transform: scale(0.98);
+    }
+
+    .settings-menu-item.lang-item {
+        cursor: default;
+    }
+
+    .settings-menu-item.lang-item:hover {
+        background-color: transparent;
+    }
+
+    .settings-menu-item.lang-item:active {
+        transform: none;
+    }
+
+.menu-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: var(--bold-sm, 500);
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.menu-item-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: var(--color-primary-light, #F7EDEF);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.menu-chevron {
+    color: var(--color-gray-300, #d1d5db);
+    font-size: 0.9rem;
+}
+
+.logout-item .menu-item-left span {
+    color: var(--color-danger, #ef4444);
+}
+
+.logout-icon {
+    background-color: #fee2e2 !important;
+    color: var(--color-danger, #ef4444) !important;
+}
+
+.lang-toggle-group {
+    display: flex;
+    background: #f0f0f0;
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+}
+
+.lang-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-muted);
+}
+
+    .lang-btn.active {
+        background: #ffffff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        font-weight: 700;
+        color: var(--color-primary);
+    }
+
+/* Logout Confirmation Modal */
+.modal-container {
+    background-color: white;
+    width: 85%;
+    max-width: 350px;
+    padding: 30px 20px;
+    border-radius: var(--radius-md, 16px);
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: scaleIn 0.2s ease-out;
+}
+
+.modal-icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    font-size: 1.2rem;
+    font-weight: var(--bold-lg);
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.modal-message {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+    .modal-actions button {
+        flex: 1;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        font-weight: var(--bold-sm);
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: opacity 0.2s;
+    }
+
+.btn-cancel {
+    background-color: var(--color-gray-100, #f3f4f6);
+    color: var(--text-main);
+}
+
+.btn-confirm {
+    background-color: var(--color-danger, #ef4444);
+    color: white;
+}
+
+    .btn-confirm:active, .btn-cancel:active {
+        opacity: 0.8;
+    }
+
+@media (max-width: 576px) {
+    .settings-modal-card {
+        max-width: 100%;
+        border-radius: 20px 20px 0 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        animation: slideUpSettings 0.25s ease-out;
+    }
+
+    @keyframes slideUpSettings {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
 }
