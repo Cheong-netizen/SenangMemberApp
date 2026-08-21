@@ -1,5 +1,6 @@
 using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Services.IService;
+using SenangMemberApp.Shared.Infrastructure.Firebase;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
@@ -16,6 +17,8 @@ namespace SenangMemberApp.Shared.Pages
         private IUserProfileService UserProfileService { get; set; } = default!;
         [Inject]
         private ITokenService tokenService { get; set; } = default!;
+        [Inject]
+        private IPushDeviceRegistrationService PushDeviceRegistrationService { get; set; } = default!;
         private UserProfileResponseDTO UserProfile { get; set; } = new();
         protected override async Task OnInitializedAsync()
         {
@@ -39,6 +42,7 @@ namespace SenangMemberApp.Shared.Pages
         {
             // 1. Clear User State/Tokens here
             // 2. Navigate to Login Page
+            await UnregisterPushDeviceBestEffortAsync();
             await shopState.ResetStateAsync();
             await tokenService.ClearAsync();
             NavManager.NavigateTo("/");
@@ -65,6 +69,17 @@ namespace SenangMemberApp.Shared.Pages
                 // 1. Save to Local Storage
                 await JS.InvokeVoidAsync("localStorage.setItem", "selectedCulture", culture);
 
+                // Keep the server-side FCM registration aligned with this device's app language.
+                using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                try
+                {
+                    await PushDeviceRegistrationService.UpdatePreferredLanguageAsync(culture, timeout.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    // The native preference is already saved; registration will retry later.
+                }
+
                 // 2. Force a reload to apply the culture globally to the entire app
                 NavManager.NavigateTo(NavManager.Uri, forceLoad: true);
             }
@@ -84,9 +99,23 @@ namespace SenangMemberApp.Shared.Pages
         private async Task ConfirmLogout()
         {
             IsLogoutModalVisible = false;
+            await UnregisterPushDeviceBestEffortAsync();
             await shopState.ResetStateAsync();
             await tokenService.ClearAsync();
             NavManager.NavigateTo("/");
+        }
+
+        private async Task UnregisterPushDeviceBestEffortAsync()
+        {
+            try
+            {
+                using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                await PushDeviceRegistrationService.UnregisterCurrentDeviceAsync(timeout.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Logout must complete even if the notification endpoint is unavailable.
+            }
         }
     }
 }

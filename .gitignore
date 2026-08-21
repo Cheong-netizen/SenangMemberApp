@@ -8,6 +8,9 @@
 *.jks
 /keystore/
 
+# Firebase app configuration (supplied separately per environment)
+**/infrastructure/firebase/google-services.json
+
 # User-specific files
 *.rsuser
 *.suo
@@ -35,6 +38,9 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Oo]ut/
+
+# Short machine-local MSBuild intermediate path (see SenangMemberApp/Directory.Build.props)
+/SenangMemberApp/.o/
 [Ll]og/
 [Ll]ogs/
 

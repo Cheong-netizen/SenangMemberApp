@@ -56,18 +56,12 @@ namespace SenangMemberApp.Web.Services
 
         public async Task SaveCompanyTokenAsync(string companyToken, string refreshToken)
         {
-            Console.WriteLine($"Saving token: {companyToken}");
-            Console.WriteLine($"Saving token: {refreshToken}");
-
             await _sessionStorage.SetAsync("authCompanyToken", companyToken);
             await _sessionStorage.SetAsync("refreshCompanyToken", refreshToken);
         }
 
         public async Task SaveTokenAsync(string token, string refreshToken)
         {
-            Console.WriteLine($"Saving token: {token}");
-            Console.WriteLine($"Saving token: {refreshToken}");
-
             await _sessionStorage.SetAsync("authToken", token);
             await _sessionStorage.SetAsync("refreshToken", refreshToken);
         }

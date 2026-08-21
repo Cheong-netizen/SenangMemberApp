@@ -8,6 +8,8 @@ using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SenangMemberApp.Infrastructure.Firebase;
+using SenangMemberApp.Shared.Infrastructure.Firebase;
 
 namespace SenangMemberApp
 {
@@ -42,6 +44,8 @@ namespace SenangMemberApp
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
             builder.Services.AddScoped<IUrlLauncher, MobileUrlLauncher>();
             builder.Services.AddScoped<ITokenService, MobileTokenService>();
+            builder.Services.AddSingleton<IPushDeviceRegistrationService, MobilePushDeviceRegistrationService>();
+            builder.Services.AddSingleton<IPushNotificationNavigationService, PushNotificationNavigationService>();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             builder.Services.AddScoped<LanguageService>();
             builder.Services.AddAuthorizationCore();
@@ -78,6 +82,31 @@ namespace SenangMemberApp
                 };
                 return new HttpClient(handler);
             });
+
+            var appointmentServerBaseUrl = builder.Configuration["ApiBaseUrl"]?.TrimEnd('/')
+                                           ?? "https://60.49.248.21:43250";
+            builder.Services
+                .AddHttpClient(MobilePushDeviceRegistrationService.HttpClientName, client =>
+                {
+                    client.BaseAddress = new Uri($"{appointmentServerBaseUrl}/");
+                    client.Timeout = TimeSpan.FromSeconds(15);
+                })
+                .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+                {
+                    SslOptions = new System.Net.Security.SslClientAuthenticationOptions
+                    {
+                        RemoteCertificateValidationCallback = (sender, cert, chain, errors) =>
+                        {
+                            if (errors == System.Net.Security.SslPolicyErrors.None) return true;
+                            var host = (sender as System.Net.Security.SslStream)?.TargetHostName ?? "";
+                            return host == "localhost"
+                                || host == "127.0.0.1"
+                                || host == "60.49.248.21"
+                                || host.StartsWith("192.168.")
+                                || host.StartsWith("10.");
+                        }
+                    }
+                });
 
             //get base url to be reused in the API client
             var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"]

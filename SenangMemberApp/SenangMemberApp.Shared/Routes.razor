@@ -1,6 +1,11 @@
 ﻿@using System.Globalization
 @using SenangMemberApp.Shared.Components.AuthRoute
+@using SenangMemberApp.Shared.Infrastructure.Firebase
+@implements IDisposable
 @inject IJSRuntime JS
+@inject NavigationManager NavigationManager
+@inject IPushNotificationNavigationService PushNavigation
+@inject IPushDeviceRegistrationService PushDeviceRegistration
 
 <Router AppAssembly="typeof(Layout.MainLayout).Assembly">
     <Found Context="routeData">
@@ -13,6 +18,11 @@
 </Router>
 
 @code {
+    protected override void OnInitialized()
+    {
+        PushNavigation.NavigationRequested += OnPushNavigationRequested;
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -20,6 +30,8 @@
             // Try to get the saved language, default to English if empty
             var savedCulture = await JS.InvokeAsync<string>("localStorage.getItem", "selectedCulture");
             var culture = string.IsNullOrEmpty(savedCulture) ? "en-US" : savedCulture;
+
+            _ = PushDeviceRegistration.UpdatePreferredLanguageAsync(culture);
 
             if (CultureInfo.CurrentCulture.Name != culture)
             {
@@ -30,6 +42,24 @@
                 // Refresh the UI to apply the loaded culture
                 StateHasChanged();
             }
+
+            NavigateToPendingNotification();
         }
+    }
+
+    private void OnPushNavigationRequested() =>
+        _ = InvokeAsync(NavigateToPendingNotification);
+
+    private void NavigateToPendingNotification()
+    {
+        if (PushNavigation.TryDequeueRoute(out var route) && !string.IsNullOrWhiteSpace(route))
+        {
+            NavigationManager.NavigateTo(route);
+        }
+    }
+
+    public void Dispose()
+    {
+        PushNavigation.NavigationRequested -= OnPushNavigationRequested;
     }
 }

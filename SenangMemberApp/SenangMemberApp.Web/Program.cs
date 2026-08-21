@@ -9,6 +9,7 @@ using SenangMemberApp.Web.Components;
 using SenangMemberApp.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
+using SenangMemberApp.Shared.Infrastructure.Firebase;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,8 @@ builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IShopState, ShopState>();
 builder.Services.AddScoped<ITokenService, WebStoreTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddSingleton<IPushDeviceRegistrationService, NullPushDeviceRegistrationService>();
+builder.Services.AddSingleton<IPushNotificationNavigationService, NullPushNotificationNavigationService>();
 builder.Services.AddScoped<ICreditService, CreditService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IShopStateLocalManagement, WebShopStateLocalManagement>();

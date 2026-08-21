@@ -26,6 +26,9 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         public IAppointmentDetailState AppointmentState { get; set; } = default!;
 
         [Inject]
+        private IAppointmentService AppointmentService { get; set; } = default!;
+
+        [Inject]
         private ICompanyService companyService { get; set; } = default!;
 
         [Inject]
@@ -49,8 +52,28 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
 
             if (MyAppointment == null || MyAppointment.appointmentID != Id)
             {
-                navigationManager.NavigateTo("/Appointment");
-                return;
+                try
+                {
+                    var response = await AppointmentService.GetAppointmentList(
+                        DateTime.Now.AddYears(-1),
+                        DateTime.Now.AddYears(1));
+
+                    MyAppointment = response?.result?.FirstOrDefault(item => item.appointmentID == Id);
+                    if (MyAppointment is not null)
+                    {
+                        AppointmentState.SetSelectedAppointment(MyAppointment);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[AppointmentDetails] Unable to resolve notification booking: {ex.GetType().Name}");
+                }
+
+                if (MyAppointment is null)
+                {
+                    navigationManager.NavigateTo("/Appointment");
+                    return;
+                }
             }
 
             try
