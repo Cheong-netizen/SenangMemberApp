@@ -1,0 +1,165 @@
+/* ===== UPDATE NOTIFICATION OVERLAY ===== */
+.update-notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: overlayFadeIn 0.25s ease-out;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===== UPDATE NOTIFICATION CARD ===== */
+.update-notification-card {
+    width: 100%;
+    max-width: 380px;
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 32px 24px 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+    animation: cardScaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cardScaleUp {
+    from {
+        transform: scale(0.9) translateY(15px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ===== ICON CONTAINER ===== */
+.update-notification-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary-light, #F7EDEF) 0%, #FCE7F3 100%);
+    color: var(--color-primary, #B04E64);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(176, 78, 100, 0.15);
+    animation: iconPulse 2s infinite ease-in-out;
+}
+
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+/* ===== TITLE ===== */
+.update-notification-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+/* ===== MESSAGE ===== */
+.update-notification-message {
+    font-size: 14.5px;
+    color: #4B5563;
+    line-height: 1.55;
+    margin-bottom: 24px;
+    word-break: break-word;
+}
+
+/* ===== VERSION BADGE ===== */
+.update-version-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #F3F4F6;
+    padding: 8px 18px;
+    border-radius: 24px;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-top: 14px;
+    border: 1px solid #E5E7EB;
+}
+
+.update-version-info .current-version {
+    color: #6B7280;
+}
+
+.update-version-info i {
+    font-size: 13px;
+    color: var(--color-primary, #B04E64);
+}
+
+.update-version-info .new-version {
+    color: var(--color-primary, #B04E64);
+    font-weight: 700;
+}
+
+/* ===== ACTIONS ===== */
+.update-notification-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.update-notification-btn {
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.update-now-btn {
+    background: linear-gradient(135deg, var(--color-primary, #B04E64) 0%, var(--color-primary-hover, #9E3F55) 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(176, 78, 100, 0.35);
+}
+
+.update-now-btn:hover {
+    box-shadow: 0 6px 20px rgba(176, 78, 100, 0.45);
+    filter: brightness(1.05);
+}
+
+.update-now-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(176, 78, 100, 0.25);
+}

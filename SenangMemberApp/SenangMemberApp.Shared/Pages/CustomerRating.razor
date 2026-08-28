@@ -1,0 +1,36 @@
+@page "/CustomerRating"
+@page "/CustomerRating/{strRatingToken}"
+@page "/history/review"
+@layout EmptyLayout
+
+@inject NavigationManager NavigationManager
+
+<ReviewModal IsOpen="true"
+             ItemName="@itemName"
+             Branch="@branch"
+             ReviewUrl="@reviewUrl"
+             ServiceRecordId="@serviceRecordId"
+             StrRatingToken="@strRatingToken"
+             OnClose="GoBack" />
+
+@code {
+    [Parameter]
+    public string? strRatingToken { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? itemName { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? branch { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? reviewUrl { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? serviceRecordId { get; set; }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/history");
+    }
+}

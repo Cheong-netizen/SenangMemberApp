@@ -1,5 +1,6 @@
 @page "/AppointmentSelectServices"
 @using SenangMemberApp.Shared.Models
+@using SenangMemberApp.Shared.Models.DTO
 @layout EmptyLayout
 
 @using Microsoft.Extensions.Localization
@@ -8,7 +9,7 @@
 
 <div class="page-wrapper">
     <div class="header">
-        <div><span @onclick="navBack"><i class="fa-solid fa-angle-left"></i></span></div>
+        <div><span @onclick="navBack" style="cursor: pointer;"><i class="fa-solid fa-angle-left"></i></span></div>
         <div><span>@Loc["PageTitle"]</span></div>
         <div></div>
     </div>
@@ -64,47 +65,99 @@
         </div>
     </div>
     <div class="category-filter-bar">
-        <button class="category-pill @(_selectedCategoryId == 0 ? "active" : "")" @onclick="() => FilterByCategory(0)">All</button>
+        <button class="category-pill @(string.IsNullOrEmpty(_selectedCategoryId) ? "active" : "")" @onclick='() => FilterByCategory("")'>All</button>
         @foreach (var category in Categories)
         {
-            <button class="category-pill @(_selectedCategoryId == category.Id ? "active" : "")" @onclick="() => FilterByCategory(category.Id)">@category.Name</button>
+            <button class="category-pill @(_selectedCategoryId == category.id ? "active" : "")" @onclick="() => FilterByCategory(category.id)">@category.description</button>
         }
     </div>
-    <div class="product-grid">
-        @foreach (var service in FilteredItems)
-        {
-            <div class="product-info-wrapper @(SelectedServiceIds.Contains(service.Id) ? "selected" : "")" 
-                 @onpointerdown="async (e) => await itemClicked(service.Id, e)" 
-                 @onpointerup="() => itemReleased(service.Id)" 
-                 @onpointermove="onPointerMove">
-                <div class="product-info">
-                    <span class="product-name">@service.Name</span>
-                    <span class="product-info-subtitle">@service.Description</span>
-                    <span class="product-info-subtitle">RM @service.Price | @service.EstimatedDuration.TotalMinutes mins</span>
+
+    @if (isLoading)
+    {
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <span>Loading services...</span>
+        </div>
+    }
+    else if (!FilteredItems.Any())
+    {
+        <div class="no-services-found">
+            <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; color: var(--text-muted); margin-bottom: 8px;"></i>
+            <span>No services found.</span>
+        </div>
+    }
+    else
+    {
+        <div class="product-grid">
+            @foreach (var service in FilteredItems)
+            {
+                var key = GetServiceKey(service);
+                var isSelected = SelectedServiceCodes.Contains(key);
+                <div class="product-info-wrapper @(isSelected ? "selected" : "")" 
+                     @onpointerdown="async (e) => await itemClicked(service, e)" 
+                     @onpointerup="() => itemReleased(service)" 
+                     @onpointermove="onPointerMove">
+                    @if (!string.IsNullOrWhiteSpace(service.imagePath))
+                    {
+                        <img class="service-image" src="@service.imagePath" alt="@service.salesDescription" />
+                    }
+                    else
+                    {
+                        <div class="no-image-placeholder-service">
+                            <i class="fa-solid fa-spa"></i>
+                        </div>
+                    }
+                    <div class="product-info">
+                        <span class="product-name">@service.salesDescription</span>
+                        @if (!string.IsNullOrWhiteSpace(service.remarks))
+                        {
+                            <span class="product-info-subtitle">@service.remarks</span>
+                        }
+                        else if (!string.IsNullOrWhiteSpace(service.itemGroupName))
+                        {
+                            <span class="product-info-subtitle">@service.itemGroupName</span>
+                        }
+                    </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }
 </div>
+
 <div @onclick="navSelectStaff" class="next-button">
-    <div class="next-button-content @(SelectedServiceIds.Count < 1 ? "disabled" : "")">
+    <div class="next-button-content @(SelectedServiceCodes.Count != 1 ? "disabled" : "")">
         <span>@Loc["NextButton"]</span>
     </div>
 </div>
 
-@if (servicesModalIsOpen)
+@if (servicesModalIsOpen && serviceToShowInModal != null)
 {
     <div @onclick="closeServiceModal" class="backdrop">
         <div @onclick:stopPropagation="true" class="modal-wrapper">
             <div class="modal-top">
                 <div></div>
-                <div><span>@serviceToShowInModal.Name</span></div>
-                <div @onclick="closeServiceModal" class="close-button"><i class="fa-solid fa-xmark"></i></div>
+                <div><span>@serviceToShowInModal.salesDescription</span></div>
+                <div @onclick="closeServiceModal" class="close-button" style="cursor: pointer;"><i class="fa-solid fa-xmark"></i></div>
             </div>
             <div class="modal-content" style="padding: 20px;">
-                <p><strong>Description:</strong> @serviceToShowInModal.Description</p>
-                <p><strong>Price:</strong> RM @serviceToShowInModal.Price</p>
-                <p><strong>Duration:</strong> @serviceToShowInModal.EstimatedDuration.TotalMinutes mins</p>
+                @if (!string.IsNullOrWhiteSpace(serviceToShowInModal.imagePath))
+                {
+                    <img class="modal-image" src="@serviceToShowInModal.imagePath" alt="@serviceToShowInModal.salesDescription" style="max-height: 180px; object-fit: contain; border-radius: 8px;" />
+                }
+                <div style="width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                    @if (!string.IsNullOrWhiteSpace(serviceToShowInModal.itemGroupName))
+                    {
+                        <p><strong>Category:</strong> @serviceToShowInModal.itemGroupName</p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(serviceToShowInModal.itemBrandName))
+                    {
+                        <p><strong>Brand:</strong> @serviceToShowInModal.itemBrandName</p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(serviceToShowInModal.remarks))
+                    {
+                        <p><strong>Description:</strong> @serviceToShowInModal.remarks</p>
+                    }
+                </div>
             </div>
         </div>
     </div>

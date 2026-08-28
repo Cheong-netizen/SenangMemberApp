@@ -1,8 +1,10 @@
-﻿using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SenangMemberApp.Shared.Services.IService
 {
@@ -10,6 +12,8 @@ namespace SenangMemberApp.Shared.Services.IService
     {
         public string selectedStaffId { get; }
         public HashSet<int> SelectedServiceIds { get; } 
+        public HashSet<string> SelectedServiceCodes { get; }
+        public List<ServiceResponseDTO> SelectedServices { get; }
         public TimeSpan TotalEstimateTime { get; } 
         public string selectedStaffName { get; }
         public string selectedBookingShopName { get; }
@@ -24,6 +28,7 @@ namespace SenangMemberApp.Shared.Services.IService
         public Task<bool> ConfirmAppointment();
         public void SetOutlet(BranchResponseDTO outlet);
         public void SetSelectedService(HashSet<int> selectedServiceIds, TimeSpan totalEstimateTime);
+        public void SetSelectedServices(List<ServiceResponseDTO> selectedServices, TimeSpan totalEstimateTime);
         public void SetSelectedStaff(string staffId, string staffName);
     }
 }

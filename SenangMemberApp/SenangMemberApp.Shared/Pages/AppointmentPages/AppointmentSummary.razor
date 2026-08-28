@@ -67,7 +67,27 @@
             </div>
         }
 
-        @if (servicesDetails != null && servicesDetails.Any())
+        @if (appointmentState.SelectedServices != null && appointmentState.SelectedServices.Any())
+        {
+            <div class="services-wrapper">
+                <span class="header-text"><i class="fa-solid fa-list icon"></i> @Loc["StepServices"]</span>
+                @foreach (var service in appointmentState.SelectedServices)
+                {
+                    <div class="services">
+                        <span class="normal-text">@service.salesDescription</span>
+                        @if (!string.IsNullOrWhiteSpace(service.remarks))
+                        {
+                            <span class="subtitle-text">@service.remarks</span>
+                        }
+                        else if (!string.IsNullOrWhiteSpace(service.itemGroupName))
+                        {
+                            <span class="subtitle-text">@service.itemGroupName</span>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        else if (servicesDetails != null && servicesDetails.Any())
         {
             <div class="services-wrapper">
                 <span class="header-text"><i class="fa-solid fa-list icon"></i> @Loc["StepServices"]</span>

@@ -107,6 +107,16 @@ namespace SenangMemberApp.Shared.ApiClient
             return response;
         }
 
+        public async Task<ApiResponseRoot<List<ServiceStaffResponseDTO>>> FetchServiceStaffByBranch(string branchCode)
+        {
+            var requestBody = new { id = branchCode };
+            var response = await CompanyPostAsync<object, ApiResponseRoot<List<ServiceStaffResponseDTO>>>("api/PublicMember/GetServiceStaffByBranch", requestBody);
+            var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+            var debugResponse = System.Text.Json.JsonSerializer.Serialize(response, options);
+            Debug.WriteLine(debugResponse);
+            return response;
+        }
+
         public async Task<RegisterApiResponseDTO?> RegisterAccount(string name, string email, string phoneNumber, string password)
         {
             var request = new RegisterRequestDTO

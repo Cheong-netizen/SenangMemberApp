@@ -56,5 +56,11 @@ namespace SenangMemberApp.Shared.Services.ConcreteService
 
             return response;
         }
+
+        public async Task<ApiResponseRoot<List<ServiceStaffResponseDTO>>> GetCompanyServiceStaffByBranch(string branchCode)
+        {
+            var response = await _companyAC.FetchServiceStaffByBranch(branchCode);
+            return response;
+        }
     }
 }

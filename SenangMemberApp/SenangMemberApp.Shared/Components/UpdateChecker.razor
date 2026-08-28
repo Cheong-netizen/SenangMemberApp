@@ -1,0 +1,200 @@
+@using SenangMemberApp.Shared.Services
+@using SenangMemberApp.Shared.Services.IService
+@inject IAppVersionService AppVersionService
+@inject NavigationManager Nav
+@implements IDisposable
+
+<UpdateNotificationDialog IsOpen="@showUpdateDialog"
+                          CurrentVersion="@currentVersion"
+                          NewVersion="@latestVersion"
+                          UpdateUrl="@updateUrl"
+                          CloseOnOverlayClick="false"
+                          IsOpenChanged="@((bool val) => showUpdateDialog = val)"
+                          OnUpdate="OnUpdateNow" />
+
+@code {
+    private bool showUpdateDialog = false;
+    private string updateUrl = string.Empty;
+    private string currentVersion = string.Empty;
+    private string latestVersion = string.Empty;
+    private bool hasChecked = false;
+    private bool _navigatedToStore = false;
+    private System.Timers.Timer? _checkTimer;
+    private bool _isChecking = false;
+    private bool _isUpdateAvailable = false;
+    private DateTime _lastCheckTime = DateTime.MinValue;
+    private readonly TimeSpan _minCheckInterval = TimeSpan.FromSeconds(1);
+
+    protected override void OnInitialized()
+    {
+        Nav.LocationChanged += OnLocationChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !hasChecked)
+        {
+            hasChecked = true;
+            await CheckForUpdates();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private void EnsureTimerRunning()
+    {
+        if (!_isUpdateAvailable)
+        {
+            return;
+        }
+
+        if (_checkTimer == null)
+        {
+            _checkTimer = new System.Timers.Timer(1000);
+            _checkTimer.Elapsed += async (sender, e) =>
+            {
+                if (_navigatedToStore && !_isChecking && _isUpdateAvailable)
+                {
+                    _navigatedToStore = false;
+                    await InvokeAsync(async () => await CheckForUpdates(forceCheck: true));
+                }
+            };
+            _checkTimer.Start();
+        }
+        else if (!_checkTimer.Enabled && _isUpdateAvailable)
+        {
+            _checkTimer.Start();
+        }
+    }
+
+    private void StopTimer()
+    {
+        if (_checkTimer != null && _checkTimer.Enabled)
+        {
+            _checkTimer.Stop();
+        }
+    }
+
+    private async void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        if (e.Location.Contains("play.google.com") ||
+            e.Location.Contains("apps.apple.com") ||
+            e.Location.Contains("market.android.com"))
+        {
+            _navigatedToStore = true;
+
+            if (_isUpdateAvailable)
+            {
+                EnsureTimerRunning();
+            }
+            return;
+        }
+
+        if (_navigatedToStore)
+        {
+            _navigatedToStore = false;
+
+            if (_isUpdateAvailable)
+            {
+                await CheckForUpdates(forceCheck: true);
+            }
+            else
+            {
+                StopTimer();
+            }
+            return;
+        }
+
+        await CheckForUpdates();
+    }
+
+    private async Task CheckForUpdates(bool forceCheck = false)
+    {
+        try
+        {
+            if (_isChecking) return;
+
+            if (showUpdateDialog) return;
+
+            if (!forceCheck && (DateTime.Now - _lastCheckTime) < _minCheckInterval)
+            {
+                return;
+            }
+
+            _isChecking = true;
+            _lastCheckTime = DateTime.Now;
+
+            currentVersion = AppVersionService.GetCurrentVersion();
+
+            var versionInfo = await AppVersionService.GetLatestVersionInfoAsync();
+            if (versionInfo != null)
+            {
+                var platform = AppVersionService.GetPlatform();
+                if (string.Equals(platform, "iOS", StringComparison.OrdinalIgnoreCase))
+                {
+                    latestVersion = versionInfo.ios_latest_version;
+                }
+                else
+                {
+                    latestVersion = versionInfo.android_latest_version;
+                }
+            }
+
+            var isAvailable = await AppVersionService.IsUpdateAvailableAsync();
+            _isUpdateAvailable = isAvailable;
+
+            if (isAvailable)
+            {
+                updateUrl = await AppVersionService.GetUpdateUrlAsync();
+                showUpdateDialog = true;
+                await InvokeAsync(StateHasChanged);
+                EnsureTimerRunning();
+            }
+            else
+            {
+                StopTimer();
+
+                if (showUpdateDialog)
+                {
+                    showUpdateDialog = false;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error checking for updates: {ex.Message}");
+        }
+        finally
+        {
+            _isChecking = false;
+        }
+    }
+
+    private async Task OnUpdateNow()
+    {
+        if (!string.IsNullOrEmpty(updateUrl))
+        {
+            _navigatedToStore = true;
+
+            showUpdateDialog = false;
+            await InvokeAsync(StateHasChanged);
+
+            if (_isUpdateAvailable)
+            {
+                EnsureTimerRunning();
+            }
+
+            _ = Task.Delay(1000).ContinueWith(async _ =>
+            {
+                await InvokeAsync(async () => await CheckForUpdates(forceCheck: true));
+            });
+        }
+    }
+
+    public void Dispose()
+    {
+        Nav.LocationChanged -= OnLocationChanged;
+        _checkTimer?.Stop();
+        _checkTimer?.Dispose();
+    }
+}

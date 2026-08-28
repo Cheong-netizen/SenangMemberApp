@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Models.DTO.CreditDTO;
 using System;
@@ -15,5 +15,6 @@ namespace SenangMemberApp.Shared.Services.IService
         Task<MemberBalanceDTO> GetCompanyMemberBalance();
         Task<ApiResponseRoot<List<BranchResponseDTO>>> GetCompanyBranchDetails();
         Task<ApiResponseRoot<List<BroadcastResponseDTO>>> GetCompanyBroadcast();
+        Task<ApiResponseRoot<List<ServiceStaffResponseDTO>>> GetCompanyServiceStaffByBranch(string branchCode);
     }
 }

@@ -26,12 +26,34 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         protected override void OnInitialized()
         {
             generateDate();
+
+            if (appointmentState.selectedTime != default(DateTime) && appointmentState.selectedTime >= DateTime.Today)
+            {
+                currentViewDate = appointmentState.selectedTime.Date;
+                for (int i = 0; i < yearOfWeeks.Count; i++)
+                {
+                    if (yearOfWeeks[i].Any(d => d.Date.Date == currentViewDate.Date))
+                    {
+                        selectedWeekIndex = i;
+                        break;
+                    }
+                }
+            }
+
             week = yearOfWeeks[selectedWeekIndex];
 
             DaySchedule? foundDate = week.FirstOrDefault(d => d.Date.Date == currentViewDate.Date);
             if (foundDate != null)
             {
                 activeDaySchedule = foundDate;
+                if (appointmentState.selectedTime != default(DateTime))
+                {
+                    selectedSlot = activeDaySchedule.TimeSlots.FirstOrDefault(s => s.FullDateTime == appointmentState.selectedTime);
+                    if (selectedSlot != null)
+                    {
+                        selectedDate = selectedSlot.FullDateTime;
+                    }
+                }
             }
         }
 
@@ -105,6 +127,14 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
             if (foundDate != null)
             {
                 activeDaySchedule = foundDate;
+                if (appointmentState.selectedTime != default(DateTime) && appointmentState.selectedTime.Date == date.Date)
+                {
+                    selectedSlot = activeDaySchedule.TimeSlots.FirstOrDefault(s => s.FullDateTime == appointmentState.selectedTime);
+                }
+                else
+                {
+                    selectedSlot = null;
+                }
             }
             StateHasChanged();
         }
@@ -113,15 +143,15 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
         {
             var slots = new List<TimeSlot>();
 
-            // Set start and end bounds (10:30 to 16:30)
-            DateTime start = date.Date.AddHours(10).AddMinutes(30);
-            DateTime end = date.Date.AddHours(16).AddMinutes(30);
+            // Set start and end bounds (9:00 AM to 6:00 PM)
+            DateTime start = date.Date.AddHours(9);
+            DateTime end = date.Date.AddHours(18);
 
             // Get the current time once to ensure consistency during generation
             DateTime now = DateTime.Now;
 
-            // Generate slots in 1-hour increments
-            while (start < end)
+            // Generate slots in 30-minute increments
+            while (start <= end)
             {
                 bool isPast = start < now;
 
@@ -133,7 +163,7 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
                     IsAvailable = !isPast
                 });
 
-                start = start.AddHours(1);
+                start = start.AddMinutes(30);
             }
 
             return slots;

@@ -1,0 +1,370 @@
+@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Localization
+@using SenangMemberApp.Shared.Services.IService
+@inject IUrlLauncher UrlLauncher
+@inject IConfiguration Configuration
+
+@if (IsOpen)
+{
+    <div class="review-modal-backdrop" @onclick="HandleBackdropClick">
+        <div class="review-modal-card" @onclick:stopPropagation="true">
+
+            <!-- HEADER -->
+            <div class="review-modal-header">
+                <button class="btn-modal-close" @onclick="CloseModal" title="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="review-modal-header-content">
+                    <div class="icon-container">
+                        <span class="header-icon">⭐</span>
+                    </div>
+                    <h2 class="review-modal-title">Rate Your Experience</h2>
+                    @if (!string.IsNullOrWhiteSpace(ItemName) || !string.IsNullOrWhiteSpace(Branch))
+                    {
+                        <div class="purchase-item-badge">
+                            @if (!string.IsNullOrWhiteSpace(ItemName))
+                            {
+                                <span class="badge-item">@ItemName</span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Branch))
+                            {
+                                <span class="badge-branch"><i class="fa-solid fa-location-dot me-1"></i>@Branch</span>
+                            }
+                        </div>
+                    }
+                    <p class="review-modal-subtitle">Your feedback helps us improve our service</p>
+                </div>
+            </div>
+
+            <!-- BODY -->
+            <div class="review-modal-body">
+
+                <!-- RATING QUESTION -->
+                <div class="question-section">
+                    <div class="question-text">✨ How would you rate your experience? ✨</div>
+                </div>
+
+                <!-- STAR RATING -->
+                <div class="stars-container">
+                    <div class="stars-wrapper">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            var starNumber = i;
+                            <div class="star-wrapper">
+                                <span class="star @(rating >= i ? "filled" : "") @(hoverRating >= i ? "hover" : "")"
+                                      @onclick="(() => OnRate(starNumber))"
+                                      @onmouseover="(() => hoverRating = starNumber)"
+                                      @onmouseout="(() => hoverRating = 0)">
+                                    ★
+                                </span>
+                                @if (i == 5)
+                                {
+                                    <div class="star-label">Excellent</div>
+                                }
+                                else if (i == 1)
+                                {
+                                    <div class="star-label">Poor</div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- RATING FEEDBACK MESSAGE -->
+                @if (rating > 0 && !hasSubmitted)
+                {
+                    <div class="feedback-container">
+                        <div class="feedback-card @GetMessageClass()">
+                            <div class="feedback-icon">
+                                @GetFeedbackIcon()
+                            </div>
+                            <div class="feedback-content">
+                                <div class="feedback-title">@GetFeedbackTitle()</div>
+                                <div class="feedback-message">@MessageText</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- GOOGLE REVIEW SECTION (5 STARS) -->
+                @if (rating == 5 && !hasSubmitted)
+                {
+                    <div class="google-review-section">
+                        <div class="section-header">
+                            <span class="section-title">Share your positive experience to help others discover our service!</span>
+                            <span class="section-title">Your review makes a difference.</span>
+                        </div>
+
+                        <div class="redirect-notice">
+                            <span class="notice-icon">⏱️</span>
+                            <span>You'll be redirected to Google Reviews</span>
+                        </div>
+
+                        <button class="btn btn-google" @onclick="RedirectToGoogleReview" disabled="@isSaving">
+                            @if (isSaving)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                            }
+                            <span class="btn-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                                    <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                                    <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                                    <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                                    <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                                </svg>
+                            </span>
+                            <span class="btn-text">Write a Google Review</span>
+                        </button>
+                    </div>
+                }
+
+                <!-- COMMENT SECTION (1-4 STARS) -->
+                @if (rating is > 0 and < 5 && !hasSubmitted)
+                {
+                    <div class="comment-section">
+                        <div class="comment-prompt">
+                            What could we do better? Your feedback is valuable to us.
+                        </div>
+
+                        <div class="textarea-wrapper">
+                            <div class="textarea-header">
+                                <span class="textarea-label">Your comments</span>
+                                <span class="char-count">@comment.Length/500</span>
+                            </div>
+                            <textarea @bind="comment"
+                                      @oninput="(e) => OnCommentInput(e)"
+                                      maxlength="500"
+                                      placeholder="Please share your thoughts..."
+                                      disabled="@isSaving">
+                            </textarea>
+                            <div class="textarea-footer">
+                                <span class="hint-text">Your feedback will remain confidential</span>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-secondary" @onclick="ResetRating" disabled="@isSaving">
+                                Cancel
+                            </button>
+                            <button class="btn btn-primary" @onclick="Submit"
+                                    disabled="@(string.IsNullOrWhiteSpace(comment) || isSaving)">
+                                @if (isSaving)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                }
+                                else
+                                {
+                                    <span class="btn-icon">➤</span>
+                                }
+                                <span class="btn-text">Submit Feedback</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                <!-- THANK YOU MESSAGE -->
+                @if (hasSubmitted && rating != 5)
+                {
+                    <div class="thank-you-section">
+                        <div class="thank-you-card">
+                            <div class="thank-you-icon">🎉</div>
+                            <div class="thank-you-content">
+                                <h3>Thank You!</h3>
+                                <p>We appreciate your feedback and will use it to improve our service.</p>
+                                <div class="thank-you-note">
+                                    <span class="note-icon">💡</span>
+                                    <span>Your insights help us grow</span>
+                                </div>
+                            </div>
+                            <div class="btn-group mt-3">
+                                <button class="btn btn-primary" @onclick="CloseModal">
+                                    Done
+                                </button>
+                                <button class="btn btn-outline" @onclick="ResetForm">
+                                    Submit Another Rating
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnSubmitted { get; set; }
+
+    [Parameter]
+    public string? ItemName { get; set; }
+
+    [Parameter]
+    public string? Branch { get; set; }
+
+    [Parameter]
+    public string? ReviewUrl { get; set; }
+
+    [Parameter]
+    public string? ServiceRecordId { get; set; }
+
+    [Parameter]
+    public string? StrRatingToken { get; set; }
+
+    private int rating = 0;
+    private int hoverRating = 0;
+    private string comment = string.Empty;
+    private bool isSaving = false;
+    private bool hasSubmitted = false;
+    private string MessageText = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        // If modal was reopened, make sure we keep or reset state appropriately
+    }
+
+    private void OnRate(int starNumber)
+    {
+        rating = starNumber;
+        MessageText = starNumber switch
+        {
+            5 => "We're thrilled you had a fantastic experience! We'd love if you could share your feedback with others.",
+            4 => "Thank you for the good feedback! We're constantly working to make your experience even better.",
+            3 => "Thank you for your rating. We'd appreciate knowing how we can make your next experience even better.",
+            2 => "We're sorry your experience wasn't up to expectations. Please let us know how we can improve.",
+            1 => "We sincerely apologize that your experience was poor. Please tell us what went wrong so we can make it right.",
+            _ => string.Empty
+        };
+    }
+
+    private string GetMessageClass() => $"rating-{rating}";
+
+    private string GetFeedbackIcon() => rating switch
+    {
+        5 => "🤩",
+        4 => "😊",
+        3 => "🙂",
+        2 => "🙁",
+        1 => "😞",
+        _ => "⭐"
+    };
+
+    private string GetFeedbackTitle() => rating switch
+    {
+        5 => "Outstanding Experience!",
+        4 => "Great Experience!",
+        3 => "Satisfactory Experience",
+        2 => "Needs Improvement",
+        1 => "Poor Experience",
+        _ => "Your Feedback"
+    };
+
+    private void OnCommentInput(ChangeEventArgs e)
+    {
+        comment = e.Value?.ToString() ?? string.Empty;
+    }
+
+    private void ResetRating()
+    {
+        rating = 0;
+        hoverRating = 0;
+        comment = string.Empty;
+        MessageText = string.Empty;
+    }
+
+    private void ResetForm()
+    {
+        rating = 0;
+        hoverRating = 0;
+        comment = string.Empty;
+        MessageText = string.Empty;
+        hasSubmitted = false;
+        isSaving = false;
+    }
+
+    private async Task RedirectToGoogleReview()
+    {
+        isSaving = true;
+        try
+        {
+            string url = ReviewUrl ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                var query = Uri.EscapeDataString($"{Branch ?? ""} {ItemName ?? ""} review".Trim());
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    query = "customer review";
+                }
+                url = $"https://www.google.com/search?q={query}";
+            }
+
+            await UrlLauncher.OpenUrlAsync(url);
+            hasSubmitted = true;
+            if (OnSubmitted.HasDelegate)
+            {
+                await OnSubmitted.InvokeAsync(5);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error opening review url: {ex.Message}");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private async Task Submit()
+    {
+        if (string.IsNullOrWhiteSpace(comment) || isSaving) return;
+
+        isSaving = true;
+        try
+        {
+            // Simulate saving rating and comment
+            await Task.Delay(600);
+            hasSubmitted = true;
+            if (OnSubmitted.HasDelegate)
+            {
+                await OnSubmitted.InvokeAsync(rating);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error submitting rating: {ex.Message}");
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private async Task HandleBackdropClick()
+    {
+        await CloseModal();
+    }
+
+    private async Task CloseModal()
+    {
+        IsOpen = false;
+        if (IsOpenChanged.HasDelegate)
+        {
+            await IsOpenChanged.InvokeAsync(false);
+        }
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+}

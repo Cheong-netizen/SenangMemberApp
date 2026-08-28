@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using SenangMemberApp.Shared.Models;
+using SenangMemberApp.Shared.ApiClient;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Services.IService;
 using System;
 using System.Collections.Generic;
@@ -13,85 +14,174 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
     public partial class AppointmentSelectServices
     {
         [Inject]
-        public required IServiceProducts ProductService { get; set; }
-
-        [Inject]
         public required NavigationManager NavManager { get; set; }
 
         [Inject]
         private IAppointmentState appointmentState { get; set; } = default!;
 
-        private string servicesSearchText = string.Empty;
-        private int _selectedCategoryId = 0; // 0 represents "All"
+        [Inject]
+        private CompanyAC companyAC { get; set; } = default!;
 
-        private List<CategoryModel> Categories = new();
-        private List<ServicesModel> AllItems = new();
+        private string servicesSearchText = string.Empty;
+        private string _selectedCategoryId = string.Empty; // Empty string represents "All"
+
+        private List<CatalogResponseDTO> Categories = new();
+        private List<ServiceResponseDTO> AllItems = new();
+        private Dictionary<string, List<ServiceResponseDTO>> _servicesByCategory = new();
+        private HashSet<string> SelectedServiceCodes = new();
+        private List<ServiceResponseDTO> SelectedServices = new();
+
+        private bool isLoading = true;
         private bool servicesModalIsOpen = false;
-        private HashSet<int> SelectedServiceIds = new();
+        private ServiceResponseDTO serviceToShowInModal = new();
+
         private CancellationTokenSource? pressCts;
         private bool isLongPress = false;
         private double startX;
         private double startY;
         private int MoveThreshold = 10;
-        private int modalServiceIdToDisplay = 0;
-        private ServicesModel serviceToShowInModal = new();
 
-        private IEnumerable<ServicesModel> FilteredItems
+        private IEnumerable<ServiceResponseDTO> FilteredItems
         {
             get
             {
-                IEnumerable<ServicesModel> query = AllItems.AsEnumerable();
+                IEnumerable<ServiceResponseDTO> query;
 
-                if (_selectedCategoryId != 0)
+                if (string.IsNullOrEmpty(_selectedCategoryId))
                 {
-                    query = query.Where(q => q.CategoryId == _selectedCategoryId);
+                    query = AllItems.AsEnumerable();
+                }
+                else if (_servicesByCategory.TryGetValue(_selectedCategoryId, out var catItems))
+                {
+                    query = catItems.AsEnumerable();
+                }
+                else
+                {
+                    query = AllItems.Where(q => q.itemGroupID == _selectedCategoryId);
                 }
 
-                if (!string.IsNullOrEmpty(servicesSearchText))
+                // Filter by inventoryTypeID == 3 (Services)
+                query = query.Where(q => q.inventoryTypeID == 3);
+
+                if (!string.IsNullOrWhiteSpace(servicesSearchText))
                 {
-                    query = query.Where(s => s.Name.Contains(servicesSearchText, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(s =>
+                        (!string.IsNullOrEmpty(s.salesDescription) && s.salesDescription.Contains(servicesSearchText, StringComparison.OrdinalIgnoreCase)) ||
+                        (!string.IsNullOrEmpty(s.itemGroupName) && s.itemGroupName.Contains(servicesSearchText, StringComparison.OrdinalIgnoreCase)) ||
+                        (!string.IsNullOrEmpty(s.remarks) && s.remarks.Contains(servicesSearchText, StringComparison.OrdinalIgnoreCase))
+                    );
                 }
 
                 return query;
             }
         }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            Categories = ProductService.GetCategories() ?? new List<CategoryModel>();
-            AllItems = ProductService.GetServices() ?? new List<ServicesModel>();
+            isLoading = true;
 
-            if (appointmentState.SelectedServiceIds != null && appointmentState.SelectedServiceIds.Any())
+            // Restore previous state if available
+            if (appointmentState.SelectedServiceCodes != null && appointmentState.SelectedServiceCodes.Any())
             {
-                SelectedServiceIds = new HashSet<int>(appointmentState.SelectedServiceIds);
+                var firstCode = appointmentState.SelectedServiceCodes.First();
+                SelectedServiceCodes = new HashSet<string> { firstCode };
+                var firstService = appointmentState.SelectedServices?.FirstOrDefault();
+                SelectedServices = firstService != null ? new List<ServiceResponseDTO> { firstService } : new();
+            }
+
+            try
+            {
+                // 1. Fetch Item Groups / Categories
+                var categoryResponse = await companyAC.FetchCompanyCategory();
+                Categories = categoryResponse?.result ?? new List<CatalogResponseDTO>();
+
+                // 2. Fetch Services for each category using LoadByItemGroupIDAsync
+                if (Categories.Any())
+                {
+                    var fetchTasks = Categories.Select(async cat =>
+                    {
+                        var svcResponse = await companyAC.FetchCompanyServiceList(cat.id);
+                        var services = (svcResponse?.result ?? new List<ServiceResponseDTO>())
+                            .Where(s => s.inventoryTypeID == 3)
+                            .ToList();
+                        return (cat.id, services);
+                    });
+
+                    var results = await Task.WhenAll(fetchTasks);
+                    _servicesByCategory = results.ToDictionary(r => r.id, r => r.services);
+
+                    // Aggregate all unique services
+                    var combinedList = new List<ServiceResponseDTO>();
+                    var seenCodes = new HashSet<string>();
+
+                    foreach (var groupServices in _servicesByCategory.Values)
+                    {
+                        foreach (var service in groupServices)
+                        {
+                            var code = GetServiceKey(service);
+                            if (!string.IsNullOrEmpty(code))
+                            {
+                                if (seenCodes.Add(code))
+                                {
+                                    combinedList.Add(service);
+                                }
+                            }
+                            else
+                            {
+                                combinedList.Add(service);
+                            }
+                        }
+                    }
+
+                    AllItems = combinedList;
+                }
+                else
+                {
+                    // Fallback to fetch with empty id if no categories returned
+                    var svcResponse = await companyAC.FetchCompanyServiceList("");
+                    AllItems = (svcResponse?.result ?? new List<ServiceResponseDTO>())
+                        .Where(s => s.inventoryTypeID == 3)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AppointmentSelectServices Error] {ex.Message}");
+            }
+            finally
+            {
+                isLoading = false;
             }
         }
 
-        private void FilterByCategory(int categoryId)
+        private string GetServiceKey(ServiceResponseDTO service)
+        {
+            return !string.IsNullOrEmpty(service.masterAccountID)
+                ? service.masterAccountID
+                : (!string.IsNullOrEmpty(service.displayCode) ? service.displayCode : service.salesDescription ?? "");
+        }
+
+        private void FilterByCategory(string categoryId)
         {
             _selectedCategoryId = categoryId;
         }
 
         private void navSelectStaff()
         {
-            if (SelectedServiceIds.Count < 1)
+            if (SelectedServiceCodes.Count != 1)
                 return;
 
-            TimeSpan totalEstimateTime = getTotalEstimatedTime(SelectedServiceIds);
-            appointmentState.SetSelectedService(SelectedServiceIds, totalEstimateTime);
+            var service = SelectedServices.FirstOrDefault();
+            int minutes = (service?.serviceMinutes != null && service.serviceMinutes > 0)
+                ? service.serviceMinutes.Value
+                : 120; // Default to 2 hours if 0 or null
+
+            TimeSpan totalEstimateTime = TimeSpan.FromMinutes(minutes);
+            appointmentState.SetSelectedServices(SelectedServices, totalEstimateTime);
             NavManager.NavigateTo("/AppointmentSelectStaff");
         }
 
-        private TimeSpan getTotalEstimatedTime(HashSet<int> selectedServiceIds)
-        {
-            TimeSpan totalTime = AllItems
-                .Where(s => selectedServiceIds.Contains(s.Id))
-                .Aggregate(TimeSpan.Zero, (total, next) => total + next.EstimatedDuration);
-
-            return totalTime;
-        }
-
-        private async Task itemClicked(int serviceId, PointerEventArgs e)
+        private async Task itemClicked(ServiceResponseDTO service, PointerEventArgs e)
         {
             startX = e.ClientX;
             startY = e.ClientY;
@@ -102,29 +192,36 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
                 await Task.Delay(400, pressCts.Token);
 
                 isLongPress = true;
+                serviceToShowInModal = service;
                 servicesModalIsOpen = true;
-                modalServiceIdToDisplay = serviceId;
-                serviceToShowInModal = AllItems.FirstOrDefault(i => i.Id == serviceId) ?? new ServicesModel();
+                StateHasChanged();
             }
             catch (TaskCanceledException)
             {
             }
         }
 
-        private void itemReleased(int serviceId)
+        private void itemReleased(ServiceResponseDTO service)
         {
             pressCts?.Cancel();
 
             if (isLongPress)
                 return;
 
-            if (SelectedServiceIds.Contains(serviceId))
+            var key = GetServiceKey(service);
+            if (string.IsNullOrEmpty(key)) return;
+
+            if (SelectedServiceCodes.Contains(key))
             {
-                SelectedServiceIds.Remove(serviceId);
+                SelectedServiceCodes.Remove(key);
+                SelectedServices.RemoveAll(s => GetServiceKey(s) == key);
             }
             else
             {
-                SelectedServiceIds.Add(serviceId);
+                SelectedServiceCodes.Clear();
+                SelectedServiceCodes.Add(key);
+                SelectedServices.Clear();
+                SelectedServices.Add(service);
             }
         }
 

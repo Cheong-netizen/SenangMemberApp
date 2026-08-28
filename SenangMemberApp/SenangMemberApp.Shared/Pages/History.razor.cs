@@ -79,29 +79,23 @@ namespace SenangMemberApp.Shared.Pages
             warningModalIsOpen = false;
         }
 
-        private async Task OpenReview(ServiceRecordResponseDTO item)
+        private bool isReviewModalOpen = false;
+        private ServiceRecordResponseDTO? selectedReviewItem;
+
+        private void OpenReview(ServiceRecordResponseDTO item)
         {
             if (item == null) return;
 
-            string? url = item.reviewUrl;
+            selectedReviewItem = item;
+            isReviewModalOpen = true;
+            StateHasChanged();
+        }
 
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                var query = Uri.EscapeDataString($"{item.branch} {item.itemName} review");
-                url = $"https://www.google.com/search?q={query}";
-            }
-
-            try
-            {
-                await UrlLauncher.OpenUrlAsync(url);
-            }
-            catch (Exception)
-            {
-                ShowWarningModal(
-                    Loc["ReviewErrorTitle"] ?? "Unable to Open Link",
-                    Loc["ReviewErrorMessage"] ?? "Could not open the review link. Please try again."
-                );
-            }
+        private void CloseReviewModal()
+        {
+            isReviewModalOpen = false;
+            selectedReviewItem = null;
+            StateHasChanged();
         }
         private void toggleShopListModal()
         {

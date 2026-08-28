@@ -1,5 +1,5 @@
 @page "/AppointmentSelectStaff"
-@using SenangMemberApp.Shared.Models
+@using SenangMemberApp.Shared.Models.DTO.CompanyDTO
 @layout EmptyLayout
 
 @using Microsoft.Extensions.Localization
@@ -58,21 +58,46 @@
         </div>
     </div>
     <div class="staff-grid">
-        @foreach (var staff in staffs)
+        @if (isLoading)
         {
-            <div @onclick='() => selectStaff(staff.Id, $"{staff.FirstName} {staff.LastName}")' class="staff-card @(selectedStaffId == staff.Id ? "selected" : "")">
-                <div class="image-wrapper">
-                    <img src="_content/SenangMemberApp.Shared/Images/store_placeholder.png" alt="Staff Image" />
-                </div>
-                <div class="card-content">
-                    <span>@staff.FirstName @staff.LastName</span>
-                </div>
+            <div style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center; min-height: 120px;">
+                <div class="spinner-border text-primary" role="status" style="width: 2rem; height: 2rem;"></div>
             </div>
+        }
+        else if (staffs == null || !staffs.Any())
+        {
+            <div style="grid-column: 1 / -1; text-align: center; color: #888; padding: 40px 10px;">
+                <span>No staff available for this branch</span>
+            </div>
+        }
+        else
+        {
+            @foreach (var staff in staffs)
+            {
+                var staffId = !string.IsNullOrEmpty(staff.masterAccountID) ? staff.masterAccountID : (!string.IsNullOrEmpty(staff.displayCode) ? staff.displayCode : staff.salesPersonCode);
+                var staffName = !string.IsNullOrWhiteSpace(staff.accountName) ? staff.accountName : staff.salesPersonCode;
+                <div @onclick='() => selectStaff(staffId, staffName)' class="staff-card @(selectedStaffId == staffId ? "selected" : "")">
+                    <div class="image-wrapper">
+                        <img src="@(GetStaffImageUrl(staff.imagePath))" alt="Staff Image" />
+                    </div>
+                    <div class="card-content">
+                        <span>@staffName</span>
+                        @if (!string.IsNullOrWhiteSpace(staff.jobTitle))
+                        {
+                            <span style="font-size: 11px; color: #666; margin-top: 2px;">@staff.jobTitle</span>
+                        }
+                        else if (!string.IsNullOrWhiteSpace(staff.employeeTypeName))
+                        {
+                            <span style="font-size: 11px; color: #666; margin-top: 2px;">@staff.employeeTypeName</span>
+                        }
+                    </div>
+                </div>
+            }
         }
     </div>
 </div>
 <div @onclick="navSelectDate" class="next-button">
-    <div class="next-button-content @(selectedStaffId < 1 ? "disabled" : "")">
+    <div class="next-button-content @(string.IsNullOrWhiteSpace(selectedStaffId) ? "disabled" : "")">
         <span>@Loc["NextButton"]</span>
     </div>
 </div>

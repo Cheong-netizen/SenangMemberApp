@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -43,5 +43,7 @@ namespace SenangMemberApp.Shared.Models.DTO
         public string taxFinancialAccountID { get; set; }
 
         public string remarks { get; set; }
+
+        public int? serviceMinutes { get; set; }
     }
 }

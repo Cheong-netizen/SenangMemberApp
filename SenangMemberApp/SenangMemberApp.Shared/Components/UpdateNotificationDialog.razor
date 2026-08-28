@@ -1,0 +1,102 @@
+@using SenangMemberApp.Shared.Services
+@using SenangMemberApp.Shared.Services.IService
+@inject LanguageService LangSvc
+@inject IUrlLauncher UrlLauncher
+@inject NavigationManager NavigationManager
+
+@if (IsOpen)
+{
+    <div class="update-notification-overlay" style="z-index: @ZIndex;" @onclick="HandleOverlayClick">
+        <div class="update-notification-card" @onclick:stopPropagation>
+            <div class="update-notification-icon">
+                <i class="bi bi-arrow-up-circle-fill"></i>
+            </div>
+
+            <div class="update-notification-title">
+                @(string.IsNullOrWhiteSpace(Title) ? LangSvc.GetText("UpdateAvailable") : Title)
+            </div>
+
+            <div class="update-notification-message">
+                @if (string.IsNullOrWhiteSpace(Message))
+                {
+                    @((MarkupString)LangSvc.GetText("UpdateMessage"))
+                }
+                else
+                {
+                    @((MarkupString)Message)
+                }
+                @if (!string.IsNullOrEmpty(CurrentVersion) && !string.IsNullOrEmpty(NewVersion))
+                {
+                    <div class="update-version-info">
+                        <span class="current-version">@CurrentVersion</span>
+                        <i class="bi bi-arrow-right"></i>
+                        <span class="new-version">@NewVersion</span>
+                    </div>
+                }
+            </div>
+
+            <div class="update-notification-actions">
+                <button class="update-notification-btn update-now-btn" @onclick="HandleUpdateClick">
+                    @(string.IsNullOrWhiteSpace(UpdateButtonText) ? LangSvc.GetText("UpdateNow") : UpdateButtonText)
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public string Message { get; set; } = string.Empty;
+    [Parameter] public string CurrentVersion { get; set; } = string.Empty;
+    [Parameter] public string NewVersion { get; set; } = string.Empty;
+    [Parameter] public string UpdateButtonText { get; set; } = string.Empty;
+    [Parameter] public string UpdateUrl { get; set; } = string.Empty;
+    [Parameter] public EventCallback OnUpdate { get; set; }
+    [Parameter] public bool CloseOnOverlayClick { get; set; } = false;
+    [Parameter] public int ZIndex { get; set; } = 99999;
+
+    private async Task HandleUpdateClick()
+    {
+        if (!string.IsNullOrEmpty(UpdateUrl))
+        {
+            try
+            {
+                if (UrlLauncher != null)
+                {
+                    await UrlLauncher.OpenUrlAsync(UpdateUrl);
+                }
+                else
+                {
+                    NavigationManager.NavigateTo(UpdateUrl, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error opening update URL: {ex.Message}");
+            }
+        }
+
+        if (OnUpdate.HasDelegate)
+        {
+            await OnUpdate.InvokeAsync();
+        }
+
+        await CloseAsync();
+    }
+
+    private async Task HandleOverlayClick()
+    {
+        if (CloseOnOverlayClick)
+        {
+            await CloseAsync();
+        }
+    }
+
+    private async Task CloseAsync()
+    {
+        IsOpen = false;
+        await IsOpenChanged.InvokeAsync(false);
+    }
+}

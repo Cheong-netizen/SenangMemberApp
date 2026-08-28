@@ -42,6 +42,15 @@ namespace SenangMemberApp
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
             builder.Services.AddScoped<IUrlLauncher, MobileUrlLauncher>();
             builder.Services.AddScoped<ITokenService, MobileTokenService>();
+            builder.Services.AddScoped<IAppVersionService>(sp =>
+            {
+                var httpClient = sp.GetRequiredService<HttpClient>();
+                var platform = Microsoft.Maui.Devices.DeviceInfo.Platform == Microsoft.Maui.Devices.DevicePlatform.Android
+                    ? "Android"
+                    : (Microsoft.Maui.Devices.DeviceInfo.Platform == Microsoft.Maui.Devices.DevicePlatform.iOS ? "iOS" : Microsoft.Maui.Devices.DeviceInfo.Platform.ToString());
+                var version = Microsoft.Maui.ApplicationModel.AppInfo.Current.VersionString;
+                return new AppVersionService(httpClient, platform, version);
+            });
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             builder.Services.AddScoped<LanguageService>();
             builder.Services.AddAuthorizationCore();

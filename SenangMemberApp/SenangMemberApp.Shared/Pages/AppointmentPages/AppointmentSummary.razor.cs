@@ -25,10 +25,13 @@ namespace SenangMemberApp.Shared.Pages.AppointmentPages
 
         protected override void OnInitialized()
         {
-            var allServices = productService.GetServices() ?? new List<ServicesModel>();
-            if (appointmentState.SelectedServiceIds != null && appointmentState.SelectedServiceIds.Any())
+            if (appointmentState.SelectedServices == null || !appointmentState.SelectedServices.Any())
             {
-                servicesDetails = allServices.Where(s => appointmentState.SelectedServiceIds.Contains(s.Id)).ToList();
+                var allServices = productService.GetServices() ?? new List<ServicesModel>();
+                if (appointmentState.SelectedServiceIds != null && appointmentState.SelectedServiceIds.Any())
+                {
+                    servicesDetails = allServices.Where(s => appointmentState.SelectedServiceIds.Contains(s.Id)).ToList();
+                }
             }
         }
 

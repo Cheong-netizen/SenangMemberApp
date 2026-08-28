@@ -84,4 +84,16 @@
     </div>
 }
 
+@if (isReviewModalOpen && selectedReviewItem != null)
+{
+    <ReviewModal IsOpen="isReviewModalOpen"
+                 ItemName="@selectedReviewItem.itemName"
+                 Branch="@selectedReviewItem.branch"
+                 ReviewUrl="@selectedReviewItem.reviewUrl"
+                 ServiceRecordId="@selectedReviewItem.serviceRecordID"
+                 OnClose="CloseReviewModal" />
+}
+
+
+
 

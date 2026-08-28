@@ -89,25 +89,34 @@
                 @if (activeDaySchedule.IsOpen)
                 {
                     <div class="schedule-container">
-                        @foreach (var hourGroup in activeDaySchedule.TimeSlots
-                                        .Where(s => s.IsAvailable)
-                                        .GroupBy(s => s.FullDateTime.Hour)
-                                        .OrderBy(g => g.Key))
+                        @if (!activeDaySchedule.TimeSlots.Any(s => s.IsAvailable))
                         {
-                            <div class="hour-section">
-                                <span class="hour-header">
-                                    @DateTime.Today.AddHours(hourGroup.Key).ToString("hh:00 tt")
-                                </span>
-                                <div class="time-slots-grid">
-                                    @foreach (var slot in hourGroup)
-                                    {
-                                        <div @onclick="() => { if (slot.IsAvailable) SelectTimeSlot(slot); }"
-                                             class="time-btn @(slot == selectedSlot ? "selected" : "") @(!slot.IsAvailable ? "disabled" : "")">
-                                            @slot.FullDateTime.ToString("hh:mm tt")
-                                        </div>
-                                    }
-                                </div>
+                            <div class="no-slots-message" style="text-align: center; padding: 20px; color: var(--text-muted, #888);">
+                                <span>@Loc["ClosedMessage"]</span>
                             </div>
+                        }
+                        else
+                        {
+                            @foreach (var hourGroup in activeDaySchedule.TimeSlots
+                                            .Where(s => s.IsAvailable)
+                                            .GroupBy(s => s.FullDateTime.Hour)
+                                            .OrderBy(g => g.Key))
+                            {
+                                <div class="hour-section">
+                                    <span class="hour-header">
+                                        @DateTime.Today.AddHours(hourGroup.Key).ToString("hh:00 tt")
+                                    </span>
+                                    <div class="time-slots-grid">
+                                        @foreach (var slot in hourGroup)
+                                        {
+                                            <div @onclick="() => { if (slot.IsAvailable) SelectTimeSlot(slot); }"
+                                                 class="time-btn @(selectedSlot != null && selectedSlot.FullDateTime == slot.FullDateTime ? "selected" : "") @(!slot.IsAvailable ? "disabled" : "")">
+                                                @slot.FullDateTime.ToString("hh:mm tt")
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
                         }
                     </div>
                 }
