@@ -979,11 +979,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
+      "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
       "projectName": "SenangMemberApp.Shared",
-      "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
+      "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
       "packagesPath": "C:\\Users\\ebiso\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\o\\s\\",
+      "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\o\\s\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

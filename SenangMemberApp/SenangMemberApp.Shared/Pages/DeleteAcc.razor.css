@@ -1,4 +1,4 @@
-﻿/* =========================================
+/* =========================================
    Edit Profile Page Styles
    ========================================= */
 
@@ -116,6 +116,42 @@
     .form-input:focus {
         outline: none;
         border-color: var(--color-primary);
+    }
+
+.phone-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+    .phone-input-group .form-input {
+        cursor: pointer;
+        padding-right: 2.75rem;
+    }
+
+.btn-numpad-trigger {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--color-primary);
+    padding: 6px 10px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+}
+
+    .btn-numpad-trigger:hover {
+        background-color: var(--color-primary-light);
+        color: var(--color-primary-hover);
     }
 
 /* --- 4. Address Section Styles --- */

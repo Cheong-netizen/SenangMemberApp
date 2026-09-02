@@ -30,6 +30,11 @@ namespace SenangMemberApp.Shared.Pages
         private bool warningModalIsOpen = false;
         private string warningModalTitle = "";
         private string warningModalMessage = "";
+        private bool isAccountNotExistModalVisible = false;
+
+        [Parameter]
+        [SupplyParameterFromQuery(Name = "accountDeleted")]
+        public bool? AccountDeleted { get; set; }
 
         private IEnumerable<CompanyResponseDTO> filteredShops // Ensure type matches your list
         {
@@ -65,6 +70,8 @@ namespace SenangMemberApp.Shared.Pages
         [Inject]
         IUserProfileService userProfile { get; set; } = default!;
         [Inject]
+        ITokenService tokenService { get; set; } = default!;
+        [Inject]
         IJSRuntime JSRuntime { get; set; } = default!;
         [Inject]
         IUrlLauncher UrlLauncher { get; set; } = default!;
@@ -79,11 +86,23 @@ namespace SenangMemberApp.Shared.Pages
             await LoadCompanyData();
             currentShopId = ShopState.CurrentShopId;
             currentShopName = ShopState.CurrentShopName;
+
+            bool isDeletedFromQuery = AccountDeleted == true || navManager.Uri.Contains("accountDeleted=true", StringComparison.OrdinalIgnoreCase);
+
             var response = await userProfile.GetUserProfile();
             if (response != null && response.statusCode == 200 && response.result != null)
             {
                 userProfileData = response.result;
+                if (!userProfileData.IsActive || isDeletedFromQuery)
+                {
+                    isAccountNotExistModalVisible = true;
+                }
             }
+            else if (isDeletedFromQuery)
+            {
+                isAccountNotExistModalVisible = true;
+            }
+
             await LoadAppointmentData();
             loading = false;
             StateHasChanged();
@@ -332,6 +351,14 @@ namespace SenangMemberApp.Shared.Pages
         private void navAnnouncement()
         {
             navManager.NavigateTo("/announcement");
+        }
+
+        private async Task HandleAccountNotExistLogout()
+        {
+            isAccountNotExistModalVisible = false;
+            await ShopState.ResetStateAsync();
+            await tokenService.ClearAsync();
+            navManager.NavigateTo("/", replace: true);
         }
     }
 }

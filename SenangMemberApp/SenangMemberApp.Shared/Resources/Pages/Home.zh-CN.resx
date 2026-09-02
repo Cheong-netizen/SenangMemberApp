@@ -207,4 +207,10 @@
   <data name="Ok" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="AccountNotExistTitle" xml:space="preserve">
+    <value>账号不存在</value>
+  </data>
+  <data name="AccountNotExistMessage" xml:space="preserve">
+    <value>此账号不存在或已被删除。您将被重定向至登录页面。</value>
+  </data>
 </root>

@@ -144,4 +144,13 @@
   <data name="ErrorMessage" xml:space="preserve">
     <value>The phone number or password entered is incorrect. Please try again.</value>
   </data>
+  <data name="DeleteConfirmTitle" xml:space="preserve">
+    <value>Confirm Account Deletion</value>
+  </data>
+  <data name="DeleteConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to delete your account? This action cannot be undone.</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

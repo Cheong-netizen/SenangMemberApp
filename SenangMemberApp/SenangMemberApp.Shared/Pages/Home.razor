@@ -236,3 +236,19 @@
     </div>
 }
 
+@if (isAccountNotExistModalVisible)
+{
+    <div class="modal-backdrop" @onclick="HandleAccountNotExistLogout">
+        <div class="modal-container" @onclick:stopPropagation="true">
+            <div class="modal-icon">
+                <i class="fa-solid fa-circle-exclamation" style="color: var(--color-danger);"></i>
+            </div>
+            <h3 class="modal-title">@Loc["AccountNotExistTitle"]</h3>
+            <p class="modal-message">@Loc["AccountNotExistMessage"]</p>
+            <div class="modal-actions">
+                <button class="btn-ok" @onclick="HandleAccountNotExistLogout">@Loc["Ok"]</button>
+            </div>
+        </div>
+    </div>
+}
+

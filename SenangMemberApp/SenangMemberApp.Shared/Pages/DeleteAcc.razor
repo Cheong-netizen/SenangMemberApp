@@ -39,7 +39,12 @@
 
         <div class="form-group">
             <label class="form-label">@Loc["PhoneNumberLabel"]</label>
-            <input type="tel" class="form-input" @bind="phone" placeholder="@Loc["PhoneNumberPlaceholder"]" />
+            <div class="phone-input-group" @onclick="OpenPhonePad">
+                <input type="tel" class="form-input" @bind="phone" placeholder="@Loc["PhoneNumberPlaceholder"]" readonly />
+                <button type="button" class="btn-numpad-trigger" @onclick="OpenPhonePad" @onclick:stopPropagation aria-label="Open Keypad">
+                    <i class="bi bi-grid-3x3-gap-fill"></i>
+                </button>
+            </div>
         </div>
 
         <div class="form-group">
@@ -49,8 +54,27 @@
 
     </div>
 </div>
-<div @onclick="ConfirmDelete" class="save-button">
+<div @onclick="OnDeleteClicked" class="save-button">
     <div class="save-button-content">
         <span>@Loc["DeleteButton"]</span>
     </div>
 </div>
+
+@if (isDeleteConfirmModalVisible)
+{
+    <div class="modal-backdrop" @onclick="CancelDelete">
+        <div class="modal-container" @onclick:stopPropagation="true">
+            <div class="modal-icon">
+                <i class="fa-solid fa-triangle-exclamation" style="color: var(--color-danger);"></i>
+            </div>
+            <h3 class="modal-title">@Loc["DeleteConfirmTitle"]</h3>
+            <p class="modal-message">@Loc["DeleteConfirmMessage"]</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" @onclick="CancelDelete">@Loc["Cancel"]</button>
+                <button class="btn-confirm" @onclick="ConfirmDelete">@Loc["DeleteButton"]</button>
+            </div>
+        </div>
+    </div>
+}
+
+<PhoneNumpad @bind-IsOpen="isPhonePadOpen" PhoneNumber="@phone" OnSave="OnPhoneSelected" />

@@ -19,6 +19,19 @@ namespace SenangMemberApp.Shared.Pages
         private string phone = "";
         private string password = "";
         private string errorMessage = ""; // Used to show validation errors to the user
+        private bool isDeleteConfirmModalVisible = false;
+        private bool isPhonePadOpen = false;
+
+        private void OpenPhonePad()
+        {
+            isPhonePadOpen = true;
+        }
+
+        private void OnPhoneSelected(string selectedPhone)
+        {
+            phone = selectedPhone;
+            StateHasChanged();
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -29,7 +42,7 @@ namespace SenangMemberApp.Shared.Pages
             }
         }
 
-        private async Task ConfirmDelete()
+        private void OnDeleteClicked()
         {
             // Reset error message on every new attempt
             errorMessage = "";
@@ -39,30 +52,43 @@ namespace SenangMemberApp.Shared.Pages
             var userPhone = UserProfile.Phone?.Trim().Replace("-", "").Replace(" ", "").Replace("+", "");
 
             bool isPhoneValid = !string.IsNullOrEmpty(inputPhone) && string.Equals(inputPhone, userPhone, StringComparison.OrdinalIgnoreCase);
-            bool isPasswordValid = password == UserProfile.MemberPassword;
+            bool isPasswordValid = !string.IsNullOrEmpty(password) && password == UserProfile.MemberPassword;
 
             if (isPhoneValid && isPasswordValid)
             {
-                // 2. Credentials match, proceed to trigger deletion
-                var request = new UserProfileRequestDTO
-                {
-                    Phone = UserProfile.Phone,
-                    AccountName = UserProfile.AccountName,
-                    MemberPassword = UserProfile.MemberPassword,
-                    Gender = UserProfile.Gender,
-                    Email = UserProfile.Email
-                };
-
-                await UserProfileService.ChangeUserProfile(request);
-
-                // Navigate away after successful deletion request
-                NavManager.NavigateTo("/");
+                // Credentials match, prompt user with confirmation modal
+                isDeleteConfirmModalVisible = true;
             }
             else
             {
-                // 3. Credentials do not match
+                // Credentials do not match
                 errorMessage = Loc["ErrorMessage"];
             }
+        }
+
+        private void CancelDelete()
+        {
+            isDeleteConfirmModalVisible = false;
+        }
+
+        private async Task ConfirmDelete()
+        {
+            isDeleteConfirmModalVisible = false;
+
+            // Trigger deletion
+            var request = new UserProfileRequestDTO
+            {
+                Phone = UserProfile.Phone,
+                AccountName = UserProfile.AccountName,
+                MemberPassword = UserProfile.MemberPassword,
+                Gender = UserProfile.Gender,
+                Email = UserProfile.Email
+            };
+
+            await UserProfileService.ChangeUserProfile(request);
+
+            // Navigate to homepage with accountDeleted flag
+            NavManager.NavigateTo("/home?accountDeleted=true");
         }
 
         private void GoBack()

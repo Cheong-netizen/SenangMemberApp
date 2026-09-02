@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -143,5 +143,14 @@
   </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>Nombor telefon atau kata laluan yang dimasukkan adalah salah. Sila cuba lagi.</value>
+  </data>
+  <data name="DeleteConfirmTitle" xml:space="preserve">
+    <value>Sahkan Pemadaman Akaun</value>
+  </data>
+  <data name="DeleteConfirmMessage" xml:space="preserve">
+    <value>Adakah anda pasti mahu memadamkan akaun anda? Tindakan ini tidak boleh dibatalkan.</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Batal</value>
   </data>
 </root>

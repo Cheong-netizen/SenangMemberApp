@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -206,5 +206,11 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="AccountNotExistTitle" xml:space="preserve">
+    <value>Akaun Tidak Wujud</value>
+  </data>
+  <data name="AccountNotExistMessage" xml:space="preserve">
+    <value>Akaun ini tidak wujud atau telah dipadamkan. Anda akan dialihkan ke halaman log masuk.</value>
   </data>
 </root>
