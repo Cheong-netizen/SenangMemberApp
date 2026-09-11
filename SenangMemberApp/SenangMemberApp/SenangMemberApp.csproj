@@ -26,11 +26,11 @@
     <ApplicationId>com.ebi.senangmemberapp</ApplicationId>
 
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
     <ApplicationVersion>4</ApplicationVersion>
     <!-- ApplicationDisplayVersion only maps to PackageVersion on mobile TFMs (android/ios/maccatalyst);
          set Version explicitly so it's consistent across all TargetFrameworks, including windows. -->
-    <Version>1.0</Version>
+    <Version>1.1</Version>
 
     <!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
     <WindowsPackageType>None</WindowsPackageType>

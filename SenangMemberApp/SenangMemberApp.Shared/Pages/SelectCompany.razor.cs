@@ -83,8 +83,15 @@ namespace SenangMemberApp.Shared.Pages
 
         private async Task selectCompany(string companyCode, string shopName)
         {
-            await ShopState.SetShop(companyCode, shopName);
-            navManager.NavigateTo("/home", replace: true);
+            try
+            {
+                await ShopState.SetShop(companyCode, shopName);
+                navManager.NavigateTo("/home", replace: true);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[SelectCompany] Error selecting company '{shopName}' ({companyCode}): {ex}");
+            }
         }
 
         private void OpenSettingsModal()

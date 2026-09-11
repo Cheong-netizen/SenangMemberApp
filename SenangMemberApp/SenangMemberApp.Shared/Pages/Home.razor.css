@@ -554,3 +554,60 @@
     .digital-points-wrapper i {
         font-size: 1.1em;
     }
+
+/* --- Today's Bill Section --- */
+.today-bill-wrapper {
+    padding: 0 7% 0 7%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.history-card {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-price {
+    font-weight: var(--bold-lg);
+    color: var(--color-primary);
+    font-size: var(--fontsize-text);
+    text-wrap-mode: nowrap;
+    margin-left: 10px;
+}
+
+/* Footer Actions in History Card */
+.history-card-footer {
+    display: flex;
+    border-top: 1px solid var(--color-gray-200);
+    padding: 10px 15px;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.btn-review {
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: var(--fontsize-subtitle);
+    font-weight: var(--bold-sm);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-review:hover {
+        background-color: var(--color-primary-light);
+    }
+
+    .btn-review:active {
+        transform: scale(0.97);
+    }

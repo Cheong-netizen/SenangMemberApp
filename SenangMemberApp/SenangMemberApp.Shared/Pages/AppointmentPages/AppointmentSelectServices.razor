@@ -97,16 +97,10 @@
                      @onpointerdown="async (e) => await itemClicked(service, e)" 
                      @onpointerup="() => itemReleased(service)" 
                      @onpointermove="onPointerMove">
-                    @if (!string.IsNullOrWhiteSpace(service.imagePath))
-                    {
-                        <img class="service-image" src="@service.imagePath" alt="@service.salesDescription" />
-                    }
-                    else
-                    {
-                        <div class="no-image-placeholder-service">
-                            <i class="fa-solid fa-spa"></i>
-                        </div>
-                    }
+                    <img class="service-image"
+                         src="@(string.IsNullOrWhiteSpace(service.imagePath) ? "_content/SenangMemberApp.Shared/Images/store_placeholder.png" : service.imagePath)"
+                         onerror="this.onerror=null;this.src='_content/SenangMemberApp.Shared/Images/store_placeholder.png';"
+                         alt="@service.salesDescription" />
                     <div class="product-info">
                         <span class="product-name">@service.salesDescription</span>
                         @if (!string.IsNullOrWhiteSpace(service.remarks))
@@ -140,10 +134,11 @@
                 <div @onclick="closeServiceModal" class="close-button" style="cursor: pointer;"><i class="fa-solid fa-xmark"></i></div>
             </div>
             <div class="modal-content" style="padding: 20px;">
-                @if (!string.IsNullOrWhiteSpace(serviceToShowInModal.imagePath))
-                {
-                    <img class="modal-image" src="@serviceToShowInModal.imagePath" alt="@serviceToShowInModal.salesDescription" style="max-height: 180px; object-fit: contain; border-radius: 8px;" />
-                }
+                <img class="modal-image"
+                     src="@(string.IsNullOrWhiteSpace(serviceToShowInModal.imagePath) ? "_content/SenangMemberApp.Shared/Images/store_placeholder.png" : serviceToShowInModal.imagePath)"
+                     onerror="this.onerror=null;this.src='_content/SenangMemberApp.Shared/Images/store_placeholder.png';"
+                     alt="@serviceToShowInModal.salesDescription"
+                     style="max-height: 180px; object-fit: contain; border-radius: 8px;" />
                 <div style="width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
                     @if (!string.IsNullOrWhiteSpace(serviceToShowInModal.itemGroupName))
                     {

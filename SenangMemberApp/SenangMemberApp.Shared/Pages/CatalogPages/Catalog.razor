@@ -23,8 +23,13 @@
             @foreach (var category in companyCategories)
             {
                 <div @onclick="() => navCategory(category.id)" class="catalog-grid-layout">
-                    <img class="catalog-image" src="@category.imagePath" />
-                    <span class="catalog-name">@category.description</span>
+                    <img class="catalog-image"
+                         src="@(string.IsNullOrWhiteSpace(category.imagePath) ? "_content/SenangMemberApp.Shared/Images/store_placeholder.png" : category.imagePath)"
+                         onerror="this.onerror=null;this.src='_content/SenangMemberApp.Shared/Images/store_placeholder.png';"
+                         alt="@category.description" />
+                    <div class="catalog-info-container">
+                        <span class="catalog-name">@category.description</span>
+                    </div>
                 </div>
             }
         }

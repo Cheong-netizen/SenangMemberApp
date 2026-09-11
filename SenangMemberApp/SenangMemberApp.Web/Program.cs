@@ -54,7 +54,7 @@ builder.Services.AddScoped<IUrlLauncher, WebUrlLauncher>();
 builder.Services.AddScoped<IAppVersionService>(sp =>
 {
     var httpClient = sp.GetRequiredService<HttpClient>();
-    return new AppVersionService(httpClient, "Web", "1.0");
+    return new AppVersionService(httpClient, "Web", "1.1");
 });
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<LanguageService>();

@@ -133,6 +133,47 @@
             }
             
         </div>
+
+        @if (todayBills != null && todayBills.Any())
+        {
+            <div class="today-bill-wrapper">
+                <div class="appointment-header">
+                    <span class="title-text">@(Loc["TodayBill"] ?? "Today's Bill")</span>
+                </div>
+                @foreach (var bill in todayBills)
+                {
+                    <div class="appointment-card history-card">
+                        <div class="appointment-card-header">
+                            <div class="appointment-image-name">
+                                <div class="appointment-name-info">
+                                    <span class="card-name">@GetBillBranchName(bill)</span>
+                                    <span class="card-branch">@GetBillItemName(bill)</span>
+                                </div>
+                            </div>
+                            <div class="history-price">RM @bill.totalAfterTax.ToString("0.00")</div>
+                        </div>
+                        <div class="appointment-info">
+                            <div class="chip-info">
+                                <i class="fa-regular fa-calendar-check"></i>
+                                <div class="appointment-info-text">
+                                    <span>@(bill.financialDate.TimeOfDay == TimeSpan.Zero ? bill.financialDate.ToString("dd/MM/yyyy") : bill.financialDate.ToString("dd/MM/yyyy HH:mm"))</span>
+                                    @if (!string.IsNullOrWhiteSpace(bill.displayCode))
+                                    {
+                                        <span class="appointment-info-subtitle">Bill #@bill.displayCode</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="history-card-footer">
+                            <button class="btn-review" @onclick="() => OpenReview(bill)">
+                                <i class="fa-regular fa-star"></i>
+                                <span>@(Loc["Review"] ?? "Review")</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
     }
     @* <div class="catalog-wrapper">
         <div class="appointment-header">
@@ -252,3 +293,12 @@
     </div>
 }
 
+@if (isReviewModalOpen && selectedReviewBill != null)
+{
+    <ReviewModal IsOpen="isReviewModalOpen"
+                 ItemName="@GetBillItemName(selectedReviewBill)"
+                 Branch="@GetBillBranchName(selectedReviewBill)"
+                 ReviewUrl="@selectedReviewBill.reviewUrl"
+                 ServiceRecordId="@selectedReviewBill.documentID"
+                 OnClose="CloseReviewModal" />
+}

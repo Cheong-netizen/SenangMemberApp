@@ -213,4 +213,10 @@
   <data name="AccountNotExistMessage" xml:space="preserve">
     <value>This account does not exist or has been deleted. You will be redirected to the login page.</value>
   </data>
+  <data name="TodayBill" xml:space="preserve">
+    <value>Today's Bill</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
 </root>

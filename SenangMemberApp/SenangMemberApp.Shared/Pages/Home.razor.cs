@@ -4,6 +4,7 @@ using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.AppoinmentDTO;
 using SenangMemberApp.Shared.Models.DTO.CompanyDTO;
 using SenangMemberApp.Shared.Models.DTO.CreditDTO;
+using SenangMemberApp.Shared.Models.DTO.PurchaseHistoryDTO;
 using SenangMemberApp.Shared.Pages.AppointmentPages;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.AspNetCore.Components;
@@ -75,6 +76,13 @@ namespace SenangMemberApp.Shared.Pages
         IJSRuntime JSRuntime { get; set; } = default!;
         [Inject]
         IUrlLauncher UrlLauncher { get; set; } = default!;
+        [Inject]
+        PurchaseHistoryAC purchaseHistoryAC { get; set; } = default!;
+
+        private List<TodayBillResponseDTO> todayBills = new();
+        private bool isTodayBillLoading = false;
+        private bool isReviewModalOpen = false;
+        private TodayBillResponseDTO? selectedReviewBill;
         private List<AppointmentResponseDTO> allUpcomingAppointments = new();
         private List<BranchResponseDTO> currentBranches = new();
 
@@ -104,6 +112,7 @@ namespace SenangMemberApp.Shared.Pages
             }
 
             await LoadAppointmentData();
+            await LoadTodayBillData();
             loading = false;
             StateHasChanged();
         }
@@ -115,6 +124,7 @@ namespace SenangMemberApp.Shared.Pages
                 currentShopId = ShopState.CurrentShopId;
                 currentShopName = ShopState.CurrentShopName;
                 await LoadAppointmentData();
+                await LoadTodayBillData();
                 StateHasChanged();
             });
         }
@@ -184,6 +194,7 @@ namespace SenangMemberApp.Shared.Pages
 
             // RELOAD the data using the new ID
             await LoadAppointmentData();
+            await LoadTodayBillData();
             loading = false;
         }
 
@@ -332,6 +343,7 @@ namespace SenangMemberApp.Shared.Pages
             shopListModalIsOpen = false;
             currentShopId = "0";
             currentShopName = "Select a shop";
+            todayBills = new();
             // RELOAD the data using the new ID
             StateHasChanged();
         }
@@ -359,6 +371,79 @@ namespace SenangMemberApp.Shared.Pages
             await ShopState.ResetStateAsync();
             await tokenService.ClearAsync();
             navManager.NavigateTo("/", replace: true);
+        }
+
+        private async Task LoadTodayBillData()
+        {
+            try
+            {
+                currentShopId = ShopState.CurrentShopId;
+                if (string.IsNullOrEmpty(currentShopId) || currentShopId == "0")
+                {
+                    todayBills = new();
+                    return;
+                }
+
+                isTodayBillLoading = true;
+                var response = await purchaseHistoryAC.GetCustomerTodayBill();
+                if (response != null && response.statusCode == 200 && response.result != null && response.result.Any())
+                {
+                    todayBills = response.result
+                        .Where(b => !string.IsNullOrEmpty(b.documentID))
+                        .OrderByDescending(b => b.financialDate)
+                        .ToList();
+                }
+                else
+                {
+                    todayBills = new();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[HOME] Failed to load today bills: {ex.Message}");
+                todayBills = new();
+            }
+            finally
+            {
+                isTodayBillLoading = false;
+                StateHasChanged();
+            }
+        }
+
+        private void OpenReview(TodayBillResponseDTO bill)
+        {
+            if (bill == null) return;
+            selectedReviewBill = bill;
+            isReviewModalOpen = true;
+            StateHasChanged();
+        }
+
+        private void CloseReviewModal()
+        {
+            isReviewModalOpen = false;
+            selectedReviewBill = null;
+            StateHasChanged();
+        }
+
+        private string GetBillBranchName(TodayBillResponseDTO? bill)
+        {
+            if (bill == null) return "";
+            if (!string.IsNullOrWhiteSpace(bill.branch)) return bill.branch;
+            if (!string.IsNullOrWhiteSpace(bill.branchID))
+            {
+                var branch = GetBranchName(bill.branchID);
+                if (!string.IsNullOrWhiteSpace(branch)) return branch;
+            }
+            return !string.IsNullOrWhiteSpace(ShopState.CurrentShopName) && ShopState.CurrentShopName != "Select Shop"
+                ? ShopState.CurrentShopName
+                : "";
+        }
+
+        private string GetBillItemName(TodayBillResponseDTO? bill)
+        {
+            if (bill == null) return "";
+            if (!string.IsNullOrWhiteSpace(bill.itemName)) return bill.itemName;
+            return !string.IsNullOrWhiteSpace(bill.displayCode) ? $"Bill #{bill.displayCode}" : "";
         }
     }
 }

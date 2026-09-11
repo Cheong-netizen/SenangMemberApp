@@ -213,4 +213,10 @@
   <data name="AccountNotExistMessage" xml:space="preserve">
     <value>Akaun ini tidak wujud atau telah dipadamkan. Anda akan dialihkan ke halaman log masuk.</value>
   </data>
+  <data name="TodayBill" xml:space="preserve">
+    <value>Bil Hari Ini</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Ulasan</value>
+  </data>
 </root>

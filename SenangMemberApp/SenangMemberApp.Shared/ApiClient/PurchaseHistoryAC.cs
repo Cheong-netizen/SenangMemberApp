@@ -1,4 +1,4 @@
-﻿using SenangMemberApp.Shared.Models.DTO;
+using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.PurchaseHistoryDTO;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.Extensions.Options;
@@ -32,6 +32,23 @@ namespace SenangMemberApp.Shared.ApiClient
 
             // 2. Pass the object, and ensure the first generic type is 'object' (or whatever your wrapper expects for anonymous types)
             var response = await CompanyPostAsync<object, ApiResponseRoot<Dictionary<string, List<ServiceRecordResponseDTO>>>>("api/PublicMember/GetCustomerServiceRecordByMonth", requestBody);
+
+            var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+            var jsonDebug = System.Text.Json.JsonSerializer.Serialize(response, options);
+
+            Debug.WriteLine(jsonDebug);
+            return response;
+        }
+
+        public async Task<ApiResponseRoot<List<TodayBillResponseDTO>>> GetCustomerTodayBill()
+        {
+            DateTime todayStartDate = DateTime.Today;
+            DateTime todayEndDate = DateTime.Today.AddHours(23).AddMinutes(59);
+            string todayStartDateString = todayStartDate.ToString("yyyy-MM-ddTHH:mm");
+            string todayEndDateString = todayEndDate.ToString("yyyy-MM-ddTHH:mm");
+
+            var requestBody = new { startDate = todayStartDateString, endDate = todayEndDateString };
+            var response = await CompanyPostAsync<object, ApiResponseRoot<List<TodayBillResponseDTO>>>("/api/PublicMember/GetTodayBills", requestBody);
 
             var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
             var jsonDebug = System.Text.Json.JsonSerializer.Serialize(response, options);

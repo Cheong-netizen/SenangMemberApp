@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj": {}
+    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
         "projectName": "SenangMemberApp.Shared",
-        "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
+        "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
         "packagesPath": "C:\\Users\\ebiso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\o\\s\\",
+        "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\o\\s\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -360,14 +360,14 @@
         }
       }
     },
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj": {
-      "version": "1.0.0",
+    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj": {
+      "version": "1.1.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj",
+        "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj",
         "projectName": "SenangMemberApp",
-        "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj",
+        "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj",
         "packagesPath": "C:\\Users\\ebiso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\o\\a\\",
+        "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\o\\a\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
@@ -394,8 +394,8 @@
             "framework": "net10.0-android36.0",
             "targetAlias": "net10.0-android36.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           },
@@ -403,8 +403,8 @@
             "framework": "net10.0-ios26.0",
             "targetAlias": "net10.0-ios26.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           },
@@ -412,8 +412,8 @@
             "framework": "net10.0-maccatalyst26.0",
             "targetAlias": "net10.0-maccatalyst26.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           },
@@ -421,8 +421,8 @@
             "framework": "net10.0-windows10.0.19041",
             "targetAlias": "net10.0-windows10.0.19041.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_21082026\\SenangMemberApp_21082026\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           }
@@ -835,7 +835,7 @@
               "version": "[26.0.11017, 26.0.11017]"
             },
             {
-              "name": "Microsoft.iOS.Runtime.ios-arm64.net10.0_26.0",
+              "name": "Microsoft.iOS.Runtime.iossimulator-x64.net10.0_26.0",
               "version": "[26.0.11017, 26.0.11017]"
             },
             {
@@ -1826,7 +1826,7 @@
         "android-x86": {
           "#import": []
         },
-        "ios-arm64": {
+        "iossimulator-x64": {
           "#import": []
         },
         "maccatalyst-x64": {

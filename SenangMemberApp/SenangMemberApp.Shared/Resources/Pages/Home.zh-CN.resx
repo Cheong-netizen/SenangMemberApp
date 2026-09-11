@@ -213,4 +213,10 @@
   <data name="AccountNotExistMessage" xml:space="preserve">
     <value>此账号不存在或已被删除。您将被重定向至登录页面。</value>
   </data>
+  <data name="TodayBill" xml:space="preserve">
+    <value>今日账单</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>评价</value>
+  </data>
 </root>
