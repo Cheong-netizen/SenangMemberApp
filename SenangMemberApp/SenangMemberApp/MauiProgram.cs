@@ -40,6 +40,7 @@ namespace SenangMemberApp
             builder.Services.AddScoped<IShopStateLocalManagement, MobileShopStateLocalManagement>();
             builder.Services.AddScoped<IAppointmentDetailState, AppointmentDetailState>();
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+            builder.Services.AddScoped<IThemeService, ThemeService>();
             builder.Services.AddScoped<IUrlLauncher, MobileUrlLauncher>();
             builder.Services.AddScoped<ITokenService, MobileTokenService>();
             builder.Services.AddScoped<IAppVersionService>(sp =>

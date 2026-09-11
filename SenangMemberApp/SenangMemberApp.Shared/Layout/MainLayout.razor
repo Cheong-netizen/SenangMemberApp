@@ -1,4 +1,7 @@
 @inherits LayoutComponentBase
+@using SenangMemberApp.Shared.Services.IService
+@inject IThemeService ThemeService
+@implements IDisposable
 
 <div class="page">
     @* <div class="sidebar">
@@ -18,3 +21,24 @@
 </div>
 
 <UpdateChecker />
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ThemeService.OnThemeChanged += OnThemeChanged;
+            await ThemeService.InitializeThemeAsync();
+        }
+    }
+
+    private void OnThemeChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        ThemeService.OnThemeChanged -= OnThemeChanged;
+    }
+}

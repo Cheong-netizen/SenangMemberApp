@@ -1,5 +1,6 @@
 using SenangMemberApp.Shared.Models.DTO;
 using SenangMemberApp.Shared.Models.DTO.PurchaseHistoryDTO;
+using SenangMemberApp.Shared.Models.DTO.RatingDTO;
 using SenangMemberApp.Shared.Services.IService;
 using Microsoft.Extensions.Options;
 using System;
@@ -49,6 +50,17 @@ namespace SenangMemberApp.Shared.ApiClient
 
             var requestBody = new { startDate = todayStartDateString, endDate = todayEndDateString };
             var response = await CompanyPostAsync<object, ApiResponseRoot<List<TodayBillResponseDTO>>>("/api/PublicMember/GetTodayBills", requestBody);
+
+            var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+            var jsonDebug = System.Text.Json.JsonSerializer.Serialize(response, options);
+
+            Debug.WriteLine(jsonDebug);
+            return response;
+        }
+
+        public async Task<ApiResponseRoot<object>?> CreateCustomerRatingAsync(CustomerRatingRequestDTO requestPayload)
+        {
+            var response = await CompanyPostAsync<CustomerRatingRequestDTO, ApiResponseRoot<object>>("/api/PublicMember/CreateCustomerRating", requestPayload);
 
             var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
             var jsonDebug = System.Text.Json.JsonSerializer.Serialize(response, options);

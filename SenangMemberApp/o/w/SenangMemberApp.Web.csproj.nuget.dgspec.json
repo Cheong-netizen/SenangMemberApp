@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Web\\SenangMemberApp.Web.csproj": {}
+    "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Web\\SenangMemberApp.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+    "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
         "projectName": "SenangMemberApp.Shared",
-        "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
-        "packagesPath": "C:\\Users\\ebiso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\o\\s\\",
+        "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
+        "packagesPath": "C:\\Users\\esdwa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\o\\s\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ebiso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\esdwa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -46,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -82,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -360,20 +359,20 @@
         }
       }
     },
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Web\\SenangMemberApp.Web.csproj": {
+    "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Web\\SenangMemberApp.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Web\\SenangMemberApp.Web.csproj",
+        "projectUniqueName": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Web\\SenangMemberApp.Web.csproj",
         "projectName": "SenangMemberApp.Web",
-        "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Web\\SenangMemberApp.Web.csproj",
-        "packagesPath": "C:\\Users\\ebiso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\o\\w\\",
+        "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Web\\SenangMemberApp.Web.csproj",
+        "packagesPath": "C:\\Users\\esdwa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\o\\w\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ebiso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\esdwa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -382,7 +381,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -390,8 +388,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           }
@@ -406,7 +404,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -416,7 +414,7 @@
             "Microsoft.AspNetCore.App.Internal.Assets": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.11, )",
+              "version": "[10.0.8, )",
               "autoReferenced": true
             }
           },
@@ -439,7 +437,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

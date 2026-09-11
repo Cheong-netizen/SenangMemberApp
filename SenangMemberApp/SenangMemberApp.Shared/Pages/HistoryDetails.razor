@@ -65,24 +65,7 @@
         </div>
     </div>
 
-    <!-- Review Section -->
-    <div class="details-section">
-        <h6>Review</h6>
-        <button class="btn-review" @onclick="OpenReview">
-            <i class="fa-regular fa-star"></i> Leave a Review
-        </button>
-    </div>
-
 </div>
-
-@if (isReviewModalOpen)
-{
-    <ReviewModal IsOpen="isReviewModalOpen"
-                 ItemName="Full Body Massage"
-                 Branch="Wellness Spa Center"
-                 ServiceRecordId="@HistoryId.ToString()"
-                 OnClose="() => isReviewModalOpen = false" />
-}
 
 @code {
     [Parameter]
@@ -91,8 +74,6 @@
     [Inject]
     SenangMemberApp.Shared.Services.IService.IUrlLauncher UrlLauncher { get; set; } = default!;
 
-    private bool isReviewModalOpen = false;
-
     void GoBack()
     {
         navigationManager.NavigateTo("/history");
@@ -100,10 +81,6 @@
     async Task PrintPage()
     {
         await JS.InvokeVoidAsync("window.print");
-    }
-    void OpenReview()
-    {
-        isReviewModalOpen = true;
     }
 }
 

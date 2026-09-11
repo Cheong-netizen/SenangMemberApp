@@ -16,6 +16,9 @@ namespace SenangMemberApp.Shared.Pages
         private IUserProfileService UserProfileService { get; set; } = default!;
         [Inject]
         private ITokenService tokenService { get; set; } = default!;
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
+        private bool isColorPickerVisible = false;
         private UserProfileResponseDTO UserProfile { get; set; } = new();
         protected override async Task OnInitializedAsync()
         {
@@ -87,6 +90,16 @@ namespace SenangMemberApp.Shared.Pages
             await shopState.ResetStateAsync();
             await tokenService.ClearAsync();
             NavManager.NavigateTo("/");
+        }
+
+        private void OpenColorPicker()
+        {
+            isColorPickerVisible = true;
+        }
+
+        private void HandleColorSelected(string color)
+        {
+            StateHasChanged();
         }
     }
 }

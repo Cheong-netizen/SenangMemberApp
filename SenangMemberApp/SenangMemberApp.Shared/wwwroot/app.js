@@ -188,3 +188,39 @@ window.audioRecorder = (() => {
         }
     };
 })();
+
+window.applyThemeStyles = function (color) {
+    const themeClasses = [
+        "theme-default", "theme-blue", "theme-green", "theme-orange", "theme-yellow",
+        "theme-purple", "theme-pink", "theme-teal", "theme-brown", "theme-slate"
+    ];
+    if (document.body) {
+        document.body.classList.remove(...themeClasses);
+    }
+
+    const themeClassMap = {
+        "#b04e64": "theme-default",
+        "#2196f3": "theme-blue",
+        "#4caf50": "theme-green",
+        "#ff6b35": "theme-orange",
+        "#e8a317": "theme-yellow",
+        "#8e5a7a": "theme-purple",
+        "#d87093": "theme-pink",
+        "#008080": "theme-teal",
+        "#795548": "theme-brown",
+        "#607d8b": "theme-slate"
+    };
+
+    const targetClass = (color && themeClassMap[color.toLowerCase()]) ? themeClassMap[color.toLowerCase()] : "theme-default";
+    if (document.body) {
+        document.body.classList.add(targetClass);
+    }
+
+    window.applyCssVariables(color);
+};
+
+window.applyCssVariables = function (color) {
+    if (!color) return;
+    document.documentElement.style.setProperty('--color-primary', color);
+};
+

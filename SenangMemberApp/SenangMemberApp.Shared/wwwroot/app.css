@@ -4,7 +4,6 @@ html, body {
 
 :root {
     /* --- Brand Colors --- */
-    /*--color-primary: #d4b2a8;*/ /* Main action buttons, links */
     --color-primary: #B04E64; /* Main action buttons, links */
     --color-primary-hover: #9E3F55; /* Hover states */
     --color-primary-light: #F7EDEF; /* Background tints */
@@ -289,4 +288,138 @@ body:has(.backdrop) {
 .btn-confirm:active, .btn-cancel:active, .btn-ok:active {
     opacity: 0.8;
 }
+
+/* --- Color Themes --- */
+body.theme-default, :root {
+    --color-primary: #B04E64;
+    --color-primary-hover: #9E3F55;
+    --color-primary-light: #F7EDEF;
+}
+
+body.theme-blue {
+    --color-primary: #2196F3;
+    --color-primary-hover: #1976D2;
+    --color-primary-light: #E3F2FD;
+}
+
+body.theme-green {
+    --color-primary: #4CAF50;
+    --color-primary-hover: #388E3C;
+    --color-primary-light: #E8F5E9;
+}
+
+body.theme-orange {
+    --color-primary: #FF6B35;
+    --color-primary-hover: #E55A2B;
+    --color-primary-light: #FFF0EB;
+}
+
+body.theme-yellow {
+    --color-primary: #E8A317;
+    --color-primary-hover: #C68A14;
+    --color-primary-light: #FEF8EC;
+}
+
+body.theme-purple {
+    --color-primary: #8E5A7A;
+    --color-primary-hover: #754763;
+    --color-primary-light: #F4EEF2;
+}
+
+body.theme-pink {
+    --color-primary: #D87093;
+    --color-primary-hover: #C55E82;
+    --color-primary-light: #FBF0F4;
+}
+
+body.theme-teal {
+    --color-primary: #008080;
+    --color-primary-hover: #006666;
+    --color-primary-light: #E6F2F2;
+}
+
+body.theme-brown {
+    --color-primary: #795548;
+    --color-primary-hover: #5D4037;
+    --color-primary-light: #EFEBE9;
+}
+
+body.theme-slate {
+    --color-primary: #607D8B;
+    --color-primary-hover: #455A64;
+    --color-primary-light: #ECEFF1;
+}
+
+/* --- Color Picker Modal & Elements --- */
+.color-picker-box {
+    max-width: 360px;
+    width: 90%;
+}
+
+.color-options-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    justify-items: center;
+    align-items: center;
+    margin: 20px 0 10px 0;
+}
+
+.color-option-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 0;
+}
+
+.color-option-btn:hover {
+    transform: scale(1.1);
+}
+
+.color-option-btn:active {
+    transform: scale(0.95);
+}
+
+.color-option-btn.active {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 3px white, 0 0 0 5px var(--color-primary);
+    border-color: white;
+}
+
+.color-check {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.current-theme-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 2px solid white;
+}
+
+.theme-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.theme-icon:active {
+    transform: scale(0.9);
+}
+
 

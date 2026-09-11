@@ -16,5 +16,6 @@ namespace SenangMemberApp.Shared.Models.DTO.PurchaseHistoryDTO
         public string? itemName { get; set; }
         public string? branch { get; set; }
         public string? reviewUrl { get; set; }
+        public string? customerID { get; set; }
     }
 }

@@ -78,7 +78,10 @@ namespace SenangMemberApp.Shared.Pages
         IUrlLauncher UrlLauncher { get; set; } = default!;
         [Inject]
         PurchaseHistoryAC purchaseHistoryAC { get; set; } = default!;
+        [Inject]
+        IThemeService ThemeService { get; set; } = default!;
 
+        private bool isColorPickerVisible = false;
         private List<TodayBillResponseDTO> todayBills = new();
         private bool isTodayBillLoading = false;
         private bool isReviewModalOpen = false;
@@ -444,6 +447,38 @@ namespace SenangMemberApp.Shared.Pages
             if (bill == null) return "";
             if (!string.IsNullOrWhiteSpace(bill.itemName)) return bill.itemName;
             return !string.IsNullOrWhiteSpace(bill.displayCode) ? $"Bill #{bill.displayCode}" : "";
+        }
+
+        private string? GetBillGoogleReviewPlaceId(TodayBillResponseDTO? bill)
+        {
+            if (bill == null) return null;
+            if (!string.IsNullOrWhiteSpace(bill.branchID))
+            {
+                var branch = currentBranches?.FirstOrDefault(b => b.branchID == bill.branchID);
+                if (branch != null && !string.IsNullOrWhiteSpace(branch.googleReviewPlaceID))
+                {
+                    return branch.googleReviewPlaceID;
+                }
+            }
+            return currentBranches?.FirstOrDefault(b => !string.IsNullOrWhiteSpace(b.googleReviewPlaceID))?.googleReviewPlaceID;
+        }
+
+        private string GetCustomerId(TodayBillResponseDTO? bill)
+        {
+            if (bill != null && !string.IsNullOrWhiteSpace(bill.customerID)) return bill.customerID;
+            if (bill != null && !string.IsNullOrWhiteSpace(bill.accountID)) return bill.accountID;
+            if (!string.IsNullOrWhiteSpace(userProfileData?.Phone)) return userProfileData.Phone;
+            return "";
+        }
+
+        private void OpenColorPicker()
+        {
+            isColorPickerVisible = true;
+        }
+
+        private void HandleColorSelected(string color)
+        {
+            StateHasChanged();
         }
     }
 }

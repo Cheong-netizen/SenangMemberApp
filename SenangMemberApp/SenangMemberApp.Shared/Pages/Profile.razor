@@ -90,9 +90,27 @@
                 </button>
             </div>
         </div>
+        <div class="menu-item" @onclick="OpenColorPicker">
+            <div class="menu-left">
+                <div class="menu-icon-box">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+                <span>@(Loc["AppThemeColour"] ?? "App Theme Colour")</span>
+            </div>
+            <div class="menu-chevron d-flex align-items-center gap-2">
+                <span class="current-theme-dot" style="background-color: @ThemeService.CurrentColor;"></span>
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+        </div>
     </div>
 
 </div>
+
+<ColorPickerModal IsVisible="isColorPickerVisible"
+                  IsVisibleChanged="val => isColorPickerVisible = val"
+                  OnClose="() => isColorPickerVisible = false"
+                  OnColorSelected="HandleColorSelected" />
+
 @if (IsLogoutModalVisible)
 {
     <div class="modal-backdrop">

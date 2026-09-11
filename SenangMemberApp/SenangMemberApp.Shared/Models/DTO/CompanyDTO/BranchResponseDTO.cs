@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -25,5 +25,7 @@ namespace SenangMemberApp.Shared.Models.DTO.CompanyDTO
         public string imagePath { get; set; }
 
         public bool isShownInApp { get; set; }
+
+        public string? googleReviewPlaceID { get; set; }
     }
 }

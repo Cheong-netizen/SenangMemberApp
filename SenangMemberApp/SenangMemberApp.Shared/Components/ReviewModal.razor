@@ -1,8 +1,13 @@
 @using Microsoft.Extensions.Configuration
 @using Microsoft.Extensions.Localization
+@using SenangMemberApp.Shared.ApiClient
+@using SenangMemberApp.Shared.Models.DTO.PurchaseHistoryDTO
+@using SenangMemberApp.Shared.Models.DTO.RatingDTO
 @using SenangMemberApp.Shared.Services.IService
 @inject IUrlLauncher UrlLauncher
 @inject IConfiguration Configuration
+@inject PurchaseHistoryAC PurchaseHistoryAC
+@inject IUserProfileService UserProfileService
 
 @if (IsOpen)
 {
@@ -221,6 +226,24 @@
     [Parameter]
     public string? StrRatingToken { get; set; }
 
+    [Parameter]
+    public string? DocumentId { get; set; }
+
+    [Parameter]
+    public string? CustomerId { get; set; }
+
+    [Parameter]
+    public string? BranchId { get; set; }
+
+    [Parameter]
+    public string? GroupId { get; set; }
+
+    [Parameter]
+    public string? GoogleReviewPlaceId { get; set; }
+
+    [Parameter]
+    public TodayBillResponseDTO? Bill { get; set; }
+
     private int rating = 0;
     private int hoverRating = 0;
     private string comment = string.Empty;
@@ -230,7 +253,16 @@
 
     protected override void OnParametersSet()
     {
-        // If modal was reopened, make sure we keep or reset state appropriately
+        if (Bill != null)
+        {
+            if (string.IsNullOrWhiteSpace(DocumentId)) DocumentId = Bill.documentID;
+            if (string.IsNullOrWhiteSpace(BranchId)) BranchId = Bill.branchID;
+            if (string.IsNullOrWhiteSpace(GroupId)) GroupId = Bill.groupID;
+            if (string.IsNullOrWhiteSpace(CustomerId)) CustomerId = !string.IsNullOrWhiteSpace(Bill.customerID) ? Bill.customerID : Bill.accountID;
+            if (string.IsNullOrWhiteSpace(ItemName)) ItemName = Bill.itemName;
+            if (string.IsNullOrWhiteSpace(Branch)) Branch = Bill.branch;
+            if (string.IsNullOrWhiteSpace(ReviewUrl)) ReviewUrl = Bill.reviewUrl;
+        }
     }
 
     private void OnRate(int starNumber)
@@ -298,7 +330,11 @@
         try
         {
             string url = ReviewUrl ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(url))
+            if (!string.IsNullOrWhiteSpace(GoogleReviewPlaceId))
+            {
+                url = $"https://search.google.com/local/writereview?placeid={GoogleReviewPlaceId}";
+            }
+            else if (string.IsNullOrWhiteSpace(url))
             {
                 var query = Uri.EscapeDataString($"{Branch ?? ""} {ItemName ?? ""} review".Trim());
                 if (string.IsNullOrWhiteSpace(query))
@@ -332,8 +368,33 @@
         isSaving = true;
         try
         {
-            // Simulate saving rating and comment
-            await Task.Delay(600);
+            if (rating >= 1 && rating <= 4)
+            {
+                string custId = CustomerId ?? string.Empty;
+                if (string.IsNullOrWhiteSpace(custId))
+                {
+                    var profileRes = await UserProfileService.GetUserProfile();
+                    custId = profileRes?.result?.Phone ?? string.Empty;
+                }
+
+                var request = new CustomerRatingRequestDTO
+                {
+                    ratingID = Guid.NewGuid().ToString(),
+                    customerID = custId,
+                    documentID = DocumentId ?? ServiceRecordId ?? string.Empty,
+                    rating = rating,
+                    comment = comment,
+                    submissionDate = DateTime.UtcNow,
+                    isGoogleReviewRedirected = false,
+                    branchID = BranchId ?? string.Empty,
+                    groupID = GroupId ?? string.Empty,
+                    saveAction = "Changed",
+                    isDirty = true
+                };
+
+                await PurchaseHistoryAC.CreateCustomerRatingAsync(request);
+            }
+
             hasSubmitted = true;
             if (OnSubmitted.HasDelegate)
             {

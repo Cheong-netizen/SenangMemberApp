@@ -21,7 +21,10 @@
                 }
             </span>
         </div>
-        <span @onclick="navAnnouncement" class="bg-white bell-icon"><i class="fa-solid fa-bell"></i></span>
+        <div class="d-flex align-items-center gap-2">
+            <span @onclick="OpenColorPicker" class="bg-white bell-icon theme-icon" title="Theme Color"><i class="fa-solid fa-palette"></i></span>
+            <span @onclick="navAnnouncement" class="bg-white bell-icon"><i class="fa-solid fa-bell"></i></span>
+        </div>
     </div>
     @if (currentShopId != "0")
     {
@@ -296,9 +299,19 @@
 @if (isReviewModalOpen && selectedReviewBill != null)
 {
     <ReviewModal IsOpen="isReviewModalOpen"
+                 Bill="@selectedReviewBill"
                  ItemName="@GetBillItemName(selectedReviewBill)"
                  Branch="@GetBillBranchName(selectedReviewBill)"
-                 ReviewUrl="@selectedReviewBill.reviewUrl"
-                 ServiceRecordId="@selectedReviewBill.documentID"
+                 GoogleReviewPlaceId="@GetBillGoogleReviewPlaceId(selectedReviewBill)"
+                 DocumentId="@selectedReviewBill.documentID"
+                 BranchId="@selectedReviewBill.branchID"
+                 GroupId="@selectedReviewBill.groupID"
+                 CustomerId="@GetCustomerId(selectedReviewBill)"
                  OnClose="CloseReviewModal" />
 }
+
+<ColorPickerModal IsVisible="isColorPickerVisible"
+                  IsVisibleChanged="val => isColorPickerVisible = val"
+                  OnClose="() => isColorPickerVisible = false"
+                  OnColorSelected="HandleColorSelected" />
+

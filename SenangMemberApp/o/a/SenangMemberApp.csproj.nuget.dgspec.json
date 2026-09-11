@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj": {}
+    "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+    "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
         "projectName": "SenangMemberApp.Shared",
-        "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
-        "packagesPath": "C:\\Users\\ebiso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\o\\s\\",
+        "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj",
+        "packagesPath": "C:\\Users\\esdwa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\o\\s\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ebiso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\esdwa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -46,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -82,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -360,21 +359,21 @@
         }
       }
     },
-    "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj": {
+    "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj": {
       "version": "1.1.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj",
+        "projectUniqueName": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj",
         "projectName": "SenangMemberApp",
-        "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj",
-        "packagesPath": "C:\\Users\\ebiso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\o\\a\\",
+        "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.csproj",
+        "packagesPath": "C:\\Users\\esdwa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\o\\a\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ebiso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\esdwa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -386,7 +385,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -394,8 +392,8 @@
             "framework": "net10.0-android36.0",
             "targetAlias": "net10.0-android36.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           },
@@ -403,8 +401,8 @@
             "framework": "net10.0-ios26.0",
             "targetAlias": "net10.0-ios26.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           },
@@ -412,8 +410,8 @@
             "framework": "net10.0-maccatalyst26.0",
             "targetAlias": "net10.0-maccatalyst26.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           },
@@ -421,8 +419,8 @@
             "framework": "net10.0-windows10.0.19041",
             "targetAlias": "net10.0-windows10.0.19041.0",
             "projectReferences": {
-              "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\ebiso\\Downloads\\SenangMemberApp_28_07 (1)\\SenangMemberApp_28_07\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
+              "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\esdwa\\source\\repos\\SenangMemberApp\\SenangMemberApp\\SenangMemberApp.Shared\\SenangMemberApp.Shared.csproj"
               }
             }
           }
@@ -437,7 +435,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0-android36.0": {
@@ -450,7 +448,7 @@
             },
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
-              "version": "[10.0.20, )"
+              "version": "(, )"
             },
             "Microsoft.Extensions.Http": {
               "target": "Package",
@@ -466,12 +464,12 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[10.0.20, )"
+              "version": "(, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.11, )",
+              "version": "[10.0.8, )",
               "autoReferenced": true
             }
           },
@@ -486,12 +484,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[10.0.9, 10.0.9]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.Android": {
               "privateAssets": "all"
@@ -503,7 +495,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -789,7 +781,7 @@
             },
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
-              "version": "[10.0.20, )"
+              "version": "(, )"
             },
             "Microsoft.Extensions.Http": {
               "target": "Package",
@@ -805,12 +797,12 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[10.0.20, )"
+              "version": "(, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.11, )",
+              "version": "[10.0.8, )",
               "autoReferenced": true
             }
           },
@@ -837,10 +829,6 @@
             {
               "name": "Microsoft.iOS.Runtime.iossimulator-x64.net10.0_26.0",
               "version": "[26.0.11017, 26.0.11017]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[10.0.9, 10.0.9]"
             }
           ],
           "frameworkReferences": {
@@ -854,7 +842,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1140,7 +1128,7 @@
             },
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
-              "version": "[10.0.20, )"
+              "version": "(, )"
             },
             "Microsoft.Extensions.Http": {
               "target": "Package",
@@ -1156,12 +1144,12 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[10.0.20, )"
+              "version": "(, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.11, )",
+              "version": "[10.0.8, )",
               "autoReferenced": true
             }
           },
@@ -1189,10 +1177,6 @@
             {
               "name": "Microsoft.MacCatalyst.Runtime.maccatalyst-x64.net10.0_26.0",
               "version": "[26.0.11017, 26.0.11017]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[10.0.9, 10.0.9]"
             }
           ],
           "frameworkReferences": {
@@ -1206,7 +1190,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1492,7 +1476,7 @@
             },
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
-              "version": "[10.0.20, )"
+              "version": "(, )"
             },
             "Microsoft.Extensions.Http": {
               "target": "Package",
@@ -1508,7 +1492,7 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[10.0.20, )"
+              "version": "(, )"
             }
           },
           "imports": [
@@ -1536,7 +1520,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.303/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1830,9 +1814,6 @@
           "#import": []
         },
         "maccatalyst-x64": {
-          "#import": []
-        },
-        "win-x64": {
           "#import": []
         }
       }

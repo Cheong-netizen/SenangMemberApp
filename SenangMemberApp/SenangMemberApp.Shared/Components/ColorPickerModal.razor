@@ -1,0 +1,75 @@
+@using SenangMemberApp.Shared.Services.IService
+@inject IThemeService ThemeService
+
+@if (IsVisible)
+{
+    <div class="modal-backdrop" @onclick="Close">
+        <div class="modal-container color-picker-box" @onclick:stopPropagation="true">
+            <div class="modal-icon">
+                <i class="fa-solid fa-palette"></i>
+            </div>
+            <h3 class="modal-title">App Theme Colour</h3>
+            <p class="modal-message">Choose your preferred color theme</p>
+
+            <div class="color-options-grid">
+                @foreach (var theme in ThemeService.AvailableThemes)
+                {
+                    var isSelected = ThemeService.CurrentColor.Equals(theme.Color, StringComparison.OrdinalIgnoreCase);
+                    <button type="button"
+                            class="color-option-btn @(isSelected ? "active" : "")"
+                            style="background-color: @theme.Color;"
+                            title="@theme.Name"
+                            @onclick="() => SelectColor(theme.Color)">
+                        @if (isSelected)
+                        {
+                            <i class="fa-solid fa-check color-check"></i>
+                        }
+                    </button>
+                }
+            </div>
+
+            <div class="modal-actions mt-4">
+                <button type="button" class="btn-cancel" @onclick="Close">Close</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnColorSelected { get; set; }
+
+    private async Task SelectColor(string color)
+    {
+        await ThemeService.SetThemeColorAsync(color);
+
+        if (OnColorSelected.HasDelegate)
+        {
+            await OnColorSelected.InvokeAsync(color);
+        }
+
+        await Close();
+    }
+
+    private async Task Close()
+    {
+        IsVisible = false;
+        if (IsVisibleChanged.HasDelegate)
+        {
+            await IsVisibleChanged.InvokeAsync(false);
+        }
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+}

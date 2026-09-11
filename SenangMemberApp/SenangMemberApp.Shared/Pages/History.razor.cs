@@ -79,24 +79,6 @@ namespace SenangMemberApp.Shared.Pages
             warningModalIsOpen = false;
         }
 
-        private bool isReviewModalOpen = false;
-        private ServiceRecordResponseDTO? selectedReviewItem;
-
-        private void OpenReview(ServiceRecordResponseDTO item)
-        {
-            if (item == null) return;
-
-            selectedReviewItem = item;
-            isReviewModalOpen = true;
-            StateHasChanged();
-        }
-
-        private void CloseReviewModal()
-        {
-            isReviewModalOpen = false;
-            selectedReviewItem = null;
-            StateHasChanged();
-        }
         private void toggleShopListModal()
         {
             shopListModalIsOpen = !shopListModalIsOpen;
